@@ -1,6 +1,7 @@
 # Title:
 # Author:
 # Python: 3.8
+
 import numpy as np
 from statistics import NormalDist
 from tqdm import tqdm
@@ -14,7 +15,7 @@ sigma = 0.20
 K = 100
 
 
-def price_approx(N):
+def price_approx(N: int) -> float:
 	dt = T / (N-1)
 	V = np.zeros((N, 1))
 	S_T = np.zeros((N, 1))
@@ -36,7 +37,7 @@ def price_approx(N):
 	return V_appr
 
 
-def price():
+def price_exact() -> float:
 	d1 = ((r + 0.5 * sigma**2) * T - np.log(K / S_0)) / (sigma * np.sqrt(T))
 	d2 = d1 - sigma * np.sqrt(T)
 	Phi = lambda x: NormalDist(0, 1).cdf(x)
@@ -48,7 +49,7 @@ if __name__ == '__main__':
 	xx = np.arange(1000, 15_000, 1000)
 	yy = np.array(list(map(price_approx, xx)))
 	dt = T/(xx-1)
-	error = yy - price()
+	error = yy - price_exact()
 	plt.loglog(dt, error, 'k')
 	plt.ylabel('error [\$]')
 	plt.xlabel('timestep [year]')
