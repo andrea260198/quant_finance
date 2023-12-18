@@ -66,7 +66,8 @@ def bond_yield(T: float) -> float:
     
     
 
-def exact_bond_yield(T: float) -> float:    
+def exact_bond_yield(T: float) -> float:
+    # Exact bond pricing formula for Vasicek model
     A = (1 - np.exp(-a * T)) / a
     B = (b - 0.5 * sigma**2 / a**2) * (A - T) - sigma**2 * A**2 / (4 * a)
     Z = np.exp(-A * r0 + B)
