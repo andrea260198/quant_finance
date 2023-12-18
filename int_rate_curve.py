@@ -89,7 +89,7 @@ if __name__ == '__main__':
     
     tok = time.time()
     
-    print('Time = ', tok-tik)
+    print('Time = ', tok-tik, 's')
     
     yy2 = list(map(exact_bond_yield, TT))
 
