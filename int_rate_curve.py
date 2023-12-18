@@ -46,13 +46,12 @@ def integrate_r_dt(T: float) -> float:
         # Vasicek model
         dr = a * (b - r[k]) * dt + sigma * dX()
         r[k+1] = r[k]+dr
+        
     integral = sum(r * dt)
     return integral
 
 
 def bond_yield(T: float) -> float:
-    N = int(T / dt)
-        
     B = lambda: np.exp(-integrate_r_dt(T))
 
     BB = [B() for k in range(M)]
