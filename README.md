@@ -7,3 +7,7 @@ This repo contains some example of quantitative finance projects based on what I
 ## Static type check
 A static type check is performed on every **.py** file using **mypy**.
 To the perform static type check run _static\_type\_check.sh_ script.
+
+## Multiprocessing
+
+Not that multiprocessing module is used to make full use of multi-core CPUs.
