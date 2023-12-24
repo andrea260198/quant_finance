@@ -1,6 +1,8 @@
 #!/usr/bin/python3
-# Author:
-# Version:
+#
+# Author: Andrea Cassotti
+# Version: 1.0
+# Python: 3.8
 #
 # Summary:
 # The following code plots a yield curve obtained from the CIR model
