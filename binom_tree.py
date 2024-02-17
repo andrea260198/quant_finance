@@ -13,13 +13,13 @@ import time
 from abc import ABC, abstractmethod
 
 
-class Option(ABC):
+class IOption(ABC):
     @abstractmethod
     def price_approx(self):
         ...
 
 
-class EuropeanOption(Option):
+class EuropeanOption(IOption):
     def __init__(
             self,
             T: float,
