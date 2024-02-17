@@ -1,15 +1,22 @@
-run_int_rate:
-	python3 interest_rates/int_rate_curve.py
+ifeq ($(OS), Windows_NT)
+	PY_INTERPRETER = python
+else
+	PY_INTERPRETER = python3
+endif
 
-run_binom_tree:
-	python3 option_pricing/binom_tree.py
+run_int_rate: interest_rates/int_rate_curve.py
+	$(PY_INTERPRETER) interest_rates/int_rate_curve.py
 
-install:
+run_binom_tree: option_pricing/binom_tree.py
+	$(PY_INTERPRETER) option_pricing/binom_tree.py
+
+install: requirements.txt
 	pip install -r requirements.txt
 
-build:
-	python3 setup.py build bdist_wheel
+build: setup.py
+	$(PY_INTERPRETER) setup.py build bdist_wheel
 
 clean:
-	rm -r dist
-	rm *.egg-info
+	rm -r build || :
+	rm -r dist || :
+	rm -r quant_finance.egg-info || :
