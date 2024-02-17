@@ -19,7 +19,7 @@
 #
 
 import time
-from abc import ABC, abstractmethod
+from interest_rates.int_rate_models import InterestRateModel, VasicekModel
 from multiprocessing import Pool
 import numpy as np
 import matplotlib.pyplot as plt
@@ -30,7 +30,7 @@ a = 0.1
 b = 0.07
 r0 = 0.02
 sigma = 0.02
-M = 5000  # Monte Carlo simulation sample size
+M = 20_000  # Monte Carlo simulation sample size
 
 Z = lambda: np.random.normal()  # Standard normal r.v.
 dX = lambda: Z() * np.sqrt(dt)  # X(t) is a Brownian motion
@@ -62,7 +62,6 @@ def calc_approx_yield(T: float) -> float:
     
     return y
     
-    
 
 def calc_exact_yield(T: float) -> float:
     """
@@ -76,80 +75,6 @@ def calc_exact_yield(T: float) -> float:
     y = - np.log(Z) / T
     
     return y
-
-
-class InterestRateModel(ABC):
-    @abstractmethod
-    def integrate_r_dt(self, T: float) -> float:
-        ...
-
-
-class VasicekModel(InterestRateModel):
-    Z = lambda: np.random.normal()  # Standard normal r.v.
-    dX = lambda: Z() * np.sqrt(dt)  # X(t) is a Brownian motion
-
-    def __init__(
-            self,
-            dt: float,
-            a: float,
-            b: float,
-            r0: float,
-            sigma: float
-    ):
-        self.dt: float = dt
-        self.a: float = a
-        self.b: float = b
-        self.r0: float = r0
-        self.sigma: float = sigma
-
-    def integrate_r_dt(self, T: float) -> float:
-        N = int(T / self.dt)
-
-        r = np.zeros(N)
-
-        r[0] = self.r0
-
-        for k in range(N - 1):
-            # Vasicek model
-            dr = a * (b - r[k]) * dt + sigma * dX()
-            r[k + 1] = r[k] + dr
-
-        integral = sum(r * dt)
-        return integral
-
-
-class CoxIngersolRossModel(InterestRateModel):
-    Z = lambda: np.random.normal()  # Standard normal r.v.
-    dX = lambda: Z() * np.sqrt(dt)  # X(t) is a Brownian motion
-
-    def __init__(
-            self,
-            dt: float,
-            a: float,
-            b: float,
-            r0: float,
-            sigma: float
-    ):
-        self.dt: float = dt
-        self.a: float = a
-        self.b: float = b
-        self.r0: float = r0
-        self.sigma: float = sigma
-
-    def integrate_r_dt(self, T: float) -> float:
-        N = int(T / self.dt)
-
-        r = np.zeros(N)
-
-        r[0] = self.r0
-
-        for k in range(N - 1):
-            # CIR model
-            dr = a * (b - r[k]) * dt + sigma * np.sqrt(r[k]) * dX()
-            r[k + 1] = r[k] + dr
-
-        integral = sum(r * dt)
-        return integral
 
 
 if __name__ == '__main__':
