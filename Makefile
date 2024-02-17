@@ -20,3 +20,11 @@ clean:
 	rm -r build || :
 	rm -r dist || :
 	rm -r quant_finance.egg-info || :
+
+# TODO: delete later
+print:
+	@echo "Hello world!!!"
+
+# TODO: delete later
+test_print: print
+	@echo Bonjour!
