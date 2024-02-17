@@ -11,11 +11,12 @@ import matplotlib.pyplot as plt
 from multiprocessing import Pool
 import time
 from abc import ABC, abstractmethod
+from overrides import override
 
 
 class IOption(ABC):
     @abstractmethod
-    def price_approx(self):
+    def price_approx(self, N: int) -> float:
         ...
 
 
@@ -26,14 +27,15 @@ class EuropeanOption(IOption):
             r: float,
             S_0: float,
             sigma: float,
-            K: float):
+            K: float
+    ):
         self.T: float = T  # 1
         self.r: float = r  # 0.05
         self.S_0: float = S_0  # 100
         self.sigma: float = sigma  # 0.20
         self.K: float = K  # 100
 
-	@override
+    @override
     def price_approx(self, N: int) -> float:
         T = self.T
         r = self.r
