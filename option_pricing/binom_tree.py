@@ -33,7 +33,7 @@ class EuropeanOption(IOption):
         self.sigma: float = sigma  # 0.20
         self.K: float = K  # 100
 
-
+	@override
     def price_approx(self, N: int) -> float:
         T = self.T
         r = self.r
