@@ -19,7 +19,7 @@
 #
 
 import time
-from interest_rates.int_rate_models import InterestRateModel, VasicekModel
+from interest_rates.int_rate_models import ShortRateModel, VasicekModel
 from multiprocessing import Pool
 import numpy as np
 import matplotlib.pyplot as plt
@@ -42,7 +42,7 @@ def calc_approx_yield(T: float) -> float:
     :param T:
     :return:
     """
-    model: InterestRateModel = VasicekModel(
+    model: ShortRateModel = VasicekModel(
         dt=0.01,
         a=0.1,
         b=0.07,
@@ -58,7 +58,7 @@ def calc_approx_yield(T: float) -> float:
 
     y = - np.log(E) / T
     
-    print("Yield calculated for T = ", T, " E[exp(-int(rdt))] = ", E)
+    print("Yield calculated for T = ", T, " : E[exp(-int(rdt))] = ", E)
     
     return y
     
