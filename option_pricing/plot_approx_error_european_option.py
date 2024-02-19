@@ -12,10 +12,10 @@ from option_pricing.options import EuropeanOption
 
 
 if __name__ == '__main__':
-    expiry: float = 1.0
+    expiry: float = 1.0  # [years]
     european_option = EuropeanOption(T=expiry, r=0.05, S_0=100.0, sigma=0.20, K=100.0)
 
-    xx = np.arange(1000, 15_000, 1000)
+    xx = np.arange(1000, 15_000, 1000)  # np.array with number of discretizetion steps
     
     tik = time.time()
     
