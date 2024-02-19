@@ -1,4 +1,4 @@
-# Quantitative Finance
+# Quantitative Finance Package
 
 
 ## Description
