@@ -6,10 +6,14 @@
 This repo contains some example of quantitative finance projects based on what I learned at EPFL during the Master in Financial Engineering (MFE).
 
 
-## Static type check
+## CI pipeline
 
-A static type check is performed on every **.py** file using **mypy**.
-To perform the static type check run _static\_type\_check.sh_ script.
+A static type check is performed using **mypy**.
+
+
+## CD pipeline
+
+...
 
 
 ## Multiprocessing
