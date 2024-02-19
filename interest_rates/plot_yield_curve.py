@@ -50,13 +50,11 @@ def calc_approx_yield(T: float) -> float:
         sigma=0.02,
     )
 
-    B = lambda: np.exp(-model.integrate_r_dt(T))
+    # Calculate mean as approx of zero-coupon bond price
+    B = sum([np.exp(-model.integrate_r_dt(T)) for k in range(M)]) / M
 
-    BB = [B() for k in range(M)]
-
-    E = sum(BB) / M
-
-    y = - np.log(E) / T
+    # Calculate yield
+    y = - np.log(B) / T
     
     print("Yield calculated for T = ", T, " : E[exp(-int(rdt))] = ", E)
     
