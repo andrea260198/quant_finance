@@ -4,6 +4,9 @@ from overrides import override
 
 
 class ShortRateModel(ABC):
+    """
+    This abstract class contains all the common methods between short interest rate models.
+    """
     def __init__(
             self,
             dt: float,
