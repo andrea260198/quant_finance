@@ -5,5 +5,5 @@ jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
     steps:
-      -run: echo "Hello world!!!"
-      -name: Check out repository code
+      - run: echo "Hello world!!!"
+      - name: Check out repository code
