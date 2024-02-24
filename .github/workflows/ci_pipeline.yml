@@ -15,9 +15,7 @@ jobs:
           architecture: x64
       - name: Checkout
         uses: actions/checkout@v1
-      - name: Install overrides
-        run: pip3 install overrides
-      - name: Install mypy
-        run: pip3 install mypy
+      - name: Install requirements
+        run: pip3 install -r requirements.txt
       - name: Run Mypy
         run: mypy .
