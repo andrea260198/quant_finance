@@ -2,3 +2,4 @@ overrides
 mypy
 pytest
 numpy
+tqdm
