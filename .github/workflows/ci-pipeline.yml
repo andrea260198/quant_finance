@@ -1,10 +1,21 @@
 name: CI pipeline
-run-name: ${{ github.actor }} is running the CI
+
+run-name: ${{ github.actor }} is running the CI pipeline
+
 on: [push]
+
 jobs:
   Static-code-analysis:
     runs-on: ubuntu-latest
     steps:
-      - run: mypy .
-      - name: Mypy
-        uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.7.4
+          architecture: x64
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Install mypy
+        run: pip3 install mypy
+      - name: Run Mypy
+        run: mypy .
