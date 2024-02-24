@@ -16,7 +16,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v1
       - name: Install overrides
-        run: pip3 overrides
+        run: pip3 install overrides
       - name: Install mypy
         run: pip3 install mypy
       - name: Run Mypy
