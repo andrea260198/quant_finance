@@ -2,7 +2,7 @@ name: CI pipeline
 run-name: ${{ github.actor }} is running the CI
 on: [push]
 jobs:
-  Static code analysis:
+  Static-code-analysis:
     runs-on: ubuntu-latest
     steps:
       - run: mypy .
