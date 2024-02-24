@@ -2,9 +2,9 @@ name: CI pipeline
 run-name: ${{ github.actor }} is running the CI
 on: [push]
 jobs:
-  Explore-GitHub-Actions:
+  Static code analysis:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Hello world!!!"
-      - name: Check out repository code
+      - run: mypy .
+      - name: Mypy
         uses: actions/checkout@v4
