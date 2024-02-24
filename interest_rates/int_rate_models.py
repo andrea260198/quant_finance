@@ -20,23 +20,22 @@ class ShortRateModel(ABC):
         self._b: float = b
         self._r0: float = r0
         self._sigma: float = sigma
-        Z = lambda: np.random.normal()  # Standard normal r.v.
-        self._dX = lambda: Z() * np.sqrt(dt)  # X(t) is a Brownian motion
+
+    def _dX(self) -> float:
+        Z: float = np.random.normal()  # Standard normal r.v.
+        dX: float = Z * np.sqrt(self._dt)  # X(t) is a Brownian motion
+        return dX
 
     def integrate_r_dt(self, T: float) -> float:
         dt = self._dt
-
         N = int(T / dt)
-
         r = np.zeros(N)
-
         r[0] = self._r0
-
         for k in range(N - 1):
             dr = self.calc_dr(r[k])
             r[k + 1] = r[k] + dr
 
-        integral = sum(r * dt)
+        integral: float = sum(r * dt)
         return integral
 
     @abstractmethod
@@ -78,5 +77,5 @@ class CoxIngersolRossModel(ShortRateModel):
         sigma = self._sigma
         dX = self._dX
 
-        dr = a * (b - r) * dt + sigma * np.sqrt(r) * dX()
+        dr: float = a * (b - r) * dt + sigma * np.sqrt(r) * dX()
         return dr
