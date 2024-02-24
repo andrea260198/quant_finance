@@ -23,3 +23,4 @@ clean:
 	rm -r build || :
 	rm -r dist || :
 	rm -r quant_finance.egg-info || :
+
