@@ -8,7 +8,7 @@ This repo contains some example of quantitative finance projects.
 
 ## CI pipeline
 
-A static type check is performed using **mypy**.
+Every time `git push` is executed, a static type check is performed using **mypy**.
 
 
 ## CD pipeline
