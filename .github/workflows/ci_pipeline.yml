@@ -16,6 +16,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v1
       - name: Install requirements
-        run: pip3 install -r requirements.txt
+        run: make install
       - name: Run Mypy
         run: mypy .
