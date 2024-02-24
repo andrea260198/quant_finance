@@ -7,3 +7,4 @@ jobs:
     steps:
       - run: echo "Hello world!!!"
       - name: Check out repository code
+        uses: actions/checkout@v4
