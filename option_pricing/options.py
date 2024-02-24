@@ -51,7 +51,7 @@ class EuropeanOption(IOption):
             V = V_new
             V_new[:j, 0] = np.exp(-r * dt) * (p * V[:j, 0] + q * V[1:j+1, 0])
 
-        V_appr = V_new[0, 0]
+        V_appr: float = V_new[0, 0]
         return V_appr
 
 
@@ -64,6 +64,9 @@ class EuropeanOption(IOption):
 
         d1 = ((r + 0.5 * sigma**2) * T - np.log(K / S_0)) / (sigma * np.sqrt(T))
         d2 = d1 - sigma * np.sqrt(T)
-        Phi = lambda x: NormalDist(0, 1).cdf(x)
-        V_exact = S_0 * Phi(d1) - K * np.exp(-r * T) * Phi(d2)
+
+        def Phi(x: float) -> float:
+            return NormalDist(0, 1).cdf(x)
+
+        V_exact: float = S_0 * Phi(d1) - K * np.exp(-r * T) * Phi(d2)
         return V_exact

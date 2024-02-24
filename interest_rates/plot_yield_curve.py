@@ -32,8 +32,11 @@ r0 = 0.02
 sigma = 0.02
 M = 20_000  # Monte Carlo simulation sample size
 
-Z = lambda: np.random.normal()  # Standard normal r.v.
-dX = lambda: Z() * np.sqrt(dt)  # X(t) is a Brownian motion
+
+def dX() -> float:
+    Z: float = np.random.normal()  # Standard normal r.v.
+    dX: float = Z * np.sqrt(dt)  # X(t) is a Brownian motion
+    return dX
 
 
 def calc_approx_yield(T: float) -> float:
@@ -49,15 +52,11 @@ def calc_approx_yield(T: float) -> float:
         r0=0.02,
         sigma=0.02,
     )
-
     # Calculate mean as approx of zero-coupon bond price
     B = sum([np.exp(-model.integrate_r_dt(T)) for k in range(M)]) / M
-
     # Calculate yield
-    y = - np.log(B) / T
-    
-    print("Yield calculated for T = ", T, " : E[exp(-int(rdt))] = ", E)
-    
+    y: float = - np.log(B) / T
+    print("Yield calculated for T = ", T, " : E[exp(-int(rdt))] = ", B)
     return y
     
 
@@ -70,8 +69,7 @@ def calc_exact_yield(T: float) -> float:
     A = (1 - np.exp(-a * T)) / a
     B = (b - 0.5 * sigma**2 / a**2) * (A - T) - sigma**2 * A**2 / (4 * a)
     Z = np.exp(-A * r0 + B)
-    y = - np.log(Z) / T
-    
+    y: float = - np.log(Z) / T
     return y
 
 
