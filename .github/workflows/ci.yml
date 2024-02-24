@@ -1,4 +1,4 @@
-name: CI
+name: CI pipeline
 run-name: ${{ github.actor }} is running the CI
 on: [push]
 jobs:
