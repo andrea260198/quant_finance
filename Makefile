@@ -16,15 +16,10 @@ install: requirements.txt
 build: setup.py
 	$(PY_INTERPRETER) setup.py build bdist_wheel
 
+unit_tests:
+	pytest
+
 clean:
 	rm -r build || :
 	rm -r dist || :
 	rm -r quant_finance.egg-info || :
-
-# TODO: delete later
-print:
-	@echo "Hello world!!!"
-
-# TODO: delete later
-test_print: print
-	@echo Bonjour!
