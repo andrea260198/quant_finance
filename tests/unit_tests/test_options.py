@@ -1,5 +1,5 @@
 import numpy as np
-from option_pricing.options import EuropeanCallOption
+from option_pricing.european_options import EuropeanCallOption
 
 
 def test_european_option() -> None:

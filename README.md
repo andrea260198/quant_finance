@@ -6,6 +6,17 @@
 This repo contains some example of quantitative finance topics.
 
 
+## Observations
+
+Python is not the best language to use for a big quant finance repo, because the
+fact that it is not statically typed makes it more difficult to understand in 
+big teams and big repos, as well as, less robust (more prone to runtime errors 
+and crashes while the model is running).
+
+Despite these limitations, the static checker Mypy does a good job in preventing
+many errors that might arise during runtime.
+
+
 ## CI pipeline
 
 Every time `git push` is executed, a static type check is performed using 
