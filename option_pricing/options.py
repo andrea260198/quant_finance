@@ -1,4 +1,5 @@
 import numpy as np
+import numpy.typing as npt
 from statistics import NormalDist
 from tqdm import tqdm
 from abc import ABC, abstractmethod
@@ -8,23 +9,21 @@ from overrides import override
 class IOption(ABC):
     @abstractmethod
     def price_approx(self, N: int) -> float:
-        ...
+        pass
 
 
-class EuropeanOption(IOption):
+class AbstractEuropeanOption(IOption):
     def __init__(
             self,
             T: float,
             r: float,
             S_0: float,
             sigma: float,
-            K: float
     ):
         self.T: float = T  # 1
         self.r: float = r  # 0.05
         self.S_0: float = S_0  # 100
         self.sigma: float = sigma  # 0.20
-        self.K: float = K  # 100
 
     @override
     def price_approx(self, N: int) -> float:
@@ -32,7 +31,6 @@ class EuropeanOption(IOption):
         r = self.r
         S_0 = self.S_0
         sigma = self.sigma
-        K = self.K
 
         dt = T / (N-1)
         V = np.zeros((N, 1))
@@ -45,7 +43,7 @@ class EuropeanOption(IOption):
 
         S_T = np.array([[S_0 * u**(N-k-1) * v**k] for k in range(N)])
 
-        V_new = np.maximum(S_T - K, 0)  # Get element-wise max value
+        V_new = self._calc_payoff(S_T)
 
         for j in tqdm(range(N-1, 0, -1)):
             V = V_new
@@ -54,13 +52,34 @@ class EuropeanOption(IOption):
         V_appr: float = V_new[0, 0]
         return V_appr
 
+    @abstractmethod
+    def _calc_payoff(self, S_T: npt.NDArray[np.float64]) -> npt.NDArray[np.float64]:
+        pass
+
+
+class EuropeanCallOption(AbstractEuropeanOption):
+    def __init__(
+            self,
+            T: float,
+            r: float,
+            S_0: float,
+            sigma: float,
+            K: float
+    ):
+        super().__init__(
+            T,
+            r,
+            S_0,
+            sigma
+        )
+        self._strike = K
 
     def price_exact(self) -> float:
         T = self.T
         r = self.r
         S_0 = self.S_0
         sigma = self.sigma
-        K = self.K
+        K = self._strike
 
         d1 = ((r + 0.5 * sigma**2) * T - np.log(K / S_0)) / (sigma * np.sqrt(T))
         d2 = d1 - sigma * np.sqrt(T)
@@ -70,7 +89,63 @@ class EuropeanOption(IOption):
 
         V_exact: float = S_0 * Phi(d1) - K * np.exp(-r * T) * Phi(d2)
         return V_exact
-        
+
+    @override
+    def _calc_payoff(self, S_T: npt.NDArray[np.float64]) -> npt.NDArray[np.float64]:
+        K = self._strike
+        return np.maximum(S_T - K, 0)  # Get element-wise max value
+
+
+class EuropeanPutOption(AbstractEuropeanOption):
+    def __init__(
+            self,
+            T: float,
+            r: float,
+            S_0: float,
+            sigma: float,
+            K: float
+    ):
+        super().__init__(
+            T,
+            r,
+            S_0,
+            sigma
+        )
+        self._strike = K
+
+    @override
+    def _calc_payoff(self, S_T: npt.NDArray[np.float64]) -> npt.NDArray[np.float64]:
+        K = self._strike
+        return np.maximum(K - S_T, 0)  # Get element-wise max value
+
+
+class EuropeanDigitalCallOption(AbstractEuropeanOption):
+    def __init__(
+            self,
+            T: float,
+            r: float,
+            S_0: float,
+            sigma: float,
+            K: float
+    ):
+        super().__init__(
+            T,
+            r,
+            S_0,
+            sigma
+        )
+        self._strike = K
+
+    def price_exact(self) -> float:
+        raise NotImplementedError
+
+    @override
+    def _calc_payoff(self, S_T: npt.NDArray[np.float64]) -> npt.NDArray[np.float64]:
+        K = self._strike
+        mask = S_T - K > 0
+        payoff = mask.astype(np.float64)
+        return payoff
+
         
 class AmericanOption(IOption):
     pass
