@@ -19,6 +19,8 @@ build: setup.py
 unit_tests:
 	pytest
 
+test: unit_tests
+
 clean:
 	rm -r build || :
 	rm -r dist || :
