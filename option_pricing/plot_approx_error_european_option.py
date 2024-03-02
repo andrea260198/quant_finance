@@ -8,7 +8,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from multiprocessing import Pool
 import time
-from option_pricing.options import EuropeanCallOption
+from option_pricing.european_options import EuropeanCallOption
 
 
 if __name__ == '__main__':
