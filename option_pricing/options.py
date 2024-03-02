@@ -70,3 +70,15 @@ class EuropeanOption(IOption):
 
         V_exact: float = S_0 * Phi(d1) - K * np.exp(-r * T) * Phi(d2)
         return V_exact
+        
+        
+class AmericanOption(IOption):
+    pass
+    
+    
+class EuropeanOptionWithBarrier(IOption):
+    pass
+    
+    
+class BermudianOption(IOption):
+    pass
