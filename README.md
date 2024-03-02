@@ -3,7 +3,7 @@
 
 ## Description
 
-This repo contains some example of quantitative finance projects.
+This repo contains some example of quantitative finance topics.
 
 
 ## CI pipeline
