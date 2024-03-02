@@ -1,7 +1,7 @@
 # Quantitative Finance Package
 
 
-## Description
+## Introduction
 
 This repo contains some example of quantitative finance topics.
 
