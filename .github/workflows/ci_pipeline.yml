@@ -1,6 +1,6 @@
 name: CI pipeline
 
-run-name: ${{ github.actor }} is running the CI pipeline
+run-name: ${{ github.event.head_commit.message }}
 
 on: [push]
 
