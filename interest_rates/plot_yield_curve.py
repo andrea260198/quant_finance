@@ -30,7 +30,7 @@ a = 0.1
 b = 0.07
 r0 = 0.02
 sigma = 0.02
-M = 20_000  # Monte Carlo simulation sample size
+M = 10_000  # Monte Carlo simulation sample size
 
 
 def dX() -> float:
@@ -94,4 +94,7 @@ if __name__ == '__main__':
     plt.plot(TT, yy)
     plt.plot(TT, yy2, 'k:')
     plt.ylim(0, 0.04)
+    plt.xlabel("Maturity [y]")
+    plt.ylabel("Yield")
+    plt.legend(["Monte Carlo", "closed-form"])
     plt.show()
