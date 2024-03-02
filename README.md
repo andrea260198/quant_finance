@@ -16,6 +16,8 @@ and crashes while the model is running).
 Despite these limitations, the static checker Mypy does a good job in preventing
 many errors that might arise during runtime.
 
+An advantage of Python is the huge amount of free libraries that can be used.
+
 
 ## CI pipeline
 
@@ -57,3 +59,4 @@ yield curve can be approximated by using Monte Carlo. The Monte Carlo simulation
 make use of "multiprocessing" package. Every simulation is run in a separated
 process.
 
+![image](images/yield_curve.png)
