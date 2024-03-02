@@ -49,8 +49,6 @@ class VasicekModel(ShortRateModel):
         """
         Return differential dr of Vasicek model SDE
         dr = a * (b - r[k]) * dt + sigma * dX()
-        :param r:
-        :return:
         """
         a = self._a
         b = self._b
@@ -68,8 +66,6 @@ class CoxIngersolRossModel(ShortRateModel):
         """
         Return differential dr of Cox-Ingersoll-Ross model SDE
         dr = a * (b - r[k]) * dt + sigma * dX()
-        :param r:
-        :return:
         """
         a = self._a
         b = self._b

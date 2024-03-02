@@ -19,7 +19,7 @@
 #
 
 import time
-from interest_rates.int_rate_models import ShortRateModel, VasicekModel
+from interest_rates.short_rate_models import ShortRateModel, VasicekModel
 from multiprocessing import Pool
 import numpy as np
 import matplotlib.pyplot as plt
