@@ -52,6 +52,7 @@ With `plot_approx_error_european_option.py` script I want to show that binomial
 tree approximation of European options price has an approximation error which is
 **O(dt)**, with **dt** being the timestep.
 
+![image](images/binomial_tree_pricing_error.png)
 
 ## Interest rate
 
