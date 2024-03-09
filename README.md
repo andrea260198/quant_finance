@@ -9,27 +9,28 @@ learned at EPFL during the Master in Financial Engineering (MFE).
 
 ## Observations
 
-Python is not the best language to use for a big quant finance repo, because the
-fact that it is not statically typed makes it more difficult to understand in 
-big teams and big repos, as well as, less robust (more prone to runtime errors 
-and crashes while the model is running).
+In my opinion, Python is not the best language to use for a big quantitative 
+finance repository. Not being statically typed makes this language more
+difficult to debug and more prone do runtime errors, when the codebase becomes 
+very large and many people start working on the same code.
 
 Despite these limitations, the static checker Mypy does a good job in preventing
-many errors that might arise during runtime.
+many errors that might arise during runtime. I have to note that Mypy has some 
+bugs, but there are some easy workarounds.
 
-An advantage of Python is the huge amount of free libraries that can be used.
+The advantage of Python is the huge amount of free libraries that can be used.
 
 
 ## CI pipeline
 
 Every time `git push` is executed, a static type check is performed using 
-**mypy**.
+**mypy**. Also unit testing is performed.
 
 
 ## CD pipeline
 
-In the future I would like to develop a CD pipeline to run the model in a 
-server.
+In the future I would like to develop a CD pipeline to deploy and run the model
+on a server.
 
 
 ## Multiprocessing
@@ -58,7 +59,7 @@ tree approximation of European options price has an approximation error which is
 
 With `plot_yield_curve.py` script I want to show how the exact formula for the 
 yield curve can be approximated by using Monte Carlo. The Monte Carlo simulation
-make use of "multiprocessing" package. Every simulation is run in a separated
+makes use of "multiprocessing" package. Every simulation is run in a separated
 process.
 
 ![image](images/yield_curve.png)
