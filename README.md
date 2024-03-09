@@ -24,7 +24,7 @@ The advantage of Python is the huge amount of free libraries that can be used.
 ## CI pipeline
 
 Every time `git push` is executed, a static type check is performed using 
-**mypy**. Also unit testing is performed.
+**mypy**. Also **unit testing** is performed.
 
 
 ## CD pipeline
