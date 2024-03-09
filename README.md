@@ -58,8 +58,8 @@ tree approximation of European options price has an approximation error which is
 ## Interest rate
 
 With `plot_yield_curve.py` script I want to show how the exact formula for the 
-yield curve can be approximated by using Monte Carlo. The Monte Carlo simulation
-makes use of "multiprocessing" package. Every simulation is run in a separated
-process.
+yield curve using Vasicek short-rate model can be approximated by using Monte 
+Carlo. The Monte Carlo simulation makes use of "multiprocessing" package. Every 
+simulation is run in a separated process.
 
 ![image](images/yield_curve.png)
