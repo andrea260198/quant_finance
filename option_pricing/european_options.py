@@ -2,24 +2,9 @@ import numpy as np
 import numpy.typing as npt
 from statistics import NormalDist
 from tqdm import tqdm
-from abc import ABC, abstractmethod
+from abc import abstractmethod
 from overrides import override
-
-
-class AbstractOption(ABC):
-    def __init__(self) -> None:
-        self._price: float | None = None
-
-    @abstractmethod
-    def price_approx(self, N: int) -> float:
-        pass
-
-    def get_price(self) -> float:
-        if self._price is not None:
-            return self._price
-        else:
-            raise Exception("Price not yet computed.")
-
+from option_pricing.abstract_option import AbstractOption
 
 
 class AbstractEuropeanVanillaOption(AbstractOption):
