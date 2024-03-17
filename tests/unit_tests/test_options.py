@@ -1,4 +1,6 @@
 import numpy as np
+
+from option_pricing.european_barrier_options import EuropeanPutOptionBarrierOut
 from option_pricing.european_options import EuropeanCallOption, EuropeanPutOption
 
 
@@ -23,3 +25,19 @@ def test_put_call_parity() -> None:
 
     # Verify put-call parity
     assert abs(call_price - put_price - 100 + 100 * np.exp(-0.05 * expiry)) < 0.01
+
+
+def test_european_barrier_option() -> None:
+    option = EuropeanPutOptionBarrierOut(
+        r=0.05,
+        sigma=0.20,
+        S0=100,
+        div=0.00,
+        expiry=1,
+        K=100,
+        beta=0.5
+    )
+
+    option.price_approx(1000)
+
+    print(option.get_price())
