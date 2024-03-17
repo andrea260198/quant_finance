@@ -46,6 +46,8 @@ I also created a directory for unit testing of the code.
 
 ## Risk Management
 
+This section has yet to be started.
+
 
 ## Option pricing
 
