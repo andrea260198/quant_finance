@@ -1,8 +1,10 @@
 FROM python:3.10
 
-ADD main.py .
+WORKDIR /quant_finance
 
-RUN pip install poetry
+ADD . /quant_finance
 
-CMD ["python", "./main.py"]
+RUN make install
+
+CMD ["pytest"]
 
