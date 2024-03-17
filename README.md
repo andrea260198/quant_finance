@@ -41,7 +41,8 @@ CPUs.
 
 ## Testing
 
-I also created a directory for unit testing of the code.
+Unit testing let developers be more confident when they make big changes in
+the code since regressions can be easily spot.
 
 
 ## Risk Management
