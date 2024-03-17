@@ -1,5 +1,5 @@
-from option_pricing.european_options import IOption
+from option_pricing.european_options import AbstractOption
 
 
-class AmericanOption(IOption):
+class AmericanOption(AbstractOption):
     pass

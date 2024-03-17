@@ -15,6 +15,11 @@ def test_put_call_parity() -> None:
     european_put_option = EuropeanPutOption(T=expiry, r=0.05, S_0=100.0, sigma=0.20, K=100.0)
     timesteps = 1000
 
+    european_call_option.price_approx(timesteps)
+    european_put_option.price_approx(timesteps)
+
+    call_price = european_call_option.get_price()
+    put_price = european_put_option.get_price()
+
     # Verify put-call parity
-    assert abs(european_call_option.price_approx(timesteps) - european_put_option.price_approx(timesteps) -
-               100 + 100 * np.exp(-0.05 * expiry)) < 0.01
+    assert abs(call_price - put_price - 100 + 100 * np.exp(-0.05 * expiry)) < 0.01

@@ -6,13 +6,23 @@ from abc import ABC, abstractmethod
 from overrides import override
 
 
-class IOption(ABC):
+class AbstractOption(ABC):
+    def __init__(self) -> None:
+        self._price: float | None = None
+
     @abstractmethod
     def price_approx(self, N: int) -> float:
         pass
 
+    def get_price(self) -> float:
+        if self._price is not None:
+            return self._price
+        else:
+            raise Exception("Price not yet computed.")
 
-class AbstractEuropeanOption(IOption):
+
+
+class AbstractEuropeanVanillaOption(AbstractOption):
     def __init__(
             self,
             T: float,
@@ -20,6 +30,7 @@ class AbstractEuropeanOption(IOption):
             S_0: float,
             sigma: float,
     ):
+        super().__init__()
         self.T: float = T  # 1
         self.r: float = r  # 0.05
         self.S_0: float = S_0  # 100
@@ -50,14 +61,15 @@ class AbstractEuropeanOption(IOption):
             V_new[:j, 0] = np.exp(-r * dt) * (p * V[:j, 0] + q * V[1:j+1, 0])
 
         V_appr: float = V_new[0, 0]
-        return V_appr
+        self._price = V_appr
+        return self._price
 
     @abstractmethod
     def _calc_payoff(self, S_T: npt.NDArray[np.float64]) -> npt.NDArray[np.float64]:
         pass
 
 
-class EuropeanCallOption(AbstractEuropeanOption):
+class EuropeanCallOption(AbstractEuropeanVanillaOption):
     def __init__(
             self,
             T: float,
@@ -88,7 +100,8 @@ class EuropeanCallOption(AbstractEuropeanOption):
             return NormalDist(0, 1).cdf(x)
 
         V_exact: float = S_0 * Phi(d1) - K * np.exp(-r * T) * Phi(d2)
-        return V_exact
+        self._price = V_exact
+        return self._price
 
     @override
     def _calc_payoff(self, S_T: npt.NDArray[np.float64]) -> npt.NDArray[np.float64]:
@@ -96,7 +109,7 @@ class EuropeanCallOption(AbstractEuropeanOption):
         return np.maximum(S_T - K, 0)  # Get element-wise max value
 
 
-class EuropeanPutOption(AbstractEuropeanOption):
+class EuropeanPutOption(AbstractEuropeanVanillaOption):
     def __init__(
             self,
             T: float,
@@ -119,7 +132,7 @@ class EuropeanPutOption(AbstractEuropeanOption):
         return np.maximum(K - S_T, 0)  # Get element-wise max value
 
 
-class EuropeanDigitalCallOption(AbstractEuropeanOption):
+class EuropeanDigitalCallOption(AbstractEuropeanVanillaOption):
     def __init__(
             self,
             T: float,
@@ -147,7 +160,7 @@ class EuropeanDigitalCallOption(AbstractEuropeanOption):
         return payoff
 
 
-class EuropeanPutOptionBarrierIn(IOption):
+class EuropeanPutOptionBarrierIn(AbstractOption):
     def __init__(
             self,
             r: float,
@@ -158,6 +171,7 @@ class EuropeanPutOptionBarrierIn(IOption):
             K: float,
             beta: float
     ):
+        super().__init__()
         self._r = r
         self._sigma = sigma
         self._S0 = S0
@@ -178,19 +192,20 @@ class EuropeanPutOptionBarrierIn(IOption):
         )
 
         european_put_option = EuropeanPutOption(
-            self._T,
+            self._expiry,
             self._r,
-            self._S_0,
+            self._S0,
             self._sigma,
             self._K
         )
 
         V = european_put_option.price_approx(N) - european_put_option_barrier_out.price_approx(N)
 
-        return V
+        self._price = V
+        return self._price
 
 
-class EuropeanPutOptionBarrierOut(IOption):
+class EuropeanPutOptionBarrierOut(AbstractOption):
     def __init__(
             self,
             r: float,
@@ -201,6 +216,7 @@ class EuropeanPutOptionBarrierOut(IOption):
             K: float,
             beta: float
     ):
+        super().__init__()
         self._r = r
         self._sigma = sigma
         self._S0 = S0
@@ -243,4 +259,5 @@ class EuropeanPutOptionBarrierOut(IOption):
                     V[k] = 0
                 k += 1
 
-        return V[0]
+        self._price = V[0]
+        return self._price
