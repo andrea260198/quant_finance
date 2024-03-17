@@ -9,6 +9,7 @@ import matplotlib.pyplot as plt
 from multiprocessing import Pool
 import time
 from option_pricing.european_options import EuropeanCallOption
+import psutil
 
 
 if __name__ == '__main__':
@@ -20,7 +21,8 @@ if __name__ == '__main__':
     tik = time.time()
     
     # Multi-core
-    pool = Pool(6)
+    n_cores = psutil.cpu_count(logical=False)
+    pool = Pool(n_cores)
     yy = np.array(list(pool.map(european_option.price_approx, xx)))
     
     # Mono-core
