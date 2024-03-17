@@ -23,6 +23,7 @@ from interest_rates.short_rate_models import ShortRateModel, VasicekModel
 from multiprocessing import Pool
 import numpy as np
 import matplotlib.pyplot as plt
+import psutil
 
 
 dt = 0.01
@@ -53,10 +54,10 @@ def calc_approx_yield(T: float) -> float:
         sigma=0.02,
     )
     # Calculate mean as approx of zero-coupon bond price
-    B = sum([np.exp(-model.integrate_r_dt(T)) for k in range(M)]) / M
+    Z = sum([np.exp(-model.integrate_r_dt(T)) for k in range(M)]) / M
     # Calculate yield
-    y: float = - np.log(B) / T
-    print("Yield calculated for T = ", T, " : E[exp(-int(rdt))] = ", B)
+    y: float = - np.log(Z) / T
+    print("Zero-coupon bond of maturity T = {} has value Z = {:.3f}".format(T, Z))
     return y
     
 
@@ -78,8 +79,9 @@ if __name__ == '__main__':
     
     tik = time.time()
 
-    # Multi-core version    
-    pool = Pool(6)
+    # Multi-core version
+    n_cores = psutil.cpu_count(logical=False)
+    pool = Pool(n_cores)
     yy = pool.map(calc_approx_yield, TT)
     
     # Single-core version
