@@ -41,3 +41,17 @@ def test_european_barrier_option() -> None:
     option.price_approx(1000)
 
     print(option.get_price())
+
+
+def test_american_option() -> None:
+    option = EuropeanCallOption(
+        T=10,
+        r=0.20,
+        S_0=100,
+        sigma=0.20,
+        K=100
+    )
+
+    price = option.price_approx(10000)
+
+    assert abs(price - 86.4712) < 0.01
