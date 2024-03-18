@@ -84,3 +84,26 @@ class AmericanCallOption(AbstractAmericanVanillaOption):
     def _calc_payoff(self, S: npt.NDArray[np.float64]) -> npt.NDArray[np.float64]:
         K = self._strike
         return np.maximum(S - K, 0)  # Get element-wise max value
+
+
+class AmericanPutOption(AbstractAmericanVanillaOption):
+    def __init__(
+            self,
+            T: float,
+            r: float,
+            S_0: float,
+            sigma: float,
+            K: float
+    ):
+        super().__init__(
+            T,
+            r,
+            S_0,
+            sigma
+        )
+        self._strike = K
+
+    @override
+    def _calc_payoff(self, S: npt.NDArray[np.float64]) -> npt.NDArray[np.float64]:
+        K = self._strike
+        return np.maximum(K - S, 0)  # Get element-wise max value
