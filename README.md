@@ -24,13 +24,19 @@ The advantage of Python is the huge amount of free libraries that can be used.
 ## CI pipeline
 
 Every time `git push` is executed, a static type check is performed using 
-**mypy**. Also **unit testing** is performed.
+**mypy**. Also, **unit testing** is performed.
 
 
 ## CD pipeline
 
 In the future I would like to develop a CD pipeline to deploy and run the model
 on a server.
+
+
+## Docker
+
+We can a Docker image from the project, and Docker containers can be run to test 
+the code in an isolated environment, separated from the local machine.
 
 
 ## Multiprocessing
