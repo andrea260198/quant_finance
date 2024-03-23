@@ -58,6 +58,12 @@ tree approximation of European options price has an approximation error which is
 
 ![image](images/binomial_tree_pricing_error.png)
 
+
+Below is the price surface obtained for American call options with different
+strike and expiries.
+
+![image](images/american_call_price_surface.png)
+
 ## Interest rate
 
 With `plot_yield_curve.py` script I want to show how the exact formula for the 
