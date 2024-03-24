@@ -1,4 +1,4 @@
-from option_pricing.european_options import AbstractOption
+from option_pricing.abstract_option import AbstractOption
 
 
 class BermudanOption(AbstractOption):
