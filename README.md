@@ -13,7 +13,7 @@ learned at EPFL during the Master in Financial Engineering (MFE).
 
 Python is not the best language for a big quantitative finance repository, 
 because it is not statically typed. That makes the the code difficult to debug
-and more prone to runtime errors without prior compilation. The issue becomes 
+and more prone to runtime errors, without prior compilation. The issue becomes 
 more evident when the code base becomes very large and many people start working
 on it.
 
@@ -25,14 +25,15 @@ The big advantage of Python is the huge amount of free libraries that can be
 used.
 
 
+## CI/CD
 
-## CI pipeline
+### CI pipeline
 
 Every time `git push` is executed, a static type check is performed using 
 **mypy**. Also, **unit testing** is performed.
 
 
-## CD pipeline
+### CD pipeline
 
 In the future I would like to develop a CD pipeline to deploy and run the model
 on a server.
