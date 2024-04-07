@@ -1,24 +1,29 @@
 # Quantitative Finance Package
 
+![image](images/stocks.jpg)
+
 
 ## Introduction
 
-This repo contains some example of quantitative finance topics based on what I 
+This repo contains some examples of quantitative finance topics, based on what I 
 learned at EPFL during the Master in Financial Engineering (MFE).
 
 
 ## Observations
 
-In my opinion, Python is not the best language to use for a big quantitative 
-finance repository. Not being statically typed makes this language more
-difficult to debug and more prone do runtime errors, when the codebase becomes 
-very large and many people start working on the same code.
+Python is not the best language for a big quantitative finance repository, 
+because it is not statically typed. That makes the the code difficult to debug
+and more prone to runtime errors without prior compilation. The issue becomes 
+more evident when the code base becomes very large and many people start working
+on it.
 
-Despite these limitations, the static checker Mypy does a good job in preventing
-many errors that might arise during runtime. I have to note that Mypy has some 
-bugs, but there are some easy workarounds.
+Despite these limitations, the Mypy static checker does a good job in preventing
+many errors that might arise during runtime. That said, Mypy has some 
+bugs.
 
-The advantage of Python is the huge amount of free libraries that can be used.
+The big advantage of Python is the huge amount of free libraries that can be 
+used.
+
 
 
 ## CI pipeline
@@ -35,20 +40,23 @@ on a server.
 
 ## Docker
 
-We can a Docker image from the project, and Docker containers can be run to test 
-the code in an isolated environment, separated from the local machine.
+We can create a Docker image of the project. Then we can run the Docker 
+containers to test the code in an isolated environment, separated from the 
+local machine.
 
 
 ## Multiprocessing
 
-Note that **multiprocessing** module is used to make full use of multi-core 
-CPUs.
+**multiprocessing** module is used to make full use of multi-core 
+CPUs. The fact that Python is not multithreaded due to GIL is a limitation to
+take into account. Memory cannot be easily shared between processes, while it 
+can be easily done with threads.
 
 
 ## Testing
 
-Unit testing let developers be more confident when they make big changes in
-the code since regressions can be easily spot.
+Unit testing let developers be more confident when they make changes in
+the code, since new bugs can be easily spot.
 
 
 ## Risk Management
@@ -58,15 +66,15 @@ This section has yet to be started.
 
 ## Option pricing
 
-With `plot_approx_error_european_option.py` script I want to show that binomial
-tree approximation of European options price has an approximation error which is
-**O(dt)**, with **dt** being the timestep.
+With `plot_approx_error_european_option.py` script I want to show that the 
+binomial tree approximation of European options price has an approximation error 
+which is **O(dt)**, with **dt** being the timestep used in the binomial tree.
 
 ![image](images/binomial_tree_pricing_error.png)
 
 
 Below is the price surface obtained for American call options with different
-strike and expiries.
+strike and expiries using `plot_price_surface.py` script.
 
 ![image](images/american_call_price_surface.png)
 
@@ -74,7 +82,7 @@ strike and expiries.
 
 With `plot_yield_curve.py` script I want to show how the exact formula for the 
 yield curve using Vasicek short-rate model can be approximated by using Monte 
-Carlo. The Monte Carlo simulation makes use of "multiprocessing" package. Every 
-simulation is run in a separated process.
+Carlo. The Monte Carlo simulation makes use of "multiprocessing" package. 
+Indeed, every simulation is run in a separate process.
 
 ![image](images/yield_curve.png)
