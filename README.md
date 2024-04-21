@@ -80,7 +80,7 @@ with M the number of iterations in the Monte Carlo simulation.
 ![image](images/monte_carlo_std_error_2.png)
 
 The images above also show that binomial pricing methos is computationally more efficient 
-compared to Monte Carlo method.
+compared to Monte Carlo method when pricing European options.
 
 
 Below is the price surface obtained for American call options with different
@@ -91,7 +91,7 @@ strike and expiries using `plot_price_surface.py` script.
 
 ## Implied volatility
 
-This section is still on going.
+This section is still on going. The goal is to plot a simulation of the volatility surface.
 
 Currently, I implemented Monte Carlo pricing of European call options using the Heston model.
 The Heston model considers the volatility of the underlying, not constant, but a random process.
