@@ -74,10 +74,29 @@ which is **O(dt)**, with **dt** being the timestep used in the binomial tree.
 ![image](images/binomial_tree_pricing_error.png)
 
 
+`plot_mc_approx_error_european_option.py` script shows how the standard error is **O(1/sqrt(M))**
+with M the number of iterations in the Monte Carlo simulation.
+
+![image](images/monte_carlo_std_error_2.png)
+
+The images above also show that binomial pricing methos is computationally more efficient 
+compared to Monte Carlo method.
+
+
 Below is the price surface obtained for American call options with different
 strike and expiries using `plot_price_surface.py` script.
 
 ![image](images/american_call_price_surface.png)
+
+
+## Implied volatility
+
+This section is still on going.
+
+Currently, I implemented Monte Carlo pricing of European call options using the Heston model.
+The Heston model considers the volatility of the underlying, not constant, but a random process.
+In particular the variance (or square of volatility) follows a CIR process.
+
 
 ## Interest rate
 
