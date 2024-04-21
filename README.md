@@ -67,12 +67,16 @@ This section has yet to be started.
 
 ## Option pricing
 
+### Binomial method
+
 With `plot_approx_error_european_option.py` script I want to show that the 
 binomial tree approximation of European options price has an approximation error 
 which is **O(dt)**, with **dt** being the timestep used in the binomial tree.
 
 ![image](images/binomial_tree_pricing_error.png)
 
+
+### Monte Carlo method
 
 `plot_mc_approx_error_european_option.py` script shows how the standard error is **O(1/sqrt(M))**
 with M the number of iterations in the Monte Carlo simulation.
@@ -82,6 +86,7 @@ with M the number of iterations in the Monte Carlo simulation.
 The images above also show that binomial pricing methos is computationally more efficient 
 compared to Monte Carlo method when pricing European options.
 
+### American call option price surface
 
 Below is the price surface obtained for American call options with different
 strike and expiries using `plot_price_surface.py` script.
