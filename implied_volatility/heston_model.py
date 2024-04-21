@@ -48,6 +48,8 @@ class HestonEuropeanCallOption(AbstractOption):
             mean = [0, 0]
             cov = [[1, rho], [rho, 1]]
             Z1, Z2 = np.random.multivariate_normal(mean, cov, M).T
+            Z1 = np.expand_dims(Z1, axis=1)
+            Z2 = np.expand_dims(Z2, axis=1)
             dX = Z1 * np.sqrt(dt)
             dY = Z2 * np.sqrt(dt)
             dS = r * S * dt + np.sqrt(var) * S * dX
