@@ -64,15 +64,17 @@ class AbstractEuropeanVanillaOption(AbstractOption):
 
         S = S_0 * np.ones((M, 1))
 
-        for t in np.arange(0, T, dt):
+        for t in tqdm(np.arange(0, T, dt)):
             Z = np.random.normal(0, 1, (M, 1))
             dX = Z * np.sqrt(dt)
             dS = r * S * dt + sigma * S * dX
             S += dS
 
-        avg_payoff = np.mean(self._calc_payoff(S))
+        payoff = self._calc_payoff(S)
 
-        self._price = avg_payoff  * np.exp(-self.r * self.T)
+        avg_payoff = np.mean(payoff)
+
+        self._price = avg_payoff  * np.exp(-r * T)
 
         return self._price
 
