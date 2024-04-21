@@ -20,10 +20,14 @@ class ShortRateModel(ABC):
         self._b: float = b
         self._r0: float = r0
         self._sigma: float = sigma
+        seed = 1
+        self._rng = np.random.default_rng(seed)
 
     def _dX(self) -> float:
         Z: float = np.random.normal()  # Standard normal r.v.
         dX: float = Z * np.sqrt(self._dt)  # X(t) is a Brownian motion
+        # bernoulli_rv = self._rng.integers(0, 2)  # Slower
+        # dX = (2 * bernoulli_rv - 1) * np.sqrt(self._dt)
         return dX
 
     def integrate_r_dt(self, T: float) -> float:

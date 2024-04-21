@@ -23,6 +23,9 @@ class AbstractEuropeanVanillaOption(AbstractOption):
 
     @override
     def price_approx(self, N: int) -> float:
+        """
+        Approximate option price with a binomial tree.
+        """
         T = self.T
         r = self.r
         S_0 = self.S_0
@@ -47,6 +50,30 @@ class AbstractEuropeanVanillaOption(AbstractOption):
 
         V_appr: float = V_new[0, 0]
         self._price = V_appr
+        return self._price
+
+    def price_mc_approx(self, M: int, dt: float) -> float:
+        """
+        Approximate option price with Monte Carlo method.
+        """
+
+        T = self.T
+        S_0 = self.S_0
+        r = self.r
+        sigma = self.sigma
+
+        S = S_0 * np.ones((M, 1))
+
+        for t in np.arange(0, T, dt):
+            Z = np.random.normal(0, 1, (M, 1))
+            dX = Z * np.sqrt(dt)
+            dS = r * S * dt + sigma * S * dX
+            S += dS
+
+        avg_payoff = np.mean(self._calc_payoff(S))
+
+        self._price = avg_payoff  * np.exp(-self.r * self.T)
+
         return self._price
 
     @abstractmethod
