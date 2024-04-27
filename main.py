@@ -1,8 +1,11 @@
-from implied_volatility.heston_model import HestonEuropeanCallOption
+from implied_volatility.heston_model import HestonEuropeanCallOption, volatility_surface
 from option_pricing.american_options import AmericanCallOption
 from option_pricing.european_options import EuropeanCallOption
 
 if __name__ == '__main__':
+    volatility_surface()
+
+    quit()
 
     option = HestonEuropeanCallOption(
         T=1,
@@ -12,6 +15,6 @@ if __name__ == '__main__':
         K=100
     )
 
-    price = option.price_mc_approx(10000, 0.01)
+    price = option.price_mc_approx(10_000_000, 0.01)
 
     print(price)
