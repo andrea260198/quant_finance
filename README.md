@@ -108,6 +108,8 @@ with Monte Carlo simulation. Then the implied volatilty is obtained by inverting
 Below is the volatility surface I obtained. Note that the simulation become very unstable when the 
 moneyness increases (strike low) and expiry is close to zero.
 
+Now the goal is to decrease instability and decrease the runtime by using parallelization.
+
 ![image](images/implied_volatility_surface.png)
 
 Monte Carlo simulation was performed with 100,000 simulations and timestep equal to 0.01 .

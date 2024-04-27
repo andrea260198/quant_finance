@@ -1,9 +1,9 @@
-from implied_volatility.heston_model import HestonEuropeanCallOption, volatility_surface
+from implied_volatility.heston_model import HestonEuropeanCallOption, plot_volatility_surface
 from option_pricing.american_options import AmericanCallOption
 from option_pricing.european_options import EuropeanCallOption
 
 if __name__ == '__main__':
-    volatility_surface()
+    plot_volatility_surface()
 
     quit()
 
