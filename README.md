@@ -99,8 +99,16 @@ strike and expiries using `plot_price_surface.py` script.
 This section is still on going. The goal is to plot a simulation of the volatility surface.
 
 Currently, I implemented Monte Carlo pricing of European call options using the Heston model.
-The Heston model considers the volatility of the underlying, not constant, but a random process.
+The Heston model considers the volatility of the underlying not as a constant but as a random process.
 In particular the variance (or square of volatility) follows a CIR process.
+
+To obtain the implied volatility, first I price a European call option using the Heston model of volatility
+with Monte Carlo simulation. Then the implied volatilty is obtained by inverting the Black-Scholes formula.
+
+Below is the volatility surface I obtained. Note that the simulation become very unstable when the 
+moneyness increases (strike low) and expiry is close to zero.
+
+![image](images/implied_volatility_surface.png)
 
 
 ## Interest rate
