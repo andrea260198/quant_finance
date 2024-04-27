@@ -110,6 +110,10 @@ moneyness increases (strike low) and expiry is close to zero.
 
 ![image](images/implied_volatility_surface.png)
 
+Monte Carlo simulation was performed with 100,000 simulations and timestep equal to 0.01 .
+
+Probably, decreasing the timestep might solve the instability.
+
 
 ## Interest rate
 
