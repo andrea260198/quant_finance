@@ -36,7 +36,8 @@ def plot_heston_price_surface():
 
     plt.show()
 
-def plot_volatility_surface():
+
+def plot_volatility_surface() -> None:
     KK = np.arange(80, 120, 1)
     TT = np.arange(0.1, 1, 0.1)
     K_mg, T_mg = np.meshgrid(KK, TT, indexing="ij")
@@ -57,7 +58,7 @@ def plot_volatility_surface():
         for j in range(J):
             V = HestonEuropeanCallOption(TT[j], r, S_0, sigma_0, KK[i]).price_mc_approx(M, dt)
 
-            def fun(sigma):
+            def fun(sigma: float) -> float:
                 return EuropeanCallOption(TT[j], r, S_0, sigma, KK[i]).price_exact() - V
 
             sol = root(fun, sigma_0)

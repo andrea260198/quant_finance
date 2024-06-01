@@ -2,6 +2,7 @@ import numpy as np
 import numpy.typing as npt
 from tqdm import tqdm
 from option_pricing.abstract_option import AbstractOption
+from overrides import override
 
 
 class HestonEuropeanCallOption(AbstractOption):
@@ -13,15 +14,15 @@ class HestonEuropeanCallOption(AbstractOption):
             sigma: float,
             K: float
     ):
-        super().__init__()
         self.T: float = T
         self.r: float = r
         self.S_0: float = S_0
         self.sigma: float = sigma
         self._strike = K
 
+    @override
     def price_approx(self, N: int) -> float:
-        self.price_mc_approx(N, 0.01)
+        return self.price_mc_approx(N, 0.01)
 
     def price_mc_approx(self, M: int, dt: float) -> float:
         """
