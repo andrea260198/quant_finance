@@ -16,7 +16,6 @@ class AbstractAmericanVanillaOption(AbstractOption):
             S_0: float,
             sigma: float,
     ):
-        super().__init__()
         self.T: float = T  # 1
         self.r: float = r  # 0.05
         self.S_0: float = S_0  # 100

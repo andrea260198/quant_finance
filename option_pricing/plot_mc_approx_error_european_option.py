@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from multiprocessing import Pool
 
 
-def calc_std_error(M):
+def calc_std_error(M: int) -> float:
     option = EuropeanCallOption(
         T=10,
         r=0.20,
