@@ -1,0 +1,2 @@
+class ModelResults:
+    pass
