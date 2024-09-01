@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from overrides import override
-from model_results import ModelResults
+from risk_management.model_results import ModelResults
 
 
 class RiskModel(ABC):
