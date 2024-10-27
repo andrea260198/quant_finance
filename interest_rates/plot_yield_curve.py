@@ -36,12 +36,6 @@ class ZeroCouponBond:
         self.M: int = 10_000  # Monte Carlo simulation sample size
         self.T: float = T
 
-    def dX(self) -> float:
-        Z: float = np.random.normal()  # Standard normal r.v.
-        dX: float = Z * np.sqrt(self.dt)  # X(t) is a Brownian motion
-        return dX
-
-
     def calc_approx_yield(self) -> float:
         """
         Calculate yield using an approximation of bond price using Monte Carlo simulation
@@ -61,7 +55,6 @@ class ZeroCouponBond:
         y: float = - np.log(Z) / self.T
         print("Zero-coupon bond of maturity T = {} has value Z = {:.3f}".format(self.T, Z))
         return y
-
 
     def calc_exact_yield(self) -> float:
         """
