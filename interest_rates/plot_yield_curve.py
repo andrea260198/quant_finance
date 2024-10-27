@@ -19,7 +19,7 @@
 #
 
 import time
-from interest_rates.short_rate_models import ShortRateModel, VasicekModel
+from interest_rates.short_rate_models import ShortRateModel, VasicekModel, ModelParameters
 from multiprocessing import Pool
 import numpy as np
 import matplotlib.pyplot as plt
@@ -27,14 +27,10 @@ import psutil
 
 
 class ZeroCouponBond:
-    def __init__(self, T: float):
-        self.dt: float = 0.01
-        self.a: float = 0.1
-        self.b: float = 0.07
-        self.r0: float = 0.02
-        self.sigma: float = 0.02
+    def __init__(self, T: float, short_rate_model: ShortRateModel):
         self.M: int = 10_000  # Monte Carlo simulation sample size
         self.T: float = T
+        self.short_rate_model: ShortRateModel = short_rate_model
 
     def calc_approx_yield(self) -> float:
         """
@@ -42,13 +38,7 @@ class ZeroCouponBond:
         :param T:
         :return:
         """
-        model: ShortRateModel = VasicekModel(
-            dt=self.dt,
-            a=self.a,
-            b=self.b,
-            r0=self.r0,
-            sigma=self.sigma,
-        )
+        model: ShortRateModel = self.short_rate_model
         # Calculate mean as approx of zero-coupon bond price
         Z = sum([np.exp(-model.integrate_r_dt(self.T)) for k in range(self.M)]) / self.M
         # Calculate yield
@@ -57,16 +47,7 @@ class ZeroCouponBond:
         return y
 
     def calc_exact_yield(self) -> float:
-        """
-        # Calculate yield using exact bond pricing formula for Vasicek model
-        :param T:
-        :return:
-        """
-        A = (1 - np.exp(-self.a * self.T)) / self.a
-        B = (self.b - 0.5 * self.sigma**2 / self.a**2) * (A - self.T) - self.sigma**2 * A**2 / (4 * self.a)
-        Z = np.exp(-A * self.r0 + B)
-        y: float = - np.log(Z) / self.T
-        return y
+        return self.short_rate_model.calc_exact_yield(self.T)
 
 
 if __name__ == '__main__':
@@ -75,7 +56,15 @@ if __name__ == '__main__':
     tik = time.time()
 
 
-    bonds = [ZeroCouponBond(T) for T in TT]
+    model_parameters = ModelParameters(
+        dt=0.01,
+        a=0.1,
+        b=0.07,
+        r0=0.02,
+        sigma=0.02,
+    )
+
+    bonds = [ZeroCouponBond(T, VasicekModel(model_parameters)) for T in TT]
 
 
     # Multi-core version
