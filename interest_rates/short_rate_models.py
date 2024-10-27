@@ -1,6 +1,16 @@
 import numpy as np
 from abc import ABC, abstractmethod
 from overrides import override
+from dataclasses import dataclass
+
+
+@dataclass
+class ModelParameters:
+    dt: float = 0.01
+    a: float = 0.1
+    b: float = 0.07
+    r0: float = 0.02
+    sigma: float = 0.02
 
 
 class ShortRateModel(ABC):
@@ -9,17 +19,13 @@ class ShortRateModel(ABC):
     """
     def __init__(
             self,
-            dt: float,
-            a: float,
-            b: float,
-            r0: float,
-            sigma: float
+            model_parameters: ModelParameters
     ):
-        self._dt: float = dt
-        self._a: float = a
-        self._b: float = b
-        self._r0: float = r0
-        self._sigma: float = sigma
+        self._dt: float = model_parameters.dt
+        self._a: float = model_parameters.a
+        self._b: float = model_parameters.b
+        self._r0: float = model_parameters.r0
+        self._sigma: float = model_parameters.sigma
         seed = 1
         self._rng = np.random.default_rng(seed)
 
@@ -46,6 +52,9 @@ class ShortRateModel(ABC):
     def calc_dr(self, r: float) -> float:
         ...
 
+    @abstractmethod
+    def calc_exact_yield(self, T) -> float:
+        ...
 
 class VasicekModel(ShortRateModel):
     @override
@@ -62,6 +71,18 @@ class VasicekModel(ShortRateModel):
 
         dr = a * (b - r) * dt + sigma * dX()
         return dr
+
+    def calc_exact_yield(self, T: int) -> float:
+        """
+        # Calculate yield using exact bond pricing formula for Vasicek model
+        :param T:
+        :return:
+        """
+        A = (1 - np.exp(-self._a * T)) / self._a
+        B = (self._b - 0.5 * self._sigma**2 / self._a**2) * (A - T) - self._sigma**2 * A**2 / (4 * self._a)
+        Z = np.exp(-A * self._r0 + B)
+        y: float = - np.log(Z) / T
+        return y
 
 
 class CoxIngersolRossModel(ShortRateModel):
