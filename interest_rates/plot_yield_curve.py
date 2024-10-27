@@ -27,9 +27,7 @@ import matplotlib.pyplot as plt
 import psutil
 
 
-if __name__ == '__main__':
-    TT = np.arange(1, 10, 1)
-    
+def get_yield_curves(TT) -> None:
     tik = time.time()
 
     model_parameters = ModelParameters(
@@ -43,21 +41,23 @@ if __name__ == '__main__':
     M = 10_000
     bonds = [ZeroCouponBond(T, VasicekModel(model_parameters), M) for T in TT]
 
-
     # Multi-core version
     n_cores = psutil.cpu_count(logical=False)
     pool = Pool(n_cores)
     yy = pool.map(ZeroCouponBond.calc_approx_yield, bonds)
-    
+
     # Single-core version
-    #yy = list(map(ZeroCouponBond.calc_approx_yield, bonds))
-    
+    # yy = list(map(ZeroCouponBond.calc_approx_yield, bonds))
+
     tok = time.time()
-    
-    print('Time = ', tok-tik, 's')
-    
+
+    print('Time = ', tok - tik, 's')
+
     yy2 = list(map(ZeroCouponBond.calc_exact_yield, bonds))
 
+    return yy, yy2
+
+def plot_yield_curves(TT, yy, yy2) -> None:
     plt.plot(TT, yy)
     plt.plot(TT, yy2, 'k:')
     plt.ylim(0, 0.04)
@@ -65,3 +65,11 @@ if __name__ == '__main__':
     plt.ylabel("Yield")
     plt.legend(["Monte Carlo", "closed-form"])
     plt.show()
+
+
+if __name__ == '__main__':
+    TT = np.arange(1, 10, 1)
+
+    yy, yy2 = get_yield_curves(TT)
+
+    plot_yield_curves(TT, yy, yy2)
