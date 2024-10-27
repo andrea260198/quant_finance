@@ -4,7 +4,7 @@ from overrides import override
 from dataclasses import dataclass
 
 
-@dataclass
+@dataclass(frozen=True)
 class ModelParameters:
     dt: float = 0.01
     a: float = 0.1
