@@ -26,52 +26,54 @@ import matplotlib.pyplot as plt
 import psutil
 
 
-dt = 0.01
-a = 0.1
-b = 0.07
-r0 = 0.02
-sigma = 0.02
-M = 10_000  # Monte Carlo simulation sample size
+class ZeroCouponBond:
+    def __init__(self, T: float):
+        self.dt: float = 0.01
+        self.a: float = 0.1
+        self.b: float = 0.07
+        self.r0: float = 0.02
+        self.sigma: float = 0.02
+        self.M: int = 10_000  # Monte Carlo simulation sample size
+        self.T: float = T
+
+    def dX(self) -> float:
+        Z: float = np.random.normal()  # Standard normal r.v.
+        dX: float = Z * np.sqrt(self.dt)  # X(t) is a Brownian motion
+        return dX
 
 
-def dX() -> float:
-    Z: float = np.random.normal()  # Standard normal r.v.
-    dX: float = Z * np.sqrt(dt)  # X(t) is a Brownian motion
-    return dX
+    def calc_approx_yield(self) -> float:
+        """
+        Calculate yield using an approximation of bond price using Monte Carlo simulation
+        :param T:
+        :return:
+        """
+        model: ShortRateModel = VasicekModel(
+            dt=self.dt,
+            a=self.a,
+            b=self.b,
+            r0=self.r0,
+            sigma=self.sigma,
+        )
+        # Calculate mean as approx of zero-coupon bond price
+        Z = sum([np.exp(-model.integrate_r_dt(self.T)) for k in range(self.M)]) / self.M
+        # Calculate yield
+        y: float = - np.log(Z) / self.T
+        print("Zero-coupon bond of maturity T = {} has value Z = {:.3f}".format(self.T, Z))
+        return y
 
 
-def calc_approx_yield(T: float) -> float:
-    """
-    Calculate yield using an approximation of bond price using Monte Carlo simulation
-    :param T:
-    :return:
-    """
-    model: ShortRateModel = VasicekModel(
-        dt=0.01,
-        a=0.1,
-        b=0.07,
-        r0=0.02,
-        sigma=0.02,
-    )
-    # Calculate mean as approx of zero-coupon bond price
-    Z = sum([np.exp(-model.integrate_r_dt(T)) for k in range(M)]) / M
-    # Calculate yield
-    y: float = - np.log(Z) / T
-    print("Zero-coupon bond of maturity T = {} has value Z = {:.3f}".format(T, Z))
-    return y
-    
-
-def calc_exact_yield(T: float) -> float:
-    """
-    # Calculate yield using exact bond pricing formula for Vasicek model
-    :param T:
-    :return:
-    """
-    A = (1 - np.exp(-a * T)) / a
-    B = (b - 0.5 * sigma**2 / a**2) * (A - T) - sigma**2 * A**2 / (4 * a)
-    Z = np.exp(-A * r0 + B)
-    y: float = - np.log(Z) / T
-    return y
+    def calc_exact_yield(self) -> float:
+        """
+        # Calculate yield using exact bond pricing formula for Vasicek model
+        :param T:
+        :return:
+        """
+        A = (1 - np.exp(-self.a * self.T)) / self.a
+        B = (self.b - 0.5 * self.sigma**2 / self.a**2) * (A - self.T) - self.sigma**2 * A**2 / (4 * self.a)
+        Z = np.exp(-A * self.r0 + B)
+        y: float = - np.log(Z) / self.T
+        return y
 
 
 if __name__ == '__main__':
@@ -79,19 +81,23 @@ if __name__ == '__main__':
     
     tik = time.time()
 
+
+    bonds = [ZeroCouponBond(T) for T in TT]
+
+
     # Multi-core version
     n_cores = psutil.cpu_count(logical=False)
     pool = Pool(n_cores)
-    yy = pool.map(calc_approx_yield, TT)
+    yy = pool.map(ZeroCouponBond.calc_approx_yield, bonds)
     
     # Single-core version
-    #yy = np.array(list(map(bond_yield, TT)))
+    #yy = list(map(ZeroCouponBond.calc_approx_yield, bonds))
     
     tok = time.time()
     
     print('Time = ', tok-tik, 's')
     
-    yy2 = list(map(calc_exact_yield, TT))
+    yy2 = list(map(ZeroCouponBond.calc_exact_yield, bonds))
 
     plt.plot(TT, yy)
     plt.plot(TT, yy2, 'k:')
