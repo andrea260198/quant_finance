@@ -20,12 +20,12 @@
 
 import time
 from interest_rates.short_rate_models import VasicekModel, ModelParameters
+from interest_rates.zero_coupon_bond import ZeroCouponBond
 from multiprocessing import Pool
 import numpy as np
 import matplotlib.pyplot as plt
 import psutil
 
-from interest_rates.zero_coupon_bond import ZeroCouponBond
 
 if __name__ == '__main__':
     TT = np.arange(1, 10, 1)
@@ -40,7 +40,8 @@ if __name__ == '__main__':
         sigma=0.02,
     )
 
-    bonds = [ZeroCouponBond(T, VasicekModel(model_parameters)) for T in TT]
+    M = 10_000
+    bonds = [ZeroCouponBond(T, VasicekModel(model_parameters), M) for T in TT]
 
 
     # Multi-core version

@@ -1,12 +1,13 @@
 import numpy as np
 from interest_rates.short_rate_models import ShortRateModel
+from dataclasses import dataclass
 
 
+@dataclass(frozen=True)
 class ZeroCouponBond:
-    def __init__(self, T: float, short_rate_model: ShortRateModel):
-        self.M: int = 10_000  # Monte Carlo simulation sample size
-        self.T: float = T
-        self.short_rate_model: ShortRateModel = short_rate_model
+    T: float
+    short_rate_model: ShortRateModel
+    M: int = 10_000  # Monte Carlo simulation sample size
 
     def calc_approx_yield(self) -> float:
         """
