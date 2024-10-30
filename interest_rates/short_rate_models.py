@@ -2,6 +2,7 @@ import numpy as np
 from abc import ABC, abstractmethod
 from overrides import override
 from dataclasses import dataclass
+import numpy.typing as npt
 
 
 @dataclass(frozen=True)
@@ -72,6 +73,31 @@ class VasicekModel(ShortRateModel):
         dr = a * (b - r) * dt + sigma * dX()
         return dr
 
+    def calculate_random_walks(self, T: float, M: int) -> npt.NDArray[np.float64]:
+        dt = self._dt
+        a = self._a
+        b = self._b
+        r0 = self._r0
+        sigma = self._sigma
+
+        N = int(T // dt)
+        U = get_low_discr_sample(N, M)
+
+        def integrate(U: npt.NDArray[np.float64], dt: float):
+            # We want to integrate the Vasicek SDE:
+            # dr = a * (b - r) * dt + sigma * r * dW
+            dW = np.sqrt(12) * (U - 0.5) * np.sqrt(dt)
+
+            r_t = r0 * np.ones((1, M))
+            for k, t in enumerate(np.arange(0, T, dt)):
+                r_t += a * (b - r_t) * dt + sigma * r_t * dW[k, :]
+
+            r_T = r_t
+            return r_T
+
+        S_T = integrate(U, dt)
+        return S_T
+
     def calc_exact_yield(self, T: int) -> float:
         """
         # Calculate yield using exact bond pricing formula for Vasicek model
@@ -100,3 +126,9 @@ class CoxIngersolRossModel(ShortRateModel):
 
         dr: float = a * (b - r) * dt + sigma * np.sqrt(r) * dX()
         return dr
+
+
+def get_low_discr_sample(N: int, M: int) -> npt.NDArray[np.float64]:
+    sampler = qmc.Sobol(d=N, scramble=False)
+    sobol_sequences = sampler.random(M)
+    return sobol_sequences.transpose()

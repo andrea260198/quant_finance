@@ -38,7 +38,7 @@ def get_yield_curves(TT) -> None:
         sigma=0.02,
     )
 
-    M = 5_000
+    M = 1_000
     bonds = [ZeroCouponBond(T, VasicekModel(model_parameters), M) for T in TT]
 
     # Multi-core version
