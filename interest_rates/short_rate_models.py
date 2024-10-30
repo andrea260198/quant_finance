@@ -3,6 +3,7 @@ from abc import ABC, abstractmethod
 from overrides import override
 from dataclasses import dataclass
 import numpy.typing as npt
+from scipy.stats import qmc
 
 
 @dataclass(frozen=True)
@@ -54,6 +55,10 @@ class ShortRateModel(ABC):
         ...
 
     @abstractmethod
+    def approximate_integral_with_qmc(self, T: float, M: int) -> npt.NDArray[np.float64]:
+        ...
+
+    @abstractmethod
     def calc_exact_yield(self, T) -> float:
         ...
 
@@ -73,7 +78,8 @@ class VasicekModel(ShortRateModel):
         dr = a * (b - r) * dt + sigma * dX()
         return dr
 
-    def calculate_random_walks(self, T: float, M: int) -> npt.NDArray[np.float64]:
+    @override
+    def approximate_integral_with_qmc(self, T: float, M: int) -> npt.NDArray[np.float64]:
         dt = self._dt
         a = self._a
         b = self._b
@@ -89,14 +95,16 @@ class VasicekModel(ShortRateModel):
             dW = np.sqrt(12) * (U - 0.5) * np.sqrt(dt)
 
             r_t = r0 * np.ones((1, M))
-            for k, t in enumerate(np.arange(0, T, dt)):
+            integral_t = 0
+            for k in range(N):
+                integral_t += r_t * dt
                 r_t += a * (b - r_t) * dt + sigma * r_t * dW[k, :]
 
-            r_T = r_t
-            return r_T
+            integral_T = integral_t
+            return integral_T
 
-        S_T = integrate(U, dt)
-        return S_T
+        integral_T = integrate(U, dt)
+        return integral_T
 
     def calc_exact_yield(self, T: int) -> float:
         """
