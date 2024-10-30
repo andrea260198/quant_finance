@@ -98,7 +98,7 @@ class VasicekModel(ShortRateModel):
             integral_t = 0
             for k in range(N):
                 integral_t += r_t * dt
-                r_t += a * (b - r_t) * dt + sigma * r_t * dW[k, :]
+                r_t += a * (b - r_t) * dt + sigma * dW[k, :]
 
             integral_T = integral_t
             return integral_T
