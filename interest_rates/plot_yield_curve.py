@@ -38,7 +38,7 @@ def get_yield_curves(TT) -> None:
         sigma=0.02,
     )
 
-    M = 1_000
+    M = 10_000
     bonds = [ZeroCouponBond(T, VasicekModel(model_parameters), M) for T in TT]
 
     # Multi-core version
@@ -47,7 +47,7 @@ def get_yield_curves(TT) -> None:
     #yy = pool.map(ZeroCouponBond.calc_qmc_approx_yield, bonds)
 
     # Single-core version
-    yy = list(map(ZeroCouponBond.calc_approx_yield, bonds))
+    yy = list(map(ZeroCouponBond.calc_qmc_approx_yield, bonds))
 
     tok = time.time()
 
