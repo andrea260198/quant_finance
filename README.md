@@ -121,7 +121,9 @@ Probably, decreasing the timestep might solve the instability.
 
 With `plot_yield_curve.py` script I want to show how the exact formula for the 
 yield curve using Vasicek short-rate model can be approximated by using Monte 
-Carlo. The Monte Carlo simulation makes use of "multiprocessing" package. 
+Carlo and Quasi-Monte Carlo. The Monte Carlo simulation makes use of "multiprocessing" package. 
 Indeed, every simulation is run in a separate process.
 
 ![image](images/yield_curve.png)
+
+Thanks to Quasi-Monte Carlo methos it is possible to obtain faster convergence, O(1/M), than using Monte Carlo, O(1/sqrt(M)).
