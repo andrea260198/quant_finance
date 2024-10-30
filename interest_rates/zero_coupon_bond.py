@@ -26,10 +26,12 @@ class ZeroCouponBond:
         return y
 
     def calc_qmc_approx_yield(self) -> float:
-
-
-
-        Z = np.mean(self.short_rate_model.calculate_random_walks(self.T, self.M))
+        """
+        Calculate yield using an approximation of bond price using Quasi-Monte Carlo simulation
+        :return: y
+        """
+        # Calculate mean as approx of zero-coupon bond price
+        Z = np.mean(np.exp(-self.short_rate_model.approximate_integral_with_qmc(self.T, self.M)))
         # Calculate yield
         y: float = - np.log(Z) / self.T
         print("Zero-coupon bond of maturity T = {} has value Z = {:.3f}".format(self.T, Z))
