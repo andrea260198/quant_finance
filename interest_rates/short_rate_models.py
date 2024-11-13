@@ -88,6 +88,7 @@ class VasicekModel(ShortRateModel):
 
         N = int(T // dt)
         U = get_low_discr_sample(N, M)
+        #U = np.random.uniform(size=(N, M))
 
         def integrate(U: npt.NDArray[np.float64], dt: float):
             # We want to integrate the Vasicek SDE:
