@@ -63,7 +63,7 @@ def plot_yield_curves(TT, yy, yy2) -> None:
     plt.ylim(0, 0.04)
     plt.xlabel("Maturity [y]")
     plt.ylabel("Yield")
-    plt.legend(["Monte Carlo", "closed-form"])
+    plt.legend(["Quasi-Monte Carlo", "closed-form"])
     plt.show()
 
 
