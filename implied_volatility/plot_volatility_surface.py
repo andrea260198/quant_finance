@@ -7,6 +7,7 @@ from scipy.optimize import root
 from option_pricing.european_options import EuropeanCallOption
 import numpy as np
 from multiprocessing import Pool
+from support.quant_dataclass import QuantDataclass
 
 
 def plot_heston_price_surface():
@@ -62,7 +63,7 @@ def plot_volatility_surface() -> None:
     n_cores = psutil.cpu_count(logical=False)
     pool = Pool(n_cores)
 
-    calculators = [ImplVolCalculator(K, TT, r, S_0, sigma_0, M, dt) for K in KK]
+    calculators = [ImplVolCalculator(K=K, TT=TT, r=r, S_0=S_0, sigma_0=sigma_0, M=M, dt=dt) for K in KK]
 
     sigma_mg = pool.map(ImplVolCalculator.calculate_for_specific_strike, calculators)
 
@@ -79,15 +80,14 @@ def plot_volatility_surface() -> None:
     plt.show()
 
 
-class ImplVolCalculator:
-    def __init__(self, K: float, TT: npt.NDArray[np.float64], r, S_0, sigma_0, M, dt):
-        self.K: float = K
-        self.TT: npt.NDArray[np.float64] = TT
-        self.r = r
-        self.S_0 = S_0
-        self.sigma_0 = sigma_0
-        self.M = M
-        self.dt = dt
+class ImplVolCalculator(QuantDataclass):
+    K: float
+    TT: npt.NDArray[np.float64]
+    r: float
+    S_0: float
+    sigma_0: float
+    M: int
+    dt: float
 
     def calculate_for_specific_strike(self):
         K: float = self.K
@@ -109,6 +109,7 @@ class ImplVolCalculator:
             # Negative volatility results are not accepted
             sigma_mg[0, j] = sol.x[0] if sol.x[0] > 0 else np.nan
         return sigma_mg
+    
 
 if __name__ == '__main__':
     plot_volatility_surface()
