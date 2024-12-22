@@ -1,8 +1,12 @@
+import psutil
+import numpy.typing as npt
+
 from implied_volatility.heston_model import HestonEuropeanCallOption
 import matplotlib.pyplot as plt
 from scipy.optimize import root
 from option_pricing.european_options import EuropeanCallOption
 import numpy as np
+from multiprocessing import Pool
 
 
 def plot_heston_price_surface():
@@ -54,17 +58,15 @@ def plot_volatility_surface() -> None:
     M = 100_000
     dt = 0.001
 
-    for i in range(I):
-        for j in range(J):
-            V = HestonEuropeanCallOption(TT[j], r, S_0, sigma_0, KK[i]).price_mc_approx(M, dt)
 
-            def fun(sigma: float) -> float:
-                return EuropeanCallOption(TT[j], r, S_0, sigma, KK[i]).price_exact() - V
+    n_cores = psutil.cpu_count(logical=False)
+    pool = Pool(n_cores)
 
-            sol = root(fun, sigma_0)
-            # Negative volatility results are not accepted
-            sigma_mg[i, j] = sol.x[0] if sol.x[0] > 0 else np.nan
+    calculators = [ImplVolCalculator(K, TT, r, S_0, sigma_0, M, dt) for K in KK]
 
+    sigma_mg = pool.map(ImplVolCalculator.calculate_for_specific_strike, calculators)
+
+    sigma_mg = np.concatenate(sigma_mg, axis=0)
 
     fig, ax = plt.subplots(subplot_kw={"projection": "3d"})
 
@@ -76,6 +78,37 @@ def plot_volatility_surface() -> None:
 
     plt.show()
 
+
+class ImplVolCalculator:
+    def __init__(self, K: float, TT: npt.NDArray[np.float64], r, S_0, sigma_0, M, dt):
+        self.K: float = K
+        self.TT: npt.NDArray[np.float64] = TT
+        self.r = r
+        self.S_0 = S_0
+        self.sigma_0 = sigma_0
+        self.M = M
+        self.dt = dt
+
+    def calculate_for_specific_strike(self):
+        K: float = self.K
+        TT: npt.NDArray[np.float64] = self.TT
+        r = self.r
+        S_0 = self.S_0
+        sigma_0 = self.sigma_0
+        M = self.M
+        dt = self.dt
+
+        sigma_mg = np.zeros((1, len(TT)))
+        for j, T in enumerate(TT):
+            V = HestonEuropeanCallOption(T, r, S_0, sigma_0, K).price_mc_approx(M, dt)
+
+            def fun(sigma: float) -> float:
+                return EuropeanCallOption(T, r, S_0, sigma, K).price_exact() - V
+
+            sol = root(fun, sigma_0)
+            # Negative volatility results are not accepted
+            sigma_mg[0, j] = sol.x[0] if sol.x[0] > 0 else np.nan
+        return sigma_mg
 
 if __name__ == '__main__':
     plot_volatility_surface()
