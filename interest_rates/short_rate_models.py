@@ -87,8 +87,8 @@ class VasicekModel(ShortRateModel):
         sigma = self._sigma
 
         N = int(T // dt)
-        #U = get_low_discr_sample(N, M)
-        U = np.random.uniform(size=(N, M))
+        U = get_low_discr_sample(N, M)
+        #U = np.random.uniform(size=(N, M))
 
         def integrate(U: npt.NDArray[np.float64], dt: float):
             # We want to integrate the Vasicek SDE:
@@ -138,6 +138,6 @@ class CoxIngersolRossModel(ShortRateModel):
 
 
 def get_low_discr_sample(N: int, M: int) -> npt.NDArray[np.float64]:
-    sampler = qmc.Sobol(d=N, scramble=False)
+    sampler = qmc.Sobol(d=N, scramble=True)
     sobol_sequences = sampler.random(M)
     return sobol_sequences.transpose()
