@@ -14,15 +14,15 @@ learned at EPFL during the Master in Financial Engineering (MFE).
 Python is not the best language for a big quantitative finance repository, 
 because it is not statically typed. That makes the the code difficult to debug
 and more prone to runtime errors, without prior compilation. The issue becomes 
-more evident when the code base becomes very large and many people start working
+more evident when the codebase becomes very large and many people start working
 on it.
 
 Despite these limitations, the Mypy static checker does a good job in preventing
-many errors that might arise during runtime. That said, Mypy has some 
-bugs.
+many errors that might arise during runtime. It should be noted that Mypy has still 
+some bugs.
 
 The big advantage of Python is the huge amount of free libraries that can be 
-used.
+used and the fact that new code can be run at each breakpoint during debugging. 
 
 
 ## CI/CD
@@ -36,7 +36,7 @@ Every time `git push` is executed, a static type check is performed using
 ### CD pipeline
 
 In the future I would like to develop a CD pipeline to deploy and run the model
-on a server.
+on a remote server.
 
 
 ## Docker
@@ -48,7 +48,7 @@ local machine.
 
 ## Multiprocessing
 
-**multiprocessing** module is used to make full use of multi-core 
+The **multiprocessing** module is used to make full use of multi-core 
 CPUs. The fact that Python is not multithreaded due to GIL is a limitation to
 take into account. Memory cannot be easily shared between processes, while it 
 can be easily done with threads.
@@ -57,7 +57,7 @@ can be easily done with threads.
 ## Testing
 
 Unit testing let developers be more confident when they make changes in
-the code, since new bugs can be easily spot.
+the code, since new bugs can be easily spotted.
 
 
 ## Risk Management
@@ -83,8 +83,9 @@ with M the number of iterations in the Monte Carlo simulation.
 
 ![image](images/monte_carlo_std_error_2.png)
 
-The images above also show that binomial pricing methos is computationally more efficient 
-compared to Monte Carlo method when pricing European options.
+To sum up, the two images above show that the binomial tree pricing method is computationally more efficient 
+compared to Monte Carlo method when pricing European options. However, thanks to Quasi-Monte Carlo methods, it is
+possible to reach a numerical complexity comparable to binomial trees.
 
 ### American call option price surface
 
@@ -106,13 +107,13 @@ To obtain the implied volatility, first I price a European call option using the
 with Monte Carlo simulation. Then the implied volatilty is obtained by inverting the Black-Scholes formula.
 
 Below is the volatility surface I obtained. Note that the simulation become very unstable when the 
-moneyness increases (strike low) and expiry is close to zero.
+moneyness increases (strike becomes smaller) and expiry is close to zero.
 
 Now the goal is to decrease instability and decrease the runtime by using parallelization.
 
 ![image](images/implied_volatility_surface.png)
 
-Monte Carlo simulation was performed with 100,000 simulations and timestep equal to 0.01 .
+The Monte Carlo simulation was performed with 100,000 simulations and timestep equal to 0.01 .
 
 Probably, decreasing the timestep might solve the instability.
 
@@ -121,9 +122,10 @@ Probably, decreasing the timestep might solve the instability.
 
 With `plot_yield_curve.py` script I want to show how the exact formula for the 
 yield curve using Vasicek short-rate model can be approximated by using Monte 
-Carlo and Quasi-Monte Carlo. The Monte Carlo simulation makes use of "multiprocessing" package. 
-Indeed, every simulation is run in a separate process.
+Carlo and Quasi-Monte Carlo. The simulation makes use of the **multiprocessing** package and,
+as a consequence, the simulation for every maturity is run in a separate process.
 
 ![image](images/yield_curve.png)
 
-Thanks to Quasi-Monte Carlo methos it is possible to obtain faster convergence, O(1/M), than using Monte Carlo, O(1/sqrt(M)).
+Thanks to the use of Quasi-Monte Carlo method it was possible to obtain faster convergence, 
+O(1/M), than using Monte Carlo, O(1/sqrt(M)).
