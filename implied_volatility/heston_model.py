@@ -1,6 +1,8 @@
 import numpy as np
 import numpy.typing as npt
 from tqdm import tqdm
+
+from interest_rates.short_rate_models import get_low_discr_sample
 from option_pricing.abstract_option import AbstractOption
 from overrides import override
 
@@ -46,10 +48,23 @@ class HestonEuropeanCallOption(AbstractOption):
 
         rho = 0.5  # TODO: set correct value
 
-        for t in tqdm(np.arange(0, T, dt)):
+        TT = np.arange(0, T, dt)
+
+        U = get_low_discr_sample(len(TT)*2, M)
+        U1, U2 = U[0:len(TT), :], U[len(TT):, :]
+
+        #U = get_low_discr_sample(len(TT), 2*M)
+        #U1, U2 = U[:, :M], U[:, M:]
+
+        for i, t in enumerate(TT):
             mean = [0, 0]
-            cov = [[1, rho], [rho, 1]]
-            Z1, Z2 = np.random.multivariate_normal(mean, cov, M).T
+            cov = np.array([[1, rho], [rho, 1]])
+            #Z1, Z2 = np.random.multivariate_normal(mean, cov, M).T
+
+            W1, W2 = U1[[i], :], U2[[i], :]
+
+            Z1, Z2 = np.dot(cov, np.sqrt(12) * (np.concatenate([W1, W2], axis=0) - 0.5))
+
             Z1 = np.expand_dims(Z1, axis=1)
             Z2 = np.expand_dims(Z2, axis=1)
             dX = Z1 * np.sqrt(dt)
