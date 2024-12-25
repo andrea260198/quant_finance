@@ -1,7 +1,0 @@
-overrides
-mypy
-pytest
-numpy
-tqdm
-matplotlib
-psutil
