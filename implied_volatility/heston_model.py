@@ -5,6 +5,7 @@ from tqdm import tqdm
 from interest_rates.short_rate_models import get_low_discr_sample
 from option_pricing.abstract_option import AbstractOption
 from overrides import override
+from scipy.special import ndtri
 
 
 class HestonEuropeanCallOption(AbstractOption):
@@ -53,17 +54,14 @@ class HestonEuropeanCallOption(AbstractOption):
         U = get_low_discr_sample(len(TT)*2, M)
         U1, U2 = U[0:len(TT), :], U[len(TT):, :]
 
-        #U = get_low_discr_sample(len(TT), 2*M)
-        #U1, U2 = U[:, :M], U[:, M:]
-
         for i, t in enumerate(TT):
             mean = [0, 0]
             cov = np.array([[1, rho], [rho, 1]])
-            #Z1, Z2 = np.random.multivariate_normal(mean, cov, M).T
+            Z11, Z12 = np.random.multivariate_normal(mean, cov, M).T
 
             W1, W2 = U1[[i], :], U2[[i], :]
 
-            Z1, Z2 = np.dot(cov, np.sqrt(12) * (np.concatenate([W1, W2], axis=0) - 0.5))
+            Z1, Z2 = np.dot(cov, ndtri(np.concatenate([W1, W2], axis=0)))
 
             Z1 = np.expand_dims(Z1, axis=1)
             Z2 = np.expand_dims(Z2, axis=1)
