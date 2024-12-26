@@ -1,13 +1,13 @@
 import numpy as np
 from abc import ABC, abstractmethod
 from overrides import override
-from dataclasses import dataclass
 import numpy.typing as npt
 from scipy.stats import qmc
 
+from support.quant_dataclass import QuantDataclass
 
-@dataclass(frozen=True)
-class ModelParameters:
+
+class ModelParameters(QuantDataclass):
     dt: float = 0.01
     a: float = 0.1
     b: float = 0.07
