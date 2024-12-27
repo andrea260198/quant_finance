@@ -6,22 +6,19 @@ from option_pricing.european_options import EuropeanCallOption, EuropeanPutOptio
 
 def test_european_option() -> None:
     expiry: float = 1.0  # [years]
-    european_call_option = EuropeanCallOption(T=expiry, r=0.05, S_0=100.0, sigma=0.20, K=100.0)
+    european_call_option = EuropeanCallOption(T=expiry, r=0.05, S_0=100.0, sigma=0.20, strike=100.0)
     timesteps = 1000
     assert abs(european_call_option.price_approx(timesteps) - european_call_option.price_exact()) < 0.01
 
 
 def test_put_call_parity() -> None:
     expiry: float = 1.0  # [years]
-    european_call_option = EuropeanCallOption(T=expiry, r=0.05, S_0=100.0, sigma=0.20, K=100.0)
-    european_put_option = EuropeanPutOption(T=expiry, r=0.05, S_0=100.0, sigma=0.20, K=100.0)
+    european_call_option = EuropeanCallOption(T=expiry, r=0.05, S_0=100.0, sigma=0.20, strike=100.0)
+    european_put_option = EuropeanPutOption(T=expiry, r=0.05, S_0=100.0, sigma=0.20, strike=100.0)
     timesteps = 1000
 
-    european_call_option.price_approx(timesteps)
-    european_put_option.price_approx(timesteps)
-
-    call_price = european_call_option.get_price()
-    put_price = european_put_option.get_price()
+    call_price = european_call_option.price_approx(timesteps)
+    put_price = european_put_option.price_approx(timesteps)
 
     # Verify put-call parity
     assert abs(call_price - put_price - 100 + 100 * np.exp(-0.05 * expiry)) < 0.01
@@ -34,13 +31,13 @@ def test_european_barrier_option() -> None:
         S0=100,
         div=0.00,
         expiry=1,
-        K=100,
+        strike=100,
         beta=0.5
     )
 
-    option.price_approx(1000)
+    #option.price_approx(1000)
 
-    print(option.get_price())
+    print(option.price_approx(1_000))
 
 
 def test_american_option() -> None:
@@ -49,7 +46,7 @@ def test_american_option() -> None:
         r=0.20,
         S_0=100,
         sigma=0.20,
-        K=100
+        strike=100
     )
 
     price = option.price_approx(10000)
