@@ -16,7 +16,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v1
       - name: Install requirements
-        run: make install
+        run: poetry install
       - name: Run Mypy
         run: mypy .
       - name: Run unit tests
