@@ -7,9 +7,9 @@ from option_pricing.european_options import EuropeanPutOption
 class EuropeanPutOptionBarrierIn(AbstractOption):
     r: float
     sigma: float
-    S0: float
+    S_0: float
     div: float
-    expiry: float
+    T: float
     strike: float
     beta: float
 
@@ -17,17 +17,17 @@ class EuropeanPutOptionBarrierIn(AbstractOption):
         european_put_option_barrier_out = EuropeanPutOptionBarrierOut(
             r=self.r,
             sigma=self.sigma,
-            S0=self.S0,
+            S_0=self.S_0,
             div=self.div,
-            expiry=self.expiry,
+            T=self.T,
             strike=self.strike,
             beta=self.beta
         )
 
         european_put_option = EuropeanPutOption(
-            expiry=self.expiry,
+            T=self.T,
             r=self.r,
-            S0=self.S0,
+            S_0=self.S_0,
             sigma=self.sigma,
             strike=self.strike
         )
@@ -39,19 +39,19 @@ class EuropeanPutOptionBarrierIn(AbstractOption):
 class EuropeanPutOptionBarrierOut(AbstractOption):
     r: float
     sigma: float
-    S0: float
+    S_0: float
     div: float
-    expiry: float
+    T: float
     strike: float
     beta: float
 
     def price_approx(self, N: int) -> float:
         sigma = self.sigma
-        S0 = self.S0
+        S0 = self.S_0
         beta = self.beta
         div = self.div
         r = self.r
-        dt = self.expiry / N
+        dt = self.T / N
         K = self.strike
 
         u = np.exp(sigma * np.sqrt(dt))

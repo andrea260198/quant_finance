@@ -12,7 +12,7 @@ class RiskModel(QuantDataclass, ABC):
     model_params: ModelParameters
 
     @abstractmethod
-    def run(self):
+    def run(self) -> ModelResults:
         pass
 
 

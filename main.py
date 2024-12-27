@@ -8,7 +8,7 @@ if __name__ == '__main__':
         r=0.20,
         S_0=100,
         sigma=0.20,
-        K=100
+        strike=100
     )
 
     price = option.price_mc_approx(10_000_000, 0.01)

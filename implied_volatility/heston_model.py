@@ -68,9 +68,9 @@ class HestonEuropeanCallOption(AbstractOption):
 
         avg_payoff = np.mean(payoff)
 
-        self._price = avg_payoff  * np.exp(-r * T)
+        price = avg_payoff  * np.exp(-r * T)
 
-        return self._price
+        return float(price)
 
     def _calc_payoff(self, S_T: npt.NDArray[np.float64]) -> npt.NDArray[np.float64]:
         K = self.strike

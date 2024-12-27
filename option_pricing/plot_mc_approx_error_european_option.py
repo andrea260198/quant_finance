@@ -16,7 +16,7 @@ def calc_std_error(M: int) -> float:
     errors = np.array([option.price_mc_approx(M, 0.01) for k in range(100)]) - option.price_exact()
     std_err = np.std(errors)
     print(std_err)
-    return std_err
+    return float(std_err)
 
 
 if __name__ == '__main__':

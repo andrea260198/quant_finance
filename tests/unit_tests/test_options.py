@@ -28,9 +28,9 @@ def test_european_barrier_option() -> None:
     option = EuropeanPutOptionBarrierOut(
         r=0.05,
         sigma=0.20,
-        S0=100,
+        S_0=100,
         div=0.00,
-        expiry=1,
+        T=1,
         strike=100,
         beta=0.5
     )
