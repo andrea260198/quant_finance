@@ -8,18 +8,10 @@ from option_pricing.abstract_option import AbstractOption
 
 
 class AbstractEuropeanVanillaOption(AbstractOption):
-    def __init__(
-            self,
-            T: float,
-            r: float,
-            S_0: float,
-            sigma: float,
-    ):
-        super().__init__()
-        self.T: float = T  # 1
-        self.r: float = r  # 0.05
-        self.S_0: float = S_0  # 100
-        self.sigma: float = sigma  # 0.20
+    T: float
+    r: float
+    S_0: float
+    sigma: float
 
     @override
     def price_approx(self, N: int) -> float:
@@ -84,28 +76,14 @@ class AbstractEuropeanVanillaOption(AbstractOption):
 
 
 class EuropeanCallOption(AbstractEuropeanVanillaOption):
-    def __init__(
-            self,
-            T: float,
-            r: float,
-            S_0: float,
-            sigma: float,
-            K: float
-    ):
-        super().__init__(
-            T,
-            r,
-            S_0,
-            sigma
-        )
-        self._strike = K
+    strike: float
 
     def price_exact(self) -> float:
         T = self.T
         r = self.r
         S_0 = self.S_0
         sigma = self.sigma
-        K = self._strike
+        K = self.strike
 
         d1 = ((r + 0.5 * sigma**2) * T - np.log(K / S_0)) / (sigma * np.sqrt(T))
         d2 = d1 - sigma * np.sqrt(T)
@@ -119,30 +97,16 @@ class EuropeanCallOption(AbstractEuropeanVanillaOption):
 
     @override
     def _calc_payoff(self, S_T: npt.NDArray[np.float64]) -> npt.NDArray[np.float64]:
-        K = self._strike
+        K = self.strike
         return np.maximum(S_T - K, 0)  # Get element-wise max value
 
 
 class EuropeanPutOption(AbstractEuropeanVanillaOption):
-    def __init__(
-            self,
-            T: float,
-            r: float,
-            S_0: float,
-            sigma: float,
-            K: float
-    ):
-        super().__init__(
-            T,
-            r,
-            S_0,
-            sigma
-        )
-        self._strike = K
+    strike: float
 
     @override
     def _calc_payoff(self, S_T: npt.NDArray[np.float64]) -> npt.NDArray[np.float64]:
-        K = self._strike
+        K = self.strike
         return np.maximum(K - S_T, 0)  # Get element-wise max value
 
 

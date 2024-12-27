@@ -1,16 +1,13 @@
 from abc import ABC, abstractmethod
+from functools import cached_property
+from support.quant_dataclass import QuantDataclass
 
 
-class AbstractOption(ABC):
-    def __init__(self) -> None:
-        self._price: float | None = None
+class AbstractOption(QuantDataclass, ABC):
+    @cached_property
+    def price(self) -> float:
+        return self.price_approx(100_000)
 
     @abstractmethod
     def price_approx(self, N: int) -> float:
         pass
-
-    def get_price(self) -> float:
-        if self._price is not None:
-            return self._price
-        else:
-            raise Exception("Price not yet computed.")

@@ -14,7 +14,7 @@ if __name__ == '__main__':
 
     K_mg, T_mg = np.meshgrid(K_vec, T_vec)  # type: ignore
 
-    V_mg = np.array([[AmericanCallOption(T, r, S0, sigma, K).price_approx(500) for K in K_vec] for T in T_vec])
+    V_mg = np.array([[AmericanCallOption(T=T, r=r, S_0=S0, sigma=sigma, strike=K).price_approx(500) for K in K_vec] for T in T_vec])
 
     fig, ax = plt.subplots(subplot_kw={"projection": "3d"})
 
@@ -22,6 +22,7 @@ if __name__ == '__main__':
     surf = ax.plot_surface(K_mg, T_mg, V_mg)
     ax.set_xlabel("Strike")
     ax.set_ylabel("Expiry")
+
     ax.set_zlabel("Price")
 
     plt.show()

@@ -39,7 +39,7 @@ def get_yield_curves(TT) -> None:
     )
 
     M = 100_000
-    bonds = [ZeroCouponBond(T, VasicekModel(model_parameters), M) for T in TT]
+    bonds = [ZeroCouponBond(T=T, short_rate_model=VasicekModel(model_parameters), M=M) for T in TT]
 
     # Multi-core version
     n_cores = psutil.cpu_count(logical=False)

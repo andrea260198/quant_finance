@@ -5,78 +5,54 @@ from option_pricing.european_options import EuropeanPutOption
 
 
 class EuropeanPutOptionBarrierIn(AbstractOption):
-    def __init__(
-            self,
-            r: float,
-            sigma: float,
-            S0: float,
-            div: float,
-            expiry: float,
-            K: float,
-            beta: float
-    ):
-        super().__init__()
-        self._r = r
-        self._sigma = sigma
-        self._S0 = S0
-        self._div = div
-        self._expiry = expiry
-        self._K = K
-        self._beta = beta
+    r: float
+    sigma: float
+    S0: float
+    div: float
+    expiry: float
+    strike: float
+    beta: float
 
     def price_approx(self, N: int) -> float:
         european_put_option_barrier_out = EuropeanPutOptionBarrierOut(
-            self._r,
-            self._sigma,
-            self._S0,
-            self._div,
-            self._expiry,
-            self._K,
-            self._beta
+            r=self.r,
+            sigma=self.sigma,
+            S0=self.S0,
+            div=self.div,
+            expiry=self.expiry,
+            strike=self.strike,
+            beta=self.beta
         )
 
         european_put_option = EuropeanPutOption(
-            self._expiry,
-            self._r,
-            self._S0,
-            self._sigma,
-            self._K
+            expiry=self.expiry,
+            r=self.r,
+            S0=self.S0,
+            sigma=self.sigma,
+            strike=self.strike
         )
 
         V = european_put_option.price_approx(N) - european_put_option_barrier_out.price_approx(N)
-
-        self._price = V
-        return self._price
+        return V
 
 
 class EuropeanPutOptionBarrierOut(AbstractOption):
-    def __init__(
-            self,
-            r: float,
-            sigma: float,
-            S0: float,
-            div: float,
-            expiry: float,
-            K: float,
-            beta: float
-    ):
-        super().__init__()
-        self._r = r
-        self._sigma = sigma
-        self._S0 = S0
-        self._div = div
-        self._expiry = expiry
-        self._K = K
-        self._beta = beta
+    r: float
+    sigma: float
+    S0: float
+    div: float
+    expiry: float
+    strike: float
+    beta: float
 
     def price_approx(self, N: int) -> float:
-        sigma = self._sigma
-        S0 = self._S0
-        beta = self._beta
-        div = self._div
-        r = self._r
-        dt = self._expiry / N
-        K = self._K
+        sigma = self.sigma
+        S0 = self.S0
+        beta = self.beta
+        div = self.div
+        r = self.r
+        dt = self.expiry / N
+        K = self.strike
 
         u = np.exp(sigma * np.sqrt(dt))
         v = 1 / u
@@ -103,5 +79,4 @@ class EuropeanPutOptionBarrierOut(AbstractOption):
                     V[k] = 0
                 k += 1
 
-        self._price = V[0]
-        return self._price
+        return V[0]

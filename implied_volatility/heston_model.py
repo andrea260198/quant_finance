@@ -9,19 +9,11 @@ from scipy.special import ndtri
 
 
 class HestonEuropeanCallOption(AbstractOption):
-    def __init__(
-            self,
-            T: float,
-            r: float,
-            S_0: float,
-            sigma: float,
-            K: float
-    ):
-        self.T: float = T
-        self.r: float = r
-        self.S_0: float = S_0
-        self.sigma: float = sigma
-        self._strike = K
+    T: float
+    r: float
+    S_0: float
+    sigma: float
+    strike: float
 
     @override
     def price_approx(self, N: int) -> float:
@@ -81,7 +73,7 @@ class HestonEuropeanCallOption(AbstractOption):
         return self._price
 
     def _calc_payoff(self, S_T: npt.NDArray[np.float64]) -> npt.NDArray[np.float64]:
-        K = self._strike
+        K = self.strike
         return np.maximum(S_T - K, 0)  # Get element-wise max value
 
 

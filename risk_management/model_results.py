@@ -1,6 +1,5 @@
-from dataclasses import dataclass
+from support.quant_dataclass import QuantDataclass
 
 
-@dataclass
-class ModelResults:
+class ModelResults(QuantDataclass):
     pass
