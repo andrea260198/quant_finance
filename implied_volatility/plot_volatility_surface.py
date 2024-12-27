@@ -89,7 +89,7 @@ class ImplVolCalculator(QuantDataclass):
     M: int
     dt: float
 
-    def calculate_for_specific_strike(self):
+    def calculate_for_specific_strike(self) -> npt.NDArray[np.float64]:
         K: float = self.K
         TT: npt.NDArray[np.float64] = self.TT
         r = self.r
@@ -100,10 +100,10 @@ class ImplVolCalculator(QuantDataclass):
 
         sigma_mg = np.zeros((1, len(TT)))
         for j, T in enumerate(TT):
-            V = HestonEuropeanCallOption(T, r, S_0, sigma_0, K).price_mc_approx(M, dt)
+            V = HestonEuropeanCallOption(T=T, r=r, S_0=S_0, sigma=sigma_0, strike=K).price_mc_approx(M, dt)
 
             def fun(sigma: float) -> float:
-                return EuropeanCallOption(T, r, S_0, sigma, K).price_exact() - V
+                return EuropeanCallOption(T=T, r=r, S_0=S_0, sigma=sigma, strike=K).price_exact() - V
 
             sol = root(fun, sigma_0)
             # Negative volatility results are not accepted
