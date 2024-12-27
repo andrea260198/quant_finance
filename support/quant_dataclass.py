@@ -3,7 +3,7 @@ from pydantic import BaseModel, ConfigDict
 
 class QuantDataclass(BaseModel):
     """
-    Dataclass base model which enforces type correctness on runtime
+    Dataclass base model which enforces type correctness at runtime
 
     """
     model_config = ConfigDict(
