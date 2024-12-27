@@ -49,11 +49,10 @@ class HestonEuropeanCallOption(AbstractOption):
         for i, t in enumerate(TT):
             mean = [0, 0]
             cov = np.array([[1, rho], [rho, 1]])
-            Z11, Z12 = np.random.multivariate_normal(mean, cov, M).T
 
             W1, W2 = U1[[i], :], U2[[i], :]
 
-            Z1, Z2 = np.dot(cov, ndtri(np.concatenate([W1, W2], axis=0)))
+            Z1, Z2 = np.dot(cov, ndtri(np.concatenate([W1, W2], axis=0))) + mean
 
             Z1 = np.expand_dims(Z1, axis=1)
             Z2 = np.expand_dims(Z2, axis=1)
