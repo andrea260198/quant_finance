@@ -10,7 +10,7 @@ def calc_std_error(M: int) -> float:
         r=0.20,
         S_0=100,
         sigma=0.20,
-        K=100
+        strike=100
     )
 
     errors = np.array([option.price_mc_approx(M, 0.01) for k in range(100)]) - option.price_exact()
