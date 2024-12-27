@@ -1,13 +1,9 @@
-import numpy as np
 from interest_rates.short_rate_models import ShortRateModel
-from dataclasses import dataclass
-from scipy.stats import norm, qmc
 import numpy as np
-import numpy.typing as npt
+from support.quant_dataclass import QuantDataclass
 
 
-@dataclass(frozen=True)
-class ZeroCouponBond:
+class ZeroCouponBond(QuantDataclass):
     T: float
     short_rate_model: ShortRateModel
     M: int = 10_000  # Monte Carlo simulation sample size
