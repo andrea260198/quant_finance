@@ -111,28 +111,14 @@ class EuropeanPutOption(AbstractEuropeanVanillaOption):
 
 
 class EuropeanDigitalCallOption(AbstractEuropeanVanillaOption):
-    def __init__(
-            self,
-            T: float,
-            r: float,
-            S_0: float,
-            sigma: float,
-            K: float
-    ):
-        super().__init__(
-            T,
-            r,
-            S_0,
-            sigma
-        )
-        self._strike = K
+    strike: float
 
     def price_exact(self) -> float:
         raise NotImplementedError
 
     @override
     def _calc_payoff(self, S_T: npt.NDArray[np.float64]) -> npt.NDArray[np.float64]:
-        K = self._strike
+        K = self.strike
         mask = S_T - K > 0
         payoff = mask.astype(np.float64)
         return payoff

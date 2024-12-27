@@ -10,7 +10,7 @@ from multiprocessing import Pool
 from support.quant_dataclass import QuantDataclass
 
 
-def plot_heston_price_surface():
+def plot_heston_price_surface() -> None:
     KK = np.arange(50, 150, 1)
     TT = np.arange(0.1, 3, 0.1)
     K_mg, T_mg = np.meshgrid(KK, TT, indexing="ij")
@@ -29,7 +29,7 @@ def plot_heston_price_surface():
 
     for i in range(I):
         for j in range(J):
-            V_mg[i, j] = HestonEuropeanCallOption(TT[j], r, S_0, sigma, KK[i]).price_mc_approx(M, dt)
+            V_mg[i, j] = HestonEuropeanCallOption(T=TT[j], r=r, S_0=S_0, sigma=sigma, strike=KK[i]).price_mc_approx(M, dt)
 
     fig, ax = plt.subplots(subplot_kw={"projection": "3d"})
 
@@ -65,7 +65,7 @@ def plot_volatility_surface() -> None:
 
     calculators = [ImplVolCalculator(K=K, TT=TT, r=r, S_0=S_0, sigma_0=sigma_0, M=M, dt=dt) for K in KK]
 
-    sigma_mg = pool.map(ImplVolCalculator.calculate_for_specific_strike, calculators)
+    sigma_mg = pool.map(ImplVolCalculator.calculate_for_specific_strike, calculators)  # type: ignore
 
     sigma_mg = np.concatenate(sigma_mg, axis=0)
 

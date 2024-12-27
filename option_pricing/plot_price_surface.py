@@ -12,7 +12,7 @@ if __name__ == '__main__':
     r = 0.05
     sigma = 0.20
 
-    K_mg, T_mg = np.meshgrid(K_vec, T_vec)  # type: ignore
+    K_mg, T_mg = np.meshgrid(K_vec, T_vec)
 
     V_mg = np.array([[AmericanCallOption(T=T, r=r, S_0=S0, sigma=sigma, strike=K).price_approx(500) for K in K_vec] for T in T_vec])
 

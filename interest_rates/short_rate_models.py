@@ -59,7 +59,7 @@ class ShortRateModel(ABC):
         ...
 
     @abstractmethod
-    def calc_exact_yield(self, T) -> float:
+    def calc_exact_yield(self, T: float) -> float:
         ...
 
 class VasicekModel(ShortRateModel):
@@ -90,13 +90,13 @@ class VasicekModel(ShortRateModel):
         U = get_low_discr_sample(N, M)
         #U = np.random.uniform(size=(N, M))
 
-        def integrate(U: npt.NDArray[np.float64], dt: float):
+        def integrate(U: npt.NDArray[np.float64], dt: float) -> npt.NDArray[np.float64]:
             # We want to integrate the Vasicek SDE:
             # dr = a * (b - r) * dt + sigma * r * dW
             dW = np.sqrt(12) * (U - 0.5) * np.sqrt(dt)
 
             r_t = r0 * np.ones((1, M))
-            integral_t = 0
+            integral_t = np.zeros((1, M))
             for k in range(N):
                 integral_t += r_t * dt
                 r_t += a * (b - r_t) * dt + sigma * dW[k, :]
@@ -107,7 +107,7 @@ class VasicekModel(ShortRateModel):
         integral_T = integrate(U, dt)
         return integral_T
 
-    def calc_exact_yield(self, T: int) -> float:
+    def calc_exact_yield(self, T: float) -> float:
         """
         # Calculate yield using exact bond pricing formula for Vasicek model
         :param T:
@@ -139,5 +139,5 @@ class CoxIngersolRossModel(ShortRateModel):
 
 def get_low_discr_sample(N: int, M: int) -> npt.NDArray[np.float64]:
     sampler = qmc.Sobol(d=N, scramble=True)
-    sobol_sequences = sampler.random(M)
+    sobol_sequences = np.array(sampler.random(M))
     return sobol_sequences.transpose()
