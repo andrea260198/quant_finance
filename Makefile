@@ -10,8 +10,9 @@ run_int_rate: interest_rates/int_rate_curve.py
 run_binom_tree: option_pricing/binom_tree.py
 	$(PY_INTERPRETER) option_pricing/binom_tree.py
 
-install: requirements.txt
-	pip install -r requirements.txt
+install:
+	pip install poetry
+	poetry install
 
 build: setup.py
 	$(PY_INTERPRETER) setup.py build bdist_wheel
