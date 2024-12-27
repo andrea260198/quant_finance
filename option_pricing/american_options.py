@@ -9,17 +9,10 @@ from option_pricing.abstract_option import AbstractOption
 
 
 class AbstractAmericanVanillaOption(AbstractOption):
-    def __init__(
-            self,
-            T: float,
-            r: float,
-            S_0: float,
-            sigma: float,
-    ):
-        self.T: float = T  # 1
-        self.r: float = r  # 0.05
-        self.S_0: float = S_0  # 100
-        self.sigma: float = sigma  # 0.20
+    T: float
+    r: float
+    S_0: float
+    sigma: float
 
     @override
     def price_approx(self, N: int) -> float:
@@ -62,46 +55,18 @@ class AbstractAmericanVanillaOption(AbstractOption):
 
 
 class AmericanCallOption(AbstractAmericanVanillaOption):
-    def __init__(
-            self,
-            T: float,
-            r: float,
-            S_0: float,
-            sigma: float,
-            K: float
-    ):
-        super().__init__(
-            T,
-            r,
-            S_0,
-            sigma
-        )
-        self._strike = K
+    strike: float
 
     @override
     def _calc_payoff(self, S: npt.NDArray[np.float64]) -> npt.NDArray[np.float64]:
-        K = self._strike
+        K = self.strike
         return np.maximum(S - K, 0)  # Get element-wise max value
 
 
 class AmericanPutOption(AbstractAmericanVanillaOption):
-    def __init__(
-            self,
-            T: float,
-            r: float,
-            S_0: float,
-            sigma: float,
-            K: float
-    ):
-        super().__init__(
-            T,
-            r,
-            S_0,
-            sigma
-        )
-        self._strike = K
+    strike: float
 
     @override
     def _calc_payoff(self, S: npt.NDArray[np.float64]) -> npt.NDArray[np.float64]:
-        K = self._strike
+        K = self.strike
         return np.maximum(K - S, 0)  # Get element-wise max value

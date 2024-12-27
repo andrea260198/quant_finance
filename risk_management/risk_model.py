@@ -1,17 +1,14 @@
 from abc import ABC, abstractmethod
-from dataclasses import dataclass
-
 from overrides import override
 from risk_management.model_results import ModelResults
+from support.quant_dataclass import QuantDataclass
 
 
-@dataclass
-class ModelParameters:
+class ModelParameters(QuantDataclass):
     scenarios_n: int
 
 
-@dataclass
-class RiskModel(ABC):
+class RiskModel(QuantDataclass, ABC):
     model_params: ModelParameters
 
     @abstractmethod
@@ -19,7 +16,6 @@ class RiskModel(ABC):
         pass
 
 
-@dataclass
 class MyRiskModel(RiskModel):
     @override
     def run(self) -> ModelResults:
