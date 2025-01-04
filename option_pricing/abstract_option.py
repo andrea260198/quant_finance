@@ -6,19 +6,25 @@ from support.quant_dataclass import QuantDataclass
 
 class PricingMethod(Enum):
     EXACT = auto()
-    APPROX = auto()
+    BINOMIAL_TREE = auto()
+    MONTE_CARLO = auto()
+    QUASI_MONTE_CARLO = auto()
 
 
 class AbstractOption(QuantDataclass, ABC):
-    pricing_method: PricingMethod = PricingMethod.APPROX
+    pricing_method: PricingMethod = PricingMethod.BINOMIAL_TREE
 
     @cached_property
     def price(self) -> float:
         match self.pricing_method:
             case PricingMethod.EXACT:
                 return self.price_exact()
-            case PricingMethod.APPROX:
+            case PricingMethod.BINOMIAL_TREE:
                 return self.price_approx(100_000)
+            case PricingMethod.MONTE_CARLO:
+                return self.price_mc_approx(100_000, 0.01)
+            case PricingMethod.QUASI_MONTE_CARLO:
+                raise NotImplementedError()
             case _:
                 raise ValueError("Pricing method not defined.")
 
