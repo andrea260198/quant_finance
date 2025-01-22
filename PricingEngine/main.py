@@ -1,16 +1,22 @@
-from implied_volatility.heston_model import HestonEuropeanCallOption
+from fastapi import FastAPI
+
+from option_pricing.european_barrier_options import EuropeanPutOptionBarrierOut
+
+app = FastAPI()
 
 
-if __name__ == '__main__':
-
-    option = HestonEuropeanCallOption(
-        T=1,
-        r=0.20,
-        S_0=100,
+@app.get("/")
+async def read_root():
+    option = EuropeanPutOptionBarrierOut(
+        r=0.05,
         sigma=0.20,
-        strike=100
+        S_0=100,
+        div=0.00,
+        T=1,
+        strike=100,
+        beta=0.5
     )
 
-    price = option.price_mc_approx(10_000_000, 0.01)
+    price = option.price_approx(1000)
 
-    print(price)
+    return {"Hello": price}
