@@ -4,6 +4,7 @@ version = "0.1.0"
 description = ""
 authors = ["Andrea Cassotti <cassottiandrea@hotmail.com>"]
 readme = "README.md"
+package-mode = false
 
 [tool.poetry.dependencies]
 python = "^3.12"
@@ -15,6 +16,7 @@ psutil = "^6.1.1"
 pydantic = "^2.10.4"
 pytest = '^8.3.4'
 mypy = "1.10.0"
+overrides = "^7.7.0"
 
 
 [build-system]
