@@ -47,12 +47,11 @@ class HestonEuropeanCallOption(AbstractOption):
         U1, U2 = U[0:len(TT), :], U[len(TT):, :]
 
         for i, t in enumerate(TT):
-            mean = [0, 0]
             cov = np.array([[1, rho], [rho, 1]])
 
             W1, W2 = U1[[i], :], U2[[i], :]
 
-            Z1, Z2 = np.dot(cov, ndtri(np.concatenate([W1, W2], axis=0))) + mean
+            Z1, Z2 = np.dot(cov, ndtri(np.concatenate([W1, W2], axis=0)))
 
             Z1 = np.expand_dims(Z1, axis=1)
             Z2 = np.expand_dims(Z2, axis=1)
