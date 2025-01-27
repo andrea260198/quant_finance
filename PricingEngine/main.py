@@ -3,7 +3,6 @@ from typing import Union
 from fastapi import FastAPI
 
 from implied_volatility.heston_model import HestonEuropeanCallOption
-from option_pricing.abstract_option import PricingMethod, AbstractOption
 from option_pricing.american_options import AmericanCallOption
 from option_pricing.european_options import EuropeanCallOption
 
