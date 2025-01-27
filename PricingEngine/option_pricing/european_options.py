@@ -41,8 +41,7 @@ class AbstractEuropeanVanillaOption(AbstractOption):
             V_new[:j, 0] = np.exp(-r * dt) * (p * V[:j, 0] + q * V[1:j+1, 0])
 
         V_appr: float = V_new[0, 0]
-        self._price = V_appr
-        return self._price
+        return V_appr
 
     def price_mc_approx(self, M: int, dt: float) -> float:
         """
@@ -63,12 +62,9 @@ class AbstractEuropeanVanillaOption(AbstractOption):
             S += dS
 
         payoff = self._calc_payoff(S)
-
         avg_payoff = np.mean(payoff)
-
-        self._price = avg_payoff  * np.exp(-r * T)
-
-        return self._price
+        price = avg_payoff  * np.exp(-r * T)
+        return price
 
     @abstractmethod
     def _calc_payoff(self, S_T: npt.NDArray[np.float64]) -> npt.NDArray[np.float64]:
@@ -76,6 +72,7 @@ class AbstractEuropeanVanillaOption(AbstractOption):
 
 
 class EuropeanCallOption(AbstractEuropeanVanillaOption):
+    type: str = "EuropeanCallOption"
     strike: float
 
     def price_exact(self) -> float:
@@ -92,8 +89,7 @@ class EuropeanCallOption(AbstractEuropeanVanillaOption):
             return NormalDist(0, 1).cdf(x)
 
         V_exact: float = S_0 * Phi(d1) - K * np.exp(-r * T) * Phi(d2)
-        self._price = V_exact
-        return self._price
+        return V_exact
 
     @override
     def _calc_payoff(self, S_T: npt.NDArray[np.float64]) -> npt.NDArray[np.float64]:
@@ -102,6 +98,7 @@ class EuropeanCallOption(AbstractEuropeanVanillaOption):
 
 
 class EuropeanPutOption(AbstractEuropeanVanillaOption):
+    type: str = "EuropeanPutOption"
     strike: float
 
     @override

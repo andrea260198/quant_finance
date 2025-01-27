@@ -9,6 +9,7 @@ from scipy.special import ndtri
 
 
 class HestonEuropeanCallOption(AbstractOption):
+    type: str = "HestonEuropeanCallOption"
     T: float
     r: float
     S_0: float

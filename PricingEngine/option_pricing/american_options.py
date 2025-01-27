@@ -46,8 +46,7 @@ class AbstractAmericanVanillaOption(AbstractOption):
             S_new[:j, 0] = S[:j, 0] / u
 
         V_appr: float = V_new[0, 0]
-        self._price = V_appr
-        return self._price
+        return V_appr
 
     @abstractmethod
     def _calc_payoff(self, S: npt.NDArray[np.float64]) -> npt.NDArray[np.float64]:
@@ -55,6 +54,7 @@ class AbstractAmericanVanillaOption(AbstractOption):
 
 
 class AmericanCallOption(AbstractAmericanVanillaOption):
+    type: str = "AmericanCallOption"
     strike: float
 
     @override
@@ -64,6 +64,7 @@ class AmericanCallOption(AbstractAmericanVanillaOption):
 
 
 class AmericanPutOption(AbstractAmericanVanillaOption):
+    type: str = "AmericanPutOption"
     strike: float
 
     @override
