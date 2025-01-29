@@ -15,7 +15,7 @@ if __name__ == '__main__':
         sigma=0.20,
         strike=100
     ).dict()
-    response = requests.post(url, json=data)
+    response = requests.get(url, json=data)
     print(response.json())
 
     data = AmericanCallOption(
@@ -25,7 +25,7 @@ if __name__ == '__main__':
         sigma=0.20,
         strike=100
     ).dict()
-    response = requests.post(url, json=data)
+    response = requests.get(url, json=data)
     print(response.json())
 
     data = HestonEuropeanCallOption(
@@ -35,5 +35,5 @@ if __name__ == '__main__':
         sigma=0.20,
         strike=100
     ).dict()
-    response = requests.post(url, json=data)
+    response = requests.get(url, json=data)
     print(response.json())
