@@ -1,10 +1,10 @@
 import numpy as np
 
-from option_pricing.abstract_option import AbstractOption
+from option_pricing.abstract_option import AbstractOption, ApproxTrait
 from option_pricing.european_options import EuropeanPutOption
 
 
-class EuropeanPutOptionBarrierIn(AbstractOption):
+class EuropeanPutOptionBarrierIn(AbstractOption, ApproxTrait):
     r: float
     sigma: float
     S_0: float
@@ -36,7 +36,8 @@ class EuropeanPutOptionBarrierIn(AbstractOption):
         return V
 
 
-class EuropeanPutOptionBarrierOut(AbstractOption):
+class EuropeanPutOptionBarrierOut(AbstractOption, ApproxTrait):
+    type: str = "EuropeanPutOptionBarrierOut"
     r: float
     sigma: float
     S_0: float

@@ -5,10 +5,10 @@ import numpy.typing as npt
 from overrides import override
 from tqdm import tqdm
 
-from option_pricing.abstract_option import AbstractOption
+from option_pricing.abstract_option import AbstractOption, ApproxTrait
 
 
-class AbstractAmericanVanillaOption(AbstractOption):
+class AbstractAmericanVanillaOption(AbstractOption, ApproxTrait):
     T: float
     r: float
     S_0: float
