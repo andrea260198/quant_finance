@@ -4,10 +4,10 @@ from statistics import NormalDist
 from tqdm import tqdm
 from abc import abstractmethod
 from overrides import override
-from option_pricing.abstract_option import AbstractOption
+from option_pricing.abstract_option import AbstractOption, ExactTrait, ApproxTrait, MonteCarloTrait
 
 
-class AbstractEuropeanVanillaOption(AbstractOption):
+class AbstractEuropeanVanillaOption(AbstractOption, ApproxTrait, MonteCarloTrait):
     T: float
     r: float
     S_0: float
@@ -71,7 +71,7 @@ class AbstractEuropeanVanillaOption(AbstractOption):
         pass
 
 
-class EuropeanCallOption(AbstractEuropeanVanillaOption):
+class EuropeanCallOption(AbstractEuropeanVanillaOption, ExactTrait):
     type: str = "EuropeanCallOption"
     strike: float
 

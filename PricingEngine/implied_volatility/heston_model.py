@@ -3,12 +3,12 @@ import numpy.typing as npt
 from tqdm import tqdm
 
 from interest_rates.short_rate_models import get_low_discr_sample
-from option_pricing.abstract_option import AbstractOption
+from option_pricing.abstract_option import AbstractOption, ApproxTrait, MonteCarloTrait
 from overrides import override
 from scipy.special import ndtri
 
 
-class HestonEuropeanCallOption(AbstractOption):
+class HestonEuropeanCallOption(AbstractOption, ApproxTrait, MonteCarloTrait):
     type: str = "HestonEuropeanCallOption"
     T: float
     r: float
