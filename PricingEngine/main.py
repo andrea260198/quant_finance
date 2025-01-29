@@ -14,7 +14,7 @@ async def test():
     return {"Hello": "World"}
 
 
-@app.post("/contract/")
+@app.get("/contract/")
 async def price_contract(contract: Union[EuropeanCallOption, AmericanCallOption, HestonEuropeanCallOption]) -> dict[str, float]:
     print(type(contract))
     print(contract.type)
@@ -29,5 +29,5 @@ async def price_contract(contract: Union[EuropeanCallOption, AmericanCallOption,
             option = HestonEuropeanCallOption.parse_raw(contract.json())
             return {name: option.price}
         case _:
-            return {"Error": contract.type}
+            return {f"Error for {contract.type}": 0.0}
 
