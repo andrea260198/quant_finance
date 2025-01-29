@@ -63,7 +63,7 @@ class AbstractEuropeanVanillaOption(AbstractOption, ApproxTrait, MonteCarloTrait
 
         payoff = self._calc_payoff(S)
         avg_payoff = np.mean(payoff)
-        price = avg_payoff  * np.exp(-r * T)
+        price: float = avg_payoff * np.exp(-r * T)
         return price
 
     @abstractmethod
