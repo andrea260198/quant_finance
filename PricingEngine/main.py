@@ -14,7 +14,7 @@ async def test():
     return {"Hello": "World"}
 
 
-@app.get("/contract/")
+@app.post("/contract/")
 async def price_contract(contract: Union[EuropeanCallOption, AmericanCallOption, HestonEuropeanCallOption]) -> dict[str, float]:
     print(type(contract))
     print(contract.type)
