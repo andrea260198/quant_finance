@@ -27,6 +27,14 @@ import matplotlib.pyplot as plt
 import psutil
 
 
+def main():
+    TT = np.arange(1., 10., 1.).tolist()
+
+    yy, yy2 = get_yield_curves(TT)
+
+    plot_yield_curves(TT, yy, yy2)
+
+
 def get_yield_curves(TT: list[float]) -> tuple[list[float], list[float]]:
     tik = time.time()
 
@@ -68,8 +76,4 @@ def plot_yield_curves(TT: list[float], yy: list[float], yy2: list[float]) -> Non
 
 
 if __name__ == '__main__':
-    TT = np.arange(1., 10., 1.).tolist()
-
-    yy, yy2 = get_yield_curves(TT)
-
-    plot_yield_curves(TT, yy, yy2)
+    main()
