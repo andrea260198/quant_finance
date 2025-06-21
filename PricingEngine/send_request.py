@@ -5,7 +5,7 @@ from option_pricing.american_options import AmericanCallOption
 from option_pricing.european_options import EuropeanCallOption
 
 
-if __name__ == '__main__':
+def main():
     url = 'http://localhost:8000/contract/'
 
     data = EuropeanCallOption(
@@ -37,3 +37,7 @@ if __name__ == '__main__':
     ).dict()
     response = requests.get(url, json=data)
     print(response.json())
+
+
+if __name__ == '__main__':
+    main()
