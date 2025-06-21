@@ -5,7 +5,8 @@ import numpy.typing as npt
 from option_pricing.american_options import AmericanCallOption
 from option_pricing.european_options import EuropeanCallOption
 
-if __name__ == '__main__':
+
+def main():
     K_vec = np.arange(50, 150, 1)
     T_vec = np.arange(0.1, 1.1, 0.01)
     S0 = 100
@@ -26,3 +27,7 @@ if __name__ == '__main__':
     ax.set_zlabel("Price")
 
     plt.show()
+
+
+if __name__ == '__main__':
+    main()
