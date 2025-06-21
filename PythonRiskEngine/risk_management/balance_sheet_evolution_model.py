@@ -1,4 +1,4 @@
-from risk_management.balance_sheet import BalanceSheet
+from risk_management.balance_sheet import BalanceSheet, EndingBalanceSheet
 from support.quant_dataclass import QuantDataclass
 import polars as pl
 
@@ -8,5 +8,9 @@ class BalanceSheetEvolutionModel(QuantDataclass):
     scenarios: pl.DataFrame
 
     def run(self) -> BalanceSheet:
+        df = self.starting_balance_sheet.df
+
+        # TODO: Update underlying, expiry, r... values based on scenarios for every contract
+
         df = pl.DataFrame()
-        return BalanceSheet(time=1, df=df)
+        return EndingBalanceSheet(df=df)
