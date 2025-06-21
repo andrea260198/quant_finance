@@ -11,5 +11,9 @@ class ResultsProcessor(QuantDataclass):
     ending_balance_sheet: EndingBalanceSheet
 
     def run(self):
-        df = pl.DataFrame()
-        return Results(df=df)
+        self.starting_balance_sheet.price()
+        self.ending_balance_sheet.price()
+
+        results = self.ending_balance_sheet.df["Price"] - self.starting_balance_sheet.df["Price"]
+
+        return Results(df=results)
