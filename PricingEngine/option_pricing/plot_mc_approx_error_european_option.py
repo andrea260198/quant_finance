@@ -4,6 +4,24 @@ import matplotlib.pyplot as plt
 from multiprocessing import Pool
 
 
+def main():
+    MM = [10, 100, 1000, 10_000, 100_000]
+
+    pool = Pool(6)
+
+    std_err_list = list(pool.map(calc_std_error, MM))
+
+    plt.loglog(MM, std_err_list, 'k')
+    plt.ylabel('std err [$]')
+    plt.xlabel('M')
+    plt.show()
+
+    """
+    Conclusions:
+    std_err = O(1 / sqrt(M))
+    """
+
+
 def calc_std_error(M: int) -> float:
     option = EuropeanCallOption(
         T=10,
@@ -20,18 +38,4 @@ def calc_std_error(M: int) -> float:
 
 
 if __name__ == '__main__':
-    MM = [10, 100, 1000, 10_000, 100_000]
-
-    pool = Pool(6)
-
-    std_err_list = list(pool.map(calc_std_error, MM))
-
-    plt.loglog(MM, std_err_list, 'k')
-    plt.ylabel('std err [$]')
-    plt.xlabel('M')
-    plt.show()
-
-    """
-    Conclusions:
-    std_err = O(1 / sqrt(M))
-    """
+    main()
