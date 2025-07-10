@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from enum import Enum, auto, StrEnum
 from functools import cached_property
-from support.quant_dataclass import QuantDataclass
+from support.quant_dataclass import ImmutableDataclass
 
 
 class PricingMethod(StrEnum):
@@ -11,7 +11,7 @@ class PricingMethod(StrEnum):
     QUASI_MONTE_CARLO = "QUASI_MONTE_CARLO"
 
 
-class AbstractOption(QuantDataclass, ABC):
+class AbstractOption(ImmutableDataclass, ABC):
     type: str
     pricing_method: PricingMethod = PricingMethod.BINOMIAL_TREE
 

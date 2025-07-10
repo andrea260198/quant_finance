@@ -1,11 +1,11 @@
 from pydantic import BaseModel, ConfigDict
 
 
-class QuantDataclass(BaseModel):
+class ImmutableDataclass(BaseModel):
     """
-    Dataclass base model which enforces type correctness at runtime
+    Dataclass which enforces type correctness and immutability at runtime
+    """
 
-    """
     model_config = ConfigDict(
         arbitrary_types_allowed=True,
         validate_assignment=True,
