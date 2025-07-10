@@ -7,7 +7,7 @@ from scipy.optimize import root
 from option_pricing.european_options import EuropeanCallOption
 import numpy as np
 from multiprocessing import Pool
-from support.quant_dataclass import QuantDataclass
+from support.quant_dataclass import ImmutableDataclass
 
 
 def plot_heston_price_surface() -> None:
@@ -80,7 +80,7 @@ def plot_volatility_surface() -> None:
     plt.show()
 
 
-class ImplVolCalculator(QuantDataclass):
+class ImplVolCalculator(ImmutableDataclass):
     K: float
     TT: npt.NDArray[np.float64]
     r: float

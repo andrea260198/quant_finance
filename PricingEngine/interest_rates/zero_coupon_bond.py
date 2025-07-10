@@ -1,9 +1,9 @@
 from interest_rates.short_rate_models import ShortRateModel
 import numpy as np
-from support.quant_dataclass import QuantDataclass
+from support.quant_dataclass import ImmutableDataclass
 
 
-class ZeroCouponBond(QuantDataclass):
+class ZeroCouponBond(ImmutableDataclass):
     T: float
     short_rate_model: ShortRateModel
     M: int = 10_000  # Monte Carlo simulation sample size

@@ -4,10 +4,10 @@ from overrides import override
 import numpy.typing as npt
 from scipy.stats import qmc
 
-from support.quant_dataclass import QuantDataclass
+from support.quant_dataclass import ImmutableDataclass
 
 
-class ModelParameters(QuantDataclass):
+class ModelParameters(ImmutableDataclass):
     dt: float = 0.01
     a: float = 0.1
     b: float = 0.07
