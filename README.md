@@ -101,7 +101,8 @@ strike and expiries using `plot_price_surface.py` script.
 
 ### Least-squares Monte Carlo method
 
-Ongoing...
+An example of pricing American call option is performed using least-squares Monte Carlo method.
+The method is based on the idea of approximating the continuation value of the option using a regression model.
 
 
 ## Implied volatility
