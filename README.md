@@ -90,12 +90,18 @@ To sum up, the two images above show that the binomial tree pricing method is co
 compared to Monte Carlo method when pricing European options. However, thanks to Quasi-Monte Carlo methods, it is
 possible to reach a numerical complexity comparable to binomial trees.
 
+
 ### American call option price surface
 
 Below is the price surface obtained for American call options with different
 strike and expiries using `plot_price_surface.py` script.
 
 ![image](images/american_call_price_surface.png)
+
+
+### Least-squares Monte Carlo method
+
+Ongoing...
 
 
 ## Implied volatility
