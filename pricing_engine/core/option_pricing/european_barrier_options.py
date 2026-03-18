@@ -1,7 +1,7 @@
 import numpy as np
 
-from option_pricing.abstract_option import AbstractOption, ApproxTrait
-from option_pricing.european_options import EuropeanPutOption
+from core.option_pricing.abstract_option import AbstractOption, ApproxTrait
+from core.option_pricing.european_options import EuropeanPutOption
 
 
 class EuropeanPutOptionBarrierIn(AbstractOption, ApproxTrait):

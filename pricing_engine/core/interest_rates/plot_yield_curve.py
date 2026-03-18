@@ -19,8 +19,8 @@
 #
 
 import time
-from interest_rates.short_rate_models import VasicekModel, ModelParameters
-from interest_rates.zero_coupon_bond import ZeroCouponBond
+from core.interest_rates.short_rate_models import VasicekModel, ModelParameters
+from core.interest_rates.zero_coupon_bond import ZeroCouponBond
 from multiprocessing import Pool
 import numpy as np
 import matplotlib.pyplot as plt

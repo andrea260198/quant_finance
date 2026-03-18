@@ -1,4 +1,4 @@
-from interest_rates.short_rate_models import ShortRateModel
+from core.interest_rates.short_rate_models import ShortRateModel
 import numpy as np
 from support.quant_dataclass import ImmutableDataclass
 

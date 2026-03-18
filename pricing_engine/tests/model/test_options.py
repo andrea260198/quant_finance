@@ -1,7 +1,7 @@
 import numpy as np
 
-from option_pricing.european_barrier_options import EuropeanPutOptionBarrierOut
-from option_pricing.european_options import EuropeanCallOption, EuropeanPutOption
+from core.option_pricing.european_barrier_options import EuropeanPutOptionBarrierOut
+from core.option_pricing.european_options import EuropeanCallOption, EuropeanPutOption
 
 
 def test_european_option() -> None:
