@@ -6,15 +6,15 @@ from core.option_pricing.european_options import EuropeanCallOption, EuropeanPut
 
 def test_european_option() -> None:
     expiry: float = 1.0  # [years]
-    european_call_option = EuropeanCallOption(T=expiry, r=0.05, S_0=100.0, sigma=0.20, strike=100.0)
+    european_call_option = EuropeanCallOption(type="EuropeanCallOption" ,T=expiry, r=0.05, S_0=100.0, sigma=0.20, strike=100.0)
     timesteps = 1000
     assert abs(european_call_option.price_approx(timesteps) - european_call_option.price_exact()) < 0.01
 
 
 def test_put_call_parity() -> None:
     expiry: float = 1.0  # [years]
-    european_call_option = EuropeanCallOption(T=expiry, r=0.05, S_0=100.0, sigma=0.20, strike=100.0)
-    european_put_option = EuropeanPutOption(T=expiry, r=0.05, S_0=100.0, sigma=0.20, strike=100.0)
+    european_call_option = EuropeanCallOption(type="EuropeanCallOption", T=expiry, r=0.05, S_0=100.0, sigma=0.20, strike=100.0)
+    european_put_option = EuropeanPutOption(type="EuropeanPutOption", T=expiry, r=0.05, S_0=100.0, sigma=0.20, strike=100.0)
     timesteps = 1000
 
     call_price = european_call_option.price_approx(timesteps)
@@ -42,6 +42,7 @@ def test_european_barrier_option() -> None:
 
 def test_american_option() -> None:
     option = EuropeanCallOption(
+        type="EuropeanCallOption",
         T=10,
         r=0.20,
         S_0=100,

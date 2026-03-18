@@ -3,6 +3,7 @@ from core.implied_volatility.heston_model import HestonEuropeanCallOption
 
 def test_heston_european_call_option() -> None:
     option = HestonEuropeanCallOption(
+        type="HestonEuropeanCallOption",
         T=1,
         r=0.20,
         S_0=100,
