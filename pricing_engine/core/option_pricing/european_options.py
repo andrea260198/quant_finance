@@ -1,3 +1,5 @@
+from typing import Literal
+
 import numpy as np
 import numpy.typing as npt
 from statistics import NormalDist
@@ -72,7 +74,7 @@ class AbstractEuropeanVanillaOption(AbstractOption, ApproxTrait, MonteCarloTrait
 
 
 class EuropeanCallOption(AbstractEuropeanVanillaOption, ExactTrait):
-    type: str = "EuropeanCallOption"
+    type: Literal["EuropeanCallOption"]
     strike: float
 
     def price_exact(self) -> float:

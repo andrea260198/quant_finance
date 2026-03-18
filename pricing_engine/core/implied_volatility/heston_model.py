@@ -1,3 +1,5 @@
+from typing import Literal
+
 import numpy as np
 import numpy.typing as npt
 
@@ -8,7 +10,7 @@ from scipy.special import ndtri
 
 
 class HestonEuropeanCallOption(AbstractOption, ApproxTrait, MonteCarloTrait):
-    type: str = "HestonEuropeanCallOption"
+    type: Literal["HestonEuropeanCallOption"]
     T: float
     r: float
     S_0: float
