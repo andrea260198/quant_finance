@@ -33,6 +33,8 @@ jobs:
 
       - name: Run tests for pricing_engine
         working-directory: ./pricing_engine
+        env:
+          PYTHONPATH: ${{ github.workspace }}/pricing_engine
         run: |
           uv run pytest
 
