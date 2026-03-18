@@ -1,0 +1,38 @@
+name: Pricing Engine Tests
+
+on:
+  push:
+    paths:
+      - "pricing_engine/**"
+      - ".github/workflows/pricing_engine_tests.yml"
+  pull_request:
+    paths:
+      - "pricing_engine/**"
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.14 x86_64
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.14"
+          architecture: "x64"
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v4
+
+      - name: Install pricing_engine with dependencies
+        working-directory: ./pricing_engine
+        run: |
+          uv sync
+
+      - name: Run tests for pricing_engine
+        working-directory: ./pricing_engine
+        run: |
+          uv run pytest
+
