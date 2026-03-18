@@ -1,3 +1,5 @@
+import unittest
+
 from fastapi.testclient import TestClient
 
 from core.implied_volatility.heston_model import HestonEuropeanCallOption
@@ -8,38 +10,48 @@ from api.main import app
 client = TestClient(app)
 
 
-def test_server():
-    url = '/price'
+class TestHelloWorld(unittest.TestCase):
+    def test_hello_world(self):
+        url = '/helloworld'
+        response = client.get(url)
+        assert response.status_code == 200
+        assert  response.json() == {"hello": "world"}
 
-    data = EuropeanCallOption(
-        type="EuropeanCallOption",
-        T=10,
-        r=0.20,
-        S_0=100,
-        sigma=0.20,
-        strike=100
-    ).dict()
-    response = client.post(url, json=data)
-    print(response.json())
 
-    data = AmericanCallOption(
-        type="AmericanCallOption",
-        T=10,
-        r=0.20,
-        S_0=100,
-        sigma=0.20,
-        strike=100
-    ).dict()
-    response = client.post(url, json=data)
-    print(response.json())
+class TestOption(unittest.TestCase):
+    def test_price(self):
+        url = '/price'
 
-    data = HestonEuropeanCallOption(
-        type="HestonEuropeanCallOption",
-        T=10,
-        r=0.20,
-        S_0=100,
-        sigma=0.20,
-        strike=100
-    ).dict()
-    response = client.post(url, json=data)
-    print(response.json())
+        data = EuropeanCallOption(
+            type="EuropeanCallOption",
+            T=10,
+            r=0.20,
+            S_0=100,
+            sigma=0.20,
+            strike=100
+        ).model_dump()
+        response = client.post(url, json=data)
+        assert response.status_code == 200
+
+        data = AmericanCallOption(
+            type="AmericanCallOption",
+            T=10,
+            r=0.20,
+            S_0=100,
+            sigma=0.20,
+            strike=100
+        ).model_dump()
+        response = client.post(url, json=data)
+        assert response.status_code == 200
+
+        data = HestonEuropeanCallOption(
+            type="HestonEuropeanCallOption",
+            T=10,
+            r=0.20,
+            S_0=100,
+            sigma=0.20,
+            strike=100
+        ).model_dump()
+        response = client.post(url, json=data)
+        assert response.status_code == 200
+
