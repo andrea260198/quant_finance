@@ -17,12 +17,15 @@ and more prone to runtime errors, without prior compilation. The issue becomes
 more evident when the codebase becomes very large and many people start working
 on it.
 
-Despite these limitations, the Mypy static checker does a good job in preventing
+Despite these limitations, the **Mypy** static checker does a good job in preventing
 many errors that might arise during runtime. It should be noted that Mypy has still 
-some bugs.
+some bugs. In addition, I make use of **Pydantic BaseModel** which is a class which 
+enforces type correctness and immutability of the data at runtime. 
+Pydantic, together with Mypy, make the code very robust.
 
 The big advantage of Python is the huge amount of free libraries that can be 
-used and the fact that new code can be run at each breakpoint during debugging. 
+used and the fact that new code can be executed when the debugger is at
+a certain breakpoint.
 
 
 ## CI/CD
@@ -43,7 +46,7 @@ on a remote server.
 
 We can create a Docker image of the project. Then we can run the Docker 
 containers to test the code in an isolated environment, separated from the 
-local machine.
+local machine. This is useful to ensure reproducibility of the results.
 
 
 ## Multiprocessing
@@ -57,7 +60,7 @@ can be easily done with threads.
 ## Testing
 
 Unit testing let developers be more confident when they make changes in
-the code, since new bugs can be easily spotted.
+the codebase, since new bugs can be easily spotted.
 
 
 ## Risk Management
@@ -87,12 +90,19 @@ To sum up, the two images above show that the binomial tree pricing method is co
 compared to Monte Carlo method when pricing European options. However, thanks to Quasi-Monte Carlo methods, it is
 possible to reach a numerical complexity comparable to binomial trees.
 
+
 ### American call option price surface
 
 Below is the price surface obtained for American call options with different
 strike and expiries using `plot_price_surface.py` script.
 
 ![image](images/american_call_price_surface.png)
+
+
+### Least-squares Monte Carlo method
+
+An example of pricing American call option is performed using least-squares Monte Carlo method.
+The method is based on the idea of approximating the continuation value of the option using a regression model.
 
 
 ## Implied volatility
