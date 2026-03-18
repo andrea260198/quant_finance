@@ -11,7 +11,7 @@ app = FastAPI()
 
 
 @app.get("/helloworld")
-async def test():
+async def test() -> dict[str, str]:
     return {"hello": "world"}
 
 
