@@ -3,7 +3,7 @@ from fastapi.testclient import TestClient
 from core.implied_volatility.heston_model import HestonEuropeanCallOption
 from core.option_pricing.american_options import AmericanCallOption
 from core.option_pricing.european_options import EuropeanCallOption
-from main import app
+from api.main import app
 
 client = TestClient(app)
 

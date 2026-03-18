@@ -5,7 +5,7 @@ import numpy.typing as npt
 from overrides import override
 from tqdm import tqdm
 
-from option_pricing.abstract_option import AbstractOption, ApproxTrait
+from core.option_pricing.abstract_option import AbstractOption, ApproxTrait
 
 
 class AbstractAmericanVanillaOption(AbstractOption, ApproxTrait):

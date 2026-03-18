@@ -1,10 +1,10 @@
 import psutil
 import numpy.typing as npt
 
-from implied_volatility.heston_model import HestonEuropeanCallOption
+from core.implied_volatility.heston_model import HestonEuropeanCallOption
 import matplotlib.pyplot as plt
 from scipy.optimize import root
-from option_pricing.european_options import EuropeanCallOption
+from core.option_pricing.european_options import EuropeanCallOption
 import numpy as np
 from multiprocessing import Pool
 from support.quant_dataclass import ImmutableDataclass

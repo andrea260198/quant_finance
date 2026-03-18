@@ -4,7 +4,7 @@ from statistics import NormalDist
 from tqdm import tqdm
 from abc import abstractmethod
 from overrides import override
-from option_pricing.abstract_option import AbstractOption, ExactTrait, ApproxTrait, MonteCarloTrait
+from core.option_pricing.abstract_option import AbstractOption, ExactTrait, ApproxTrait, MonteCarloTrait
 
 
 class AbstractEuropeanVanillaOption(AbstractOption, ApproxTrait, MonteCarloTrait):

@@ -8,7 +8,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from multiprocessing import Pool
 import time
-from option_pricing.european_options import EuropeanCallOption
+from core.option_pricing.european_options import EuropeanCallOption
 import psutil
 
 

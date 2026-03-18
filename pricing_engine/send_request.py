@@ -1,8 +1,8 @@
 import requests
 
-from implied_volatility.heston_model import HestonEuropeanCallOption
-from option_pricing.american_options import AmericanCallOption
-from option_pricing.european_options import EuropeanCallOption
+from core.implied_volatility.heston_model import HestonEuropeanCallOption
+from core.option_pricing.american_options import AmericanCallOption
+from core.option_pricing.european_options import EuropeanCallOption
 
 
 def main():

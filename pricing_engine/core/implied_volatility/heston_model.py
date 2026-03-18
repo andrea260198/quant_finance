@@ -1,9 +1,8 @@
 import numpy as np
 import numpy.typing as npt
-from tqdm import tqdm
 
-from interest_rates.short_rate_models import get_low_discr_sample
-from option_pricing.abstract_option import AbstractOption, ApproxTrait, MonteCarloTrait
+from core.interest_rates.short_rate_models import get_low_discr_sample
+from core.option_pricing.abstract_option import AbstractOption, ApproxTrait, MonteCarloTrait
 from overrides import override
 from scipy.special import ndtri
 
