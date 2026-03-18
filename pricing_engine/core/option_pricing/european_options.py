@@ -100,7 +100,7 @@ class EuropeanCallOption(AbstractEuropeanVanillaOption, ExactTrait):
 
 
 class EuropeanPutOption(AbstractEuropeanVanillaOption):
-    type: str = "EuropeanPutOption"
+    type: Literal["EuropeanPutOption"]
     strike: float
 
     @override
