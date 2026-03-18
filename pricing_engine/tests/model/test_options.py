@@ -26,6 +26,7 @@ def test_put_call_parity() -> None:
 
 def test_european_barrier_option() -> None:
     option = EuropeanPutOptionBarrierOut(
+        type="EuropeanPutOptionBarrierOut",
         r=0.05,
         sigma=0.20,
         S_0=100,
