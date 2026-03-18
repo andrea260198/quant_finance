@@ -1,0 +1,8 @@
+[package]
+name = "RustRiskEngine"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+json-request = "0.2.0"
+rustc-serialize = "0.3.25"
