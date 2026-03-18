@@ -9,9 +9,10 @@ client = TestClient(app)
 
 
 def test_server():
-    url = '/contract/'
+    url = '/price'
 
     data = EuropeanCallOption(
+        type="EuropeanCallOption",
         T=10,
         r=0.20,
         S_0=100,
@@ -22,6 +23,7 @@ def test_server():
     print(response.json())
 
     data = AmericanCallOption(
+        type="AmericanCallOption",
         T=10,
         r=0.20,
         S_0=100,
@@ -32,6 +34,7 @@ def test_server():
     print(response.json())
 
     data = HestonEuropeanCallOption(
+        type="HestonEuropeanCallOption",
         T=10,
         r=0.20,
         S_0=100,

@@ -1,4 +1,5 @@
 from abc import abstractmethod
+from typing import Literal
 
 import numpy as np
 import numpy.typing as npt
@@ -54,7 +55,7 @@ class AbstractAmericanVanillaOption(AbstractOption, ApproxTrait):
 
 
 class AmericanCallOption(AbstractAmericanVanillaOption):
-    type: str = "AmericanCallOption"
+    type: Literal["AmericanCallOption"]
     strike: float
 
     @override

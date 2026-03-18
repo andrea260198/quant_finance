@@ -1,6 +1,7 @@
-from typing import Union
+from typing import Union, Annotated
 
 from fastapi import FastAPI
+from pydantic import Field
 
 from core.implied_volatility.heston_model import HestonEuropeanCallOption
 from core.option_pricing.american_options import AmericanCallOption
@@ -9,25 +10,12 @@ from core.option_pricing.european_options import EuropeanCallOption
 app = FastAPI()
 
 
-@app.get("/")
+@app.get("/helloworld")
 async def test():
-    return {"Hello": "World"}
+    return {"hello": "world"}
 
 
-@app.post("/contract/")
-async def price_contract(contract: Union[EuropeanCallOption, AmericanCallOption, HestonEuropeanCallOption]) -> dict[str, float]:
-    print(type(contract))
-    print(contract.type)
-    match contract.type:
-        case "EuropeanCallOption" as name:
-            option = EuropeanCallOption.parse_raw(contract.json())
-            return {name: option.price}
-        case "AmericanCallOption" as name:
-            option = AmericanCallOption.parse_raw(contract.json())
-            return {name: option.price_approx(500)}
-        case "HestonEuropeanCallOption" as name:
-            option = HestonEuropeanCallOption.parse_raw(contract.json())
-            return {name: option.price}
-        case _:
-            return {f"Error for {contract.type}": 0.0}
+@app.post("/price")
+async def price_contract(contract: Annotated[Union[EuropeanCallOption, AmericanCallOption, HestonEuropeanCallOption], Field(discriminator="type")]) -> float:
+    return contract.price
 
