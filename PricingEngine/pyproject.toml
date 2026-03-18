@@ -1,0 +1,13 @@
+[project]
+name = "pricingengine"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "fastapi>=0.135.1",
+    "numpy>=2.4.3",
+    "overrides>=7.7.0",
+    "scipy>=1.17.1",
+    "tqdm>=4.67.3",
+]
