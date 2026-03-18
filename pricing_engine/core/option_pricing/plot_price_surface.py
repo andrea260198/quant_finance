@@ -2,8 +2,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 from core.option_pricing.american_options import AmericanCallOption
-from mpl_toolkits.mplot3d.axes3d import Axes3D
-from typing import cast
 
 
 def main() -> None:
@@ -33,8 +31,6 @@ def main() -> None:
     )
 
     fig, ax = plt.subplots(subplot_kw={"projection": "3d"})
-    ax = cast(Axes3D, ax)
-
 
     surf = ax.plot_surface(K_mg, T_mg, V_mg)
     ax.set_xlabel("Strike")

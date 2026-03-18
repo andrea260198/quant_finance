@@ -39,7 +39,7 @@ class EuropeanPutOptionBarrierIn(AbstractOption, ApproxTrait):
 
 
 class EuropeanPutOptionBarrierOut(AbstractOption, ApproxTrait):
-    type: str = "EuropeanPutOptionBarrierOut"
+    type: Literal["EuropeanPutOptionBarrierOut"]
     r: float
     sigma: float
     S_0: float
