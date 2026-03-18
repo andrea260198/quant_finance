@@ -5,6 +5,7 @@ from core.option_pricing.european_options import EuropeanPutOption
 
 
 class EuropeanPutOptionBarrierIn(AbstractOption, ApproxTrait):
+    type: Literal["EuropeanPutOptionBarrierIn"]
     r: float
     sigma: float
     S_0: float
@@ -21,15 +22,16 @@ class EuropeanPutOptionBarrierIn(AbstractOption, ApproxTrait):
             div=self.div,
             T=self.T,
             strike=self.strike,
-            beta=self.beta
+            beta=self.beta,
         )
 
         european_put_option = EuropeanPutOption(
+            type="EuropeanPutOption",
             T=self.T,
             r=self.r,
             S_0=self.S_0,
             sigma=self.sigma,
-            strike=self.strike
+            strike=self.strike,
         )
 
         V = european_put_option.price_approx(N) - european_put_option_barrier_out.price_approx(N)

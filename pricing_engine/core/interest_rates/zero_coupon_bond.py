@@ -18,7 +18,7 @@ class ZeroCouponBond(ImmutableDataclass):
         Z = np.mean([np.exp(-self.short_rate_model.integrate_r_dt(self.T)) for k in range(self.M)])
         # Calculate yield
         y: float = - np.log(Z) / self.T
-        print("Zero-coupon bond of maturity T = {} has value Z = {:.3f}".format(self.T, Z))
+        print("Zero-coupon bond of maturity T = {} has value Z = {:.3f}".format(self.T, float(Z)))
         return y
 
     def calc_qmc_approx_yield(self) -> float:
@@ -30,7 +30,7 @@ class ZeroCouponBond(ImmutableDataclass):
         Z = np.mean(np.exp(-self.short_rate_model.approximate_integral_with_qmc(self.T, self.M)))
         # Calculate yield
         y: float = - np.log(Z) / self.T
-        print("Zero-coupon bond of maturity T = {} has value Z = {:.3f}".format(self.T, Z))
+        print("Zero-coupon bond of maturity T = {} has value Z = {:.3f}".format(self.T, float(Z)))
         return y
 
     def calc_exact_yield(self) -> float:

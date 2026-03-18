@@ -25,7 +25,7 @@ class AbstractOption(ImmutableDataclass, ABC):
             case PricingMethod.MONTE_CARLO, MonteCarloTrait() as self:
                 return self.price_mc_approx(100_000, 0.01)
             case PricingMethod.QUASI_MONTE_CARLO, QuasiMonteCarloTrait() as self:
-                raise self.price_qmc_approx(100_000, 0.01)
+                return self.price_qmc_approx(100_000, 0.01)
             case _:
                 raise NotImplementedError("Pricing method not defined.")
 
