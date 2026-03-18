@@ -1,3 +1,5 @@
+from typing import Literal
+
 import numpy as np
 
 from core.option_pricing.abstract_option import AbstractOption, ApproxTrait
