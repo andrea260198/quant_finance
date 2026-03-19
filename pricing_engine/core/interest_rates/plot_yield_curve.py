@@ -2,7 +2,7 @@
 #
 # Author: Andrea Cassotti
 # Version: 1.0
-# Python: 3.8
+# Python: 3.14
 #
 # Summary:
 # The following code plots a yield curve obtained from the CIR model
@@ -47,7 +47,7 @@ def get_yield_curves(TT: list[float]) -> tuple[list[float], list[float]]:
     )
 
     M = 100_000
-    bonds = [ZeroCouponBond(T=T, short_rate_model=VasicekModel(model_parameters), M=M) for T in TT]
+    bonds = [ZeroCouponBond(type="ZeroCouponBond", T=T, short_rate_model=VasicekModel(model_parameters), M=M) for T in TT]
 
     # Multi-core version
     n_cores = psutil.cpu_count(logical=False)

@@ -1,12 +1,31 @@
+from functools import cached_property
+from typing import Literal
+
+from core.contract import Contract, PricingMethod
 from core.interest_rates.short_rate_models import ShortRateModel
 import numpy as np
-from support.quant_dataclass import ImmutableDataclass
 
 
-class ZeroCouponBond(ImmutableDataclass):
-    T: float
+class ZeroCouponBond(Contract):
+    type: Literal["ZeroCouponBond"]
+    T: float  # Maturity
     short_rate_model: ShortRateModel
     M: int = 10_000  # Monte Carlo simulation sample size
+    face_value: float = 1.0
+    pricing_method: PricingMethod = PricingMethod.QUASI_MONTE_CARLO
+
+    @cached_property
+    def price(self) -> float:
+        match self.pricing_method:
+            case PricingMethod.MONTE_CARLO:
+                return self.calc_approx_yield() * self.face_value
+            case PricingMethod.QUASI_MONTE_CARLO:
+                return self.calc_qmc_approx_yield() * self.face_value
+            case PricingMethod.EXACT:
+                return self.calc_exact_yield() * self.face_value
+            case _:
+                raise NotImplementedError("Pricing method not defined.")
+
 
     def calc_approx_yield(self) -> float:
         """
