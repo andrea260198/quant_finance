@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 from functools import cached_property
 from core.contract import Contract, PricingMethod
+from pydantic_extra_types.currency_code import ISO4217
 
 
 class AbstractOption(Contract, ABC):
@@ -9,18 +10,21 @@ class AbstractOption(Contract, ABC):
     S_0: float
     sigma: float
     pricing_method: PricingMethod
+    underlying_name: str
+    underlying_quantity: float = 1
+    currency: ISO4217 = "USD"
 
     @cached_property
     def price(self) -> float:
         match self.pricing_method, self:
             case PricingMethod.EXACT, ExactTrait() as self:
-                return self.price_exact()
+                return self.price_exact() * self.underlying_quantity
             case PricingMethod.BINOMIAL_TREE, ApproxTrait() as self:
-                return self.price_approx(100_000)
+                return self.price_approx(100_000) * self.underlying_quantity
             case PricingMethod.MONTE_CARLO, MonteCarloTrait() as self:
-                return self.price_mc_approx(100_000, 0.01)
+                return self.price_mc_approx(100_000, 0.01) * self.underlying_quantity
             case PricingMethod.QUASI_MONTE_CARLO, QuasiMonteCarloTrait() as self:
-                return self.price_qmc_approx(100_000, 0.01)
+                return self.price_qmc_approx(100_000, 0.01) * self.underlying_quantity
             case _:
                 raise NotImplementedError("Pricing method not defined.")
 
