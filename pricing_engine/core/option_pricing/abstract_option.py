@@ -1,18 +1,10 @@
 from abc import ABC, abstractmethod
-from enum import Enum, auto, StrEnum
 from functools import cached_property
-from support.quant_dataclass import ImmutableDataclass
+
+from core.contract import Contract, PricingMethod
 
 
-class PricingMethod(StrEnum):
-    EXACT = "EXACT"
-    BINOMIAL_TREE = "BINOMIAL_TREE"
-    MONTE_CARLO = "MONTE_CARLO"
-    QUASI_MONTE_CARLO = "QUASI_MONTE_CARLO"
-
-
-class AbstractOption(ImmutableDataclass, ABC):
-    type: str
+class AbstractOption(Contract, ABC):
     pricing_method: PricingMethod = PricingMethod.BINOMIAL_TREE
 
     @cached_property
