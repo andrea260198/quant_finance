@@ -19,44 +19,44 @@ class TestHelloWorld(unittest.TestCase):
 
 
 class TestOption(unittest.TestCase):
-    def test_price(self):
+    def test_price_single_constract(self):
         url = '/price'
 
-        data = EuropeanCallOption(
+        option1 = EuropeanCallOption(
             type="EuropeanCallOption",
             T=10,
             r=0.20,
             S_0=100,
             sigma=0.20,
             strike=100
-        ).model_dump()
-        response = client.post(url, json=data)
+        )
+        response = client.post(url, json=[option1.model_dump()])
         assert response.status_code == 200
 
-        data = AmericanCallOption(
+        option2 = AmericanCallOption(
             type="AmericanCallOption",
             T=10,
             r=0.20,
             S_0=100,
             sigma=0.20,
             strike=100
-        ).model_dump()
-        response = client.post(url, json=data)
+        )
+        response = client.post(url, json=[option2.model_dump()])
         assert response.status_code == 200
 
-        data = HestonEuropeanCallOption(
+        option3 = HestonEuropeanCallOption(
             type="HestonEuropeanCallOption",
             T=10,
             r=0.20,
             S_0=100,
             sigma=0.20,
             strike=100
-        ).model_dump()
-        response = client.post(url, json=data)
+        )
+        response = client.post(url, json=[option3.model_dump()])
         assert response.status_code == 200
 
-    def test_price_multiple(self):
-        url = '/price_multiple'
+    def test_price_multiple_contracts(self):
+        url = '/price'
 
         contracts = [
             EuropeanCallOption(
@@ -67,7 +67,7 @@ class TestOption(unittest.TestCase):
                 sigma=0.20,
                 strike=100
             ),
-                AmericanCallOption(
+            AmericanCallOption(
                 type="AmericanCallOption",
                 T=10,
                 r=0.20,
@@ -75,7 +75,7 @@ class TestOption(unittest.TestCase):
                 sigma=0.20,
                 strike=100
             ),
-                HestonEuropeanCallOption(
+            HestonEuropeanCallOption(
                 type="HestonEuropeanCallOption",
                 T=10,
                 r=0.20,
@@ -83,6 +83,126 @@ class TestOption(unittest.TestCase):
                 sigma=0.20,
                 strike=100
             )
+        ]
+        response = client.post(url, json=[c.model_dump() for c in contracts])
+        assert response.status_code == 200
+
+    def test_delta(self):
+        url = '/delta'
+
+        contracts = [
+            EuropeanCallOption(
+                type="EuropeanCallOption",
+                T=10,
+                r=0.20,
+                S_0=100,
+                sigma=0.20,
+                strike=100
+            ),
+            AmericanCallOption(
+                type="AmericanCallOption",
+                T=10,
+                r=0.20,
+                S_0=100,
+                sigma=0.20,
+                strike=100
+            ),
+        ]
+        response = client.post(url, json=[c.model_dump() for c in contracts])
+        assert response.status_code == 200
+
+    def test_rho(self):
+        url = '/rho'
+
+        contracts = [
+            EuropeanCallOption(
+                type="EuropeanCallOption",
+                T=10,
+                r=0.20,
+                S_0=100,
+                sigma=0.20,
+                strike=100
+            ),
+            AmericanCallOption(
+                type="AmericanCallOption",
+                T=10,
+                r=0.20,
+                S_0=100,
+                sigma=0.20,
+                strike=100
+            ),
+        ]
+        response = client.post(url, json=[c.model_dump() for c in contracts])
+        assert response.status_code == 200
+
+    def test_theta(self):
+        url = '/theta'
+
+        contracts = [
+            EuropeanCallOption(
+                type="EuropeanCallOption",
+                T=10,
+                r=0.20,
+                S_0=100,
+                sigma=0.20,
+                strike=100
+            ),
+            AmericanCallOption(
+                type="AmericanCallOption",
+                T=10,
+                r=0.20,
+                S_0=100,
+                sigma=0.20,
+                strike=100
+            ),
+        ]
+        response = client.post(url, json=[c.model_dump() for c in contracts])
+        assert response.status_code == 200
+
+    def test_vega(self):
+        url = '/vega'
+
+        contracts = [
+            EuropeanCallOption(
+                type="EuropeanCallOption",
+                T=10,
+                r=0.20,
+                S_0=100,
+                sigma=0.20,
+                strike=100
+            ),
+            AmericanCallOption(
+                type="AmericanCallOption",
+                T=10,
+                r=0.20,
+                S_0=100,
+                sigma=0.20,
+                strike=100
+            ),
+        ]
+        response = client.post(url, json=[c.model_dump() for c in contracts])
+        assert response.status_code == 200
+
+    def test_gamma(self):
+        url = '/gamma'
+
+        contracts = [
+            EuropeanCallOption(
+                type="EuropeanCallOption",
+                T=10,
+                r=0.20,
+                S_0=100,
+                sigma=0.20,
+                strike=100
+            ),
+            AmericanCallOption(
+                type="AmericanCallOption",
+                T=10,
+                r=0.20,
+                S_0=100,
+                sigma=0.20,
+                strike=100
+            ),
         ]
         response = client.post(url, json=[c.model_dump() for c in contracts])
         assert response.status_code == 200
