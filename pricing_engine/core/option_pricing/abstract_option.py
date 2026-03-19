@@ -1,6 +1,5 @@
 from abc import ABC, abstractmethod
 from functools import cached_property
-
 from core.contract import Contract, PricingMethod
 
 
@@ -24,6 +23,41 @@ class AbstractOption(Contract, ABC):
                 return self.price_qmc_approx(100_000, 0.01)
             case _:
                 raise NotImplementedError("Pricing method not defined.")
+
+    @cached_property
+    def delta(self) -> float:
+        return self._compute_second_order_difference(self, "S_0")
+
+    @cached_property
+    def theta(self) -> float:
+        return - self._compute_second_order_difference(self, "T")
+
+    @cached_property
+    def vega(self) -> float:
+        return self._compute_second_order_difference(self, "sigma")
+
+    @cached_property
+    def rho(self) -> float:
+        return self._compute_second_order_difference(self, "r")
+
+    @cached_property
+    def gamma(self) -> float:
+        return self._compute_second_derivative(self, "S_0")
+
+    @staticmethod
+    def _compute_second_order_difference(self, option_param: str) -> float:
+        # Compute second-order central difference approximation
+        EPSILON = 0.01
+        option_0 = self.model_copy(update={option_param: getattr(self, option_param) - EPSILON})
+        option_1 = self.model_copy(update={option_param: getattr(self, option_param) + EPSILON})
+        return (option_1.price - option_0.price) / (2 * EPSILON)
+
+    @staticmethod
+    def _compute_second_derivative(self, option_param: str) -> float:
+        EPSILON = 0.01
+        option_0 = self.model_copy(update={option_param: getattr(self, option_param) - EPSILON})
+        option_1 = self.model_copy(update={option_param: getattr(self, option_param) + EPSILON})
+        return (option_1.price - 2 * self.price + option_0.price) / (EPSILON ** 2)
 
 
 class ExactTrait:
