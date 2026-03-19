@@ -12,6 +12,7 @@ dependencies = [
     "numpy>=2.4.3",
     "overrides>=7.7.0",
     "psutil>=7.2.2",
+    "pydantic-extra-types>=2.11.1",
     "pytest>=9.0.2",
     "scipy>=1.17.1",
     "tqdm>=4.67.3",

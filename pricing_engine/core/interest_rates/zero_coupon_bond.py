@@ -2,6 +2,7 @@ from functools import cached_property
 from typing import Literal, Union, Annotated
 
 from pydantic import Field
+from pydantic_extra_types.currency_code import ISO4217
 
 from core.contract import Contract, PricingMethod
 from core.interest_rates.short_rate_models import VasicekModel, CoxIngersolRossModel
@@ -15,6 +16,8 @@ class ZeroCouponBond(Contract):
     pricing_method: PricingMethod
     M: int = -1 # Monte Carlo simulation sample size
     face_value: float = 1.0
+    currency: ISO4217 = "USD"
+    issuer: str = "GenericIssuer"
 
     @cached_property
     def price(self) -> float:
