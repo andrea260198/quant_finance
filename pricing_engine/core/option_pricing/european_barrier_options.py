@@ -2,6 +2,7 @@ from typing import Literal
 
 import numpy as np
 
+from core.contract import PricingMethod
 from core.option_pricing.abstract_option import AbstractOption, ApproxTrait
 from core.option_pricing.european_options import EuropeanPutOption
 
@@ -49,6 +50,7 @@ class EuropeanPutOptionBarrierOut(AbstractOption, ApproxTrait):
     T: float
     strike: float
     beta: float
+    pricing_method: PricingMethod = PricingMethod.BINOMIAL_TREE
 
     def price_approx(self, N: int) -> float:
         sigma = self.sigma

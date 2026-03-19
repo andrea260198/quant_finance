@@ -6,6 +6,7 @@ import numpy.typing as npt
 from overrides import override
 from tqdm import tqdm
 
+from core.contract import PricingMethod
 from core.option_pricing.abstract_option import AbstractOption, ApproxTrait
 
 
@@ -57,6 +58,7 @@ class AbstractAmericanVanillaOption(AbstractOption, ApproxTrait):
 class AmericanCallOption(AbstractAmericanVanillaOption):
     type: Literal["AmericanCallOption"]
     strike: float
+    pricing_method: PricingMethod = PricingMethod.BINOMIAL_TREE
 
     @override
     def _calc_payoff(self, S: npt.NDArray[np.float64]) -> npt.NDArray[np.float64]:
@@ -65,7 +67,7 @@ class AmericanCallOption(AbstractAmericanVanillaOption):
 
 
 class AmericanPutOption(AbstractAmericanVanillaOption):
-    type: str = "AmericanPutOption"
+    type: Literal["AmericanPutOption"]
     strike: float
 
     @override
