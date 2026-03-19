@@ -3,6 +3,7 @@ from typing import Literal
 import numpy as np
 import numpy.typing as npt
 
+from core.contract import PricingMethod
 from core.interest_rates.short_rate_models import get_low_discr_sample
 from core.option_pricing.abstract_option import AbstractOption, ApproxTrait, MonteCarloTrait
 from overrides import override
@@ -16,6 +17,7 @@ class HestonEuropeanCallOption(AbstractOption, ApproxTrait, MonteCarloTrait):
     S_0: float
     sigma: float
     strike: float
+    pricing_method: PricingMethod = PricingMethod.MONTE_CARLO
 
     @override
     def price_approx(self, N: int) -> float:

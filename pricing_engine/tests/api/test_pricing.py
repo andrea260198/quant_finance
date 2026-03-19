@@ -55,3 +55,35 @@ class TestOption(unittest.TestCase):
         response = client.post(url, json=data)
         assert response.status_code == 200
 
+    def test_price_multiple(self):
+        url = '/price_multiple'
+
+        contracts = [
+            EuropeanCallOption(
+                type="EuropeanCallOption",
+                T=10,
+                r=0.20,
+                S_0=100,
+                sigma=0.20,
+                strike=100
+            ),
+                AmericanCallOption(
+                type="AmericanCallOption",
+                T=10,
+                r=0.20,
+                S_0=100,
+                sigma=0.20,
+                strike=100
+            ),
+                HestonEuropeanCallOption(
+                type="HestonEuropeanCallOption",
+                T=10,
+                r=0.20,
+                S_0=100,
+                sigma=0.20,
+                strike=100
+            )
+        ]
+        response = client.post(url, json=[c.model_dump() for c in contracts])
+        assert response.status_code == 200
+

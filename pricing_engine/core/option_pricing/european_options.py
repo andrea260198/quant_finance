@@ -6,6 +6,8 @@ from statistics import NormalDist
 from tqdm import tqdm
 from abc import abstractmethod
 from overrides import override
+
+from core.contract import PricingMethod
 from core.option_pricing.abstract_option import AbstractOption, ExactTrait, ApproxTrait, MonteCarloTrait
 
 
@@ -14,6 +16,7 @@ class AbstractEuropeanVanillaOption(AbstractOption, ApproxTrait, MonteCarloTrait
     r: float
     S_0: float
     sigma: float
+    pricing_method: PricingMethod = PricingMethod.BINOMIAL_TREE
 
     @override
     def price_approx(self, N: int) -> float:

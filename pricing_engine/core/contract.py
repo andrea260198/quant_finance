@@ -1,3 +1,4 @@
+from abc import ABC
 from enum import StrEnum
 from functools import cached_property
 from typing import Literal
@@ -12,7 +13,7 @@ class PricingMethod(StrEnum):
     QUASI_MONTE_CARLO = "QUASI_MONTE_CARLO"
 
 
-class Contract(ImmutableDataclass):
+class Contract(ImmutableDataclass, ABC):
     type: Literal["Contract"]
     pricing_method: PricingMethod
 

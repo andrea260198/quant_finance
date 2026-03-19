@@ -5,7 +5,11 @@ from core.contract import Contract, PricingMethod
 
 
 class AbstractOption(Contract, ABC):
-    pricing_method: PricingMethod = PricingMethod.BINOMIAL_TREE
+    T: float
+    r: float
+    S_0: float
+    sigma: float
+    pricing_method: PricingMethod
 
     @cached_property
     def price(self) -> float:
