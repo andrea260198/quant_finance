@@ -1,11 +1,11 @@
 from risk_management.balance_sheet import StartingBalanceSheet
-from support.quant_dataclass import QuantDataclass
+from support.quant_dataclass import ImmutableDataclass
 import polars as pl
 
 from support.underlying import Underlying
 
 
-class BalanceSheetReader(QuantDataclass):
+class BalanceSheetReader(ImmutableDataclass):
     filename: str
 
     def run(self) -> StartingBalanceSheet:

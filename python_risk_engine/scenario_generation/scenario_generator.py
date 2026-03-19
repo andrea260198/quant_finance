@@ -1,7 +1,7 @@
-from support.quant_dataclass import QuantDataclass
+from support.quant_dataclass import ImmutableDataclass
 
 
-class ScenarioGenerator(QuantDataclass):
+class ScenarioGenerator(ImmutableDataclass):
 
 
     def run(self):

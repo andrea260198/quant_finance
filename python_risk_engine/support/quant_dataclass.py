@@ -1,7 +1,7 @@
 from pydantic import BaseModel, ConfigDict
 
 
-class QuantDataclass(BaseModel):
+class ImmutableDataclass(BaseModel):
     """
     Dataclass base model which enforces type correctness at runtime
 

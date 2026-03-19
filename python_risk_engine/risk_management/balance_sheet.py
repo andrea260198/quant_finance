@@ -1,8 +1,8 @@
-from support.quant_dataclass import QuantDataclass
+from support.quant_dataclass import ImmutableDataclass
 import polars as pl
 
 
-class BalanceSheet(QuantDataclass):
+class BalanceSheet(ImmutableDataclass):
     time: int
     df: pl.DataFrame
 
