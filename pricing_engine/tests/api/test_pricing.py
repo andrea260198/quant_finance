@@ -2,7 +2,10 @@ import unittest
 
 from fastapi.testclient import TestClient
 
+from core.contract import PricingMethod
 from core.implied_volatility.heston_model import HestonEuropeanCallOption
+from core.interest_rates.short_rate_models import VasicekModel
+from core.interest_rates.zero_coupon_bond import ZeroCouponBond
 from core.option_pricing.american_options import AmericanCallOption
 from core.option_pricing.european_options import EuropeanCallOption
 from api.main import app
@@ -58,6 +61,15 @@ class TestOption(unittest.TestCase):
     def test_price_multiple_contracts(self):
         url = '/price'
 
+        short_rate_model = VasicekModel(
+            type="VasicekModel",
+            dt=0.01,
+            a=0.1,
+            b=0.07,
+            r0=0.02,
+            sigma=0.02,
+        )
+
         contracts = [
             EuropeanCallOption(
                 type="EuropeanCallOption",
@@ -82,6 +94,12 @@ class TestOption(unittest.TestCase):
                 S_0=100,
                 sigma=0.20,
                 strike=100
+            ),
+            ZeroCouponBond(
+                type="ZeroCouponBond",
+                T=10,
+                short_rate_model=short_rate_model,
+                pricing_method=PricingMethod.EXACT
             )
         ]
         response = client.post(url, json=[c.model_dump() for c in contracts])
