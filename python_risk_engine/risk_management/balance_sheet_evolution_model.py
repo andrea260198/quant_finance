@@ -1,9 +1,9 @@
 from risk_management.balance_sheet import BalanceSheet, EndingBalanceSheet
-from support.quant_dataclass import QuantDataclass
+from support.quant_dataclass import ImmutableDataclass
 import polars as pl
 
 
-class BalanceSheetEvolutionModel(QuantDataclass):
+class BalanceSheetEvolutionModel(ImmutableDataclass):
     starting_balance_sheet: BalanceSheet
     scenarios: pl.DataFrame
 

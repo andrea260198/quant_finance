@@ -1,12 +1,12 @@
 from risk_management.balance_sheet import EndingBalanceSheet, StartingBalanceSheet
-from support.quant_dataclass import QuantDataclass
+from support.quant_dataclass import ImmutableDataclass
 import polars as pl
 
-class Results(QuantDataclass):
+class Results(ImmutableDataclass):
     df: pl.dataframe
 
 
-class ResultsProcessor(QuantDataclass):
+class ResultsProcessor(ImmutableDataclass):
     starting_balance_sheet: StartingBalanceSheet
     ending_balance_sheet: EndingBalanceSheet
 

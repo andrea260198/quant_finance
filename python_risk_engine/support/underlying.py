@@ -1,9 +1,9 @@
 from functools import cached_property
 
-from support.quant_dataclass import QuantDataclass
+from support.quant_dataclass import ImmutableDataclass
 
 
-class Underlying(QuantDataclass):
+class Underlying(ImmutableDataclass):
     _price: float
 
     @cached_property
