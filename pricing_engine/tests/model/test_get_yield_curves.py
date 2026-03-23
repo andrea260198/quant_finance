@@ -6,7 +6,6 @@ from core.interest_rates.short_rate_models import VasicekModel
 def test_get_yield_curve() -> None:
     TT = [1., 2., 3.]
     short_rate_model = VasicekModel(
-            type="VasicekModel",
             dt= 0.01,
             a= 0.1,
             b= 0.07,

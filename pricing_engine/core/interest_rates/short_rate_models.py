@@ -50,7 +50,8 @@ class ShortRateModel(ImmutableDataclass, ABC):
         ...
 
 class VasicekModel(ShortRateModel):
-    type: Literal["VasicekModel"]
+    type: Literal["VasicekModel"] = "VasicekModel"
+
     @override
     def calc_dr(self, r: float) -> float:
         """
@@ -109,7 +110,8 @@ class VasicekModel(ShortRateModel):
 
 
 class CoxIngersolRossModel(ShortRateModel):
-    type: Literal["CoxIngersolRossModel"]
+    type: Literal["CoxIngersolRossModel"] = "CoxIngersolRossModel"
+
     @override
     def calc_dr(self, r: float) -> float:
         """

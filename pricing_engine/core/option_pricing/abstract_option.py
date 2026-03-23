@@ -10,7 +10,7 @@ class AbstractOption(Contract, ABC):
     S_0: float
     sigma: float
     pricing_method: PricingMethod
-    underlying_name: str
+    underlying_name: str = "GenericUnderlying"
     underlying_quantity: float = 1
     currency: ISO4217 = "USD"
 

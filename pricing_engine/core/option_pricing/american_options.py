@@ -56,9 +56,9 @@ class AbstractAmericanVanillaOption(AbstractOption, ApproxTrait):
 
 
 class AmericanCallOption(AbstractAmericanVanillaOption):
-    type: Literal["AmericanCallOption"]
     strike: float
     pricing_method: PricingMethod = PricingMethod.BINOMIAL_TREE
+    type: Literal["AmericanCallOption"] = "AmericanCallOption"
 
     @override
     def _calc_payoff(self, S: npt.NDArray[np.float64]) -> npt.NDArray[np.float64]:
@@ -67,8 +67,8 @@ class AmericanCallOption(AbstractAmericanVanillaOption):
 
 
 class AmericanPutOption(AbstractAmericanVanillaOption):
-    type: Literal["AmericanPutOption"]
     strike: float
+    type: Literal["AmericanPutOption"] = "AmericanPutOption"
 
     @override
     def _calc_payoff(self, S: npt.NDArray[np.float64]) -> npt.NDArray[np.float64]:

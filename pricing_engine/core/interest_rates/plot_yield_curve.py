@@ -38,7 +38,7 @@ def main():
 
 
 def get_yield_curve(TT: list[float], short_rate_model: ShortRateModel, pricing_method: PricingMethod, M=-1) -> list[float]:
-    bonds = [ZeroCouponBond(type="ZeroCouponBond", T=T, short_rate_model=short_rate_model, M=M, pricing_method=pricing_method) for T in TT]
+    bonds = [ZeroCouponBond(T=T, short_rate_model=short_rate_model, M=M, pricing_method=pricing_method) for T in TT]
 
     # Multi-core version
     n_cores = psutil.cpu_count(logical=False)
@@ -57,10 +57,8 @@ def get_approx_and_exact_yield_curves(TT: list[float]) -> tuple[list[float], lis
     M = 100_000
     bonds = [
         ZeroCouponBond(
-            type="ZeroCouponBond",
             T=T,
             short_rate_model=VasicekModel(
-                type="VasicekModel",
                 dt=0.01,
                 a=0.1,
                 b=0.07,
@@ -74,10 +72,8 @@ def get_approx_and_exact_yield_curves(TT: list[float]) -> tuple[list[float], lis
 
     exact_bonds = [
         ZeroCouponBond(
-            type="ZeroCouponBond",
             T=T,
             short_rate_model=VasicekModel(
-                type="VasicekModel",
                 dt=0.01,
                 a=0.1,
                 b=0.07,

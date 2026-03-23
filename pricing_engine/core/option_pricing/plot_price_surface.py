@@ -17,7 +17,6 @@ def main() -> None:
         [
             [
                 AmericanCallOption(
-                    type="AmericanCallOption",
                     T=float(T),
                     r=float(r),
                     S_0=float(S0),

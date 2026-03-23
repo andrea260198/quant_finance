@@ -10,7 +10,6 @@ import numpy as np
 
 
 class ZeroCouponBond(Contract):
-    type: Literal["ZeroCouponBond"]
     T: float  # Maturity
     short_rate_model: Annotated[Union[VasicekModel, CoxIngersolRossModel], Field(discriminator="type")]
     pricing_method: PricingMethod
@@ -18,6 +17,7 @@ class ZeroCouponBond(Contract):
     face_value: float = 1.0
     currency: ISO4217 = "USD"
     issuer: str = "GenericIssuer"
+    type: Literal["ZeroCouponBond"] = "ZeroCouponBond"
 
     @cached_property
     def price(self) -> float:

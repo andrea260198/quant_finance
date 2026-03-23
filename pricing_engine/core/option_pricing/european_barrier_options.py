@@ -8,7 +8,6 @@ from core.option_pricing.european_options import EuropeanPutOption
 
 
 class EuropeanPutOptionBarrierIn(AbstractOption, ApproxTrait):
-    type: Literal["EuropeanPutOptionBarrierIn"]
     r: float
     sigma: float
     S_0: float
@@ -16,6 +15,7 @@ class EuropeanPutOptionBarrierIn(AbstractOption, ApproxTrait):
     T: float
     strike: float
     beta: float
+    type: Literal["EuropeanPutOptionBarrierIn"] = "EuropeanPutOptionBarrierIn"
 
     def price_approx(self, N: int) -> float:
         european_put_option_barrier_out = EuropeanPutOptionBarrierOut(
@@ -29,7 +29,6 @@ class EuropeanPutOptionBarrierIn(AbstractOption, ApproxTrait):
         )
 
         european_put_option = EuropeanPutOption(
-            type="EuropeanPutOption",
             T=self.T,
             r=self.r,
             S_0=self.S_0,
@@ -42,7 +41,6 @@ class EuropeanPutOptionBarrierIn(AbstractOption, ApproxTrait):
 
 
 class EuropeanPutOptionBarrierOut(AbstractOption, ApproxTrait):
-    type: Literal["EuropeanPutOptionBarrierOut"]
     r: float
     sigma: float
     S_0: float
@@ -51,6 +49,7 @@ class EuropeanPutOptionBarrierOut(AbstractOption, ApproxTrait):
     strike: float
     beta: float
     pricing_method: PricingMethod = PricingMethod.BINOMIAL_TREE
+    type: Literal["EuropeanPutOptionBarrierOut"] = "EuropeanPutOptionBarrierOut"
 
     def price_approx(self, N: int) -> float:
         sigma = self.sigma

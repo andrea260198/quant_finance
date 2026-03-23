@@ -77,8 +77,8 @@ class AbstractEuropeanVanillaOption(AbstractOption, ApproxTrait, MonteCarloTrait
 
 
 class EuropeanCallOption(AbstractEuropeanVanillaOption, ExactTrait):
-    type: Literal["EuropeanCallOption"]
     strike: float
+    type: Literal["EuropeanCallOption"] = "EuropeanCallOption"
 
     def price_exact(self) -> float:
         T = self.T
@@ -103,8 +103,8 @@ class EuropeanCallOption(AbstractEuropeanVanillaOption, ExactTrait):
 
 
 class EuropeanPutOption(AbstractEuropeanVanillaOption):
-    type: Literal["EuropeanPutOption"]
     strike: float
+    type: Literal["EuropeanPutOption"] = "EuropeanPutOption"
 
     @override
     def _calc_payoff(self, S_T: npt.NDArray[np.float64]) -> npt.NDArray[np.float64]:
