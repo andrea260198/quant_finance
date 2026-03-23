@@ -14,7 +14,6 @@ class PricingMethod(StrEnum):
 
 
 class Contract(ImmutableDataclass, ABC):
-    type: Literal["Contract"]
     pricing_method: PricingMethod
 
     @cached_property

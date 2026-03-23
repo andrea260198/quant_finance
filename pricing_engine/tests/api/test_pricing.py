@@ -26,7 +26,6 @@ class TestOption(unittest.TestCase):
         url = '/price'
 
         option1 = EuropeanCallOption(
-            type="EuropeanCallOption",
             T=10,
             r=0.20,
             S_0=100,
@@ -37,7 +36,6 @@ class TestOption(unittest.TestCase):
         assert response.status_code == 200
 
         option2 = AmericanCallOption(
-            type="AmericanCallOption",
             T=10,
             r=0.20,
             S_0=100,
@@ -48,7 +46,6 @@ class TestOption(unittest.TestCase):
         assert response.status_code == 200
 
         option3 = HestonEuropeanCallOption(
-            type="HestonEuropeanCallOption",
             T=10,
             r=0.20,
             S_0=100,
@@ -62,7 +59,6 @@ class TestOption(unittest.TestCase):
         url = '/price'
 
         short_rate_model = VasicekModel(
-            type="VasicekModel",
             dt=0.01,
             a=0.1,
             b=0.07,
@@ -72,7 +68,6 @@ class TestOption(unittest.TestCase):
 
         contracts = [
             EuropeanCallOption(
-                type="EuropeanCallOption",
                 T=10,
                 r=0.20,
                 S_0=100,
@@ -80,7 +75,6 @@ class TestOption(unittest.TestCase):
                 strike=100
             ),
             AmericanCallOption(
-                type="AmericanCallOption",
                 T=10,
                 r=0.20,
                 S_0=100,
@@ -88,7 +82,6 @@ class TestOption(unittest.TestCase):
                 strike=100
             ),
             HestonEuropeanCallOption(
-                type="HestonEuropeanCallOption",
                 T=10,
                 r=0.20,
                 S_0=100,
@@ -96,7 +89,6 @@ class TestOption(unittest.TestCase):
                 strike=100
             ),
             ZeroCouponBond(
-                type="ZeroCouponBond",
                 T=10,
                 short_rate_model=short_rate_model,
                 pricing_method=PricingMethod.EXACT
@@ -110,7 +102,6 @@ class TestOption(unittest.TestCase):
 
         contracts = [
             EuropeanCallOption(
-                type="EuropeanCallOption",
                 T=10,
                 r=0.20,
                 S_0=100,
@@ -118,7 +109,6 @@ class TestOption(unittest.TestCase):
                 strike=100
             ),
             AmericanCallOption(
-                type="AmericanCallOption",
                 T=10,
                 r=0.20,
                 S_0=100,
@@ -134,7 +124,6 @@ class TestOption(unittest.TestCase):
 
         contracts = [
             EuropeanCallOption(
-                type="EuropeanCallOption",
                 T=10,
                 r=0.20,
                 S_0=100,
@@ -142,7 +131,6 @@ class TestOption(unittest.TestCase):
                 strike=100
             ),
             AmericanCallOption(
-                type="AmericanCallOption",
                 T=10,
                 r=0.20,
                 S_0=100,
@@ -158,7 +146,6 @@ class TestOption(unittest.TestCase):
 
         contracts = [
             EuropeanCallOption(
-                type="EuropeanCallOption",
                 T=10,
                 r=0.20,
                 S_0=100,
@@ -166,7 +153,6 @@ class TestOption(unittest.TestCase):
                 strike=100
             ),
             AmericanCallOption(
-                type="AmericanCallOption",
                 T=10,
                 r=0.20,
                 S_0=100,
@@ -182,7 +168,6 @@ class TestOption(unittest.TestCase):
 
         contracts = [
             EuropeanCallOption(
-                type="EuropeanCallOption",
                 T=10,
                 r=0.20,
                 S_0=100,
@@ -190,7 +175,6 @@ class TestOption(unittest.TestCase):
                 strike=100
             ),
             AmericanCallOption(
-                type="AmericanCallOption",
                 T=10,
                 r=0.20,
                 S_0=100,
@@ -206,7 +190,6 @@ class TestOption(unittest.TestCase):
 
         contracts = [
             EuropeanCallOption(
-                type="EuropeanCallOption",
                 T=10,
                 r=0.20,
                 S_0=100,
@@ -214,7 +197,6 @@ class TestOption(unittest.TestCase):
                 strike=100
             ),
             AmericanCallOption(
-                type="AmericanCallOption",
                 T=10,
                 r=0.20,
                 S_0=100,

@@ -11,13 +11,13 @@ from scipy.special import ndtri
 
 
 class HestonEuropeanCallOption(AbstractOption, ApproxTrait, MonteCarloTrait):
-    type: Literal["HestonEuropeanCallOption"]
     T: float
     r: float
     S_0: float
     sigma: float
     strike: float
     pricing_method: PricingMethod = PricingMethod.MONTE_CARLO
+    type: Literal["HestonEuropeanCallOption"] = "HestonEuropeanCallOption"
 
     @override
     def price_approx(self, N: int) -> float:
