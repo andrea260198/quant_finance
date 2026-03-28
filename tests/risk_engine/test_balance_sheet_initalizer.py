@@ -25,4 +25,4 @@ class TestBalanceSheetInitalizer(unittest.TestCase):
 
         portfolio_value = sum([contract.price for contract in initialized_contracts])
 
-        assert True
+        assert portfolio_value == 73.62390982152526
