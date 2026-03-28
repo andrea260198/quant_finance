@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-from core.option_pricing.american_options import AmericanCallOption
+from pricing_engine.core.option_pricing.american_options import AmericanCallOption
 
 
 def main() -> None:

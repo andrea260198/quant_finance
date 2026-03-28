@@ -6,8 +6,8 @@ import numpy.typing as npt
 from overrides import override
 from tqdm import tqdm
 
-from core.contract import PricingMethod
-from core.option_pricing.abstract_option import AbstractOption, ApproxTrait
+from pricing_engine.core.contract import PricingMethod
+from pricing_engine.core.option_pricing.abstract_option import AbstractOption, ApproxTrait
 
 
 class AbstractAmericanVanillaOption(AbstractOption, ApproxTrait):

@@ -1,4 +1,4 @@
-from core.option_pricing.european_options import EuropeanCallOption
+from pricing_engine.core.option_pricing.european_options import EuropeanCallOption
 import numpy as np
 import matplotlib.pyplot as plt
 from multiprocessing import Pool

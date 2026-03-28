@@ -3,9 +3,9 @@ from typing import Literal
 import numpy as np
 import numpy.typing as npt
 
-from core.contract import PricingMethod
-from core.interest_rates.short_rate_models import get_low_discr_sample
-from core.option_pricing.abstract_option import AbstractOption, ApproxTrait, MonteCarloTrait
+from pricing_engine.core.contract import PricingMethod
+from pricing_engine.core.interest_rates.short_rate_models import get_low_discr_sample
+from pricing_engine.core.option_pricing.abstract_option import AbstractOption, ApproxTrait, MonteCarloTrait
 from overrides import override
 from scipy.special import ndtri
 

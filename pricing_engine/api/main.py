@@ -3,10 +3,10 @@ from typing import Union, Annotated
 from fastapi import FastAPI
 from pydantic import Field
 
-from core.implied_volatility.heston_model import HestonEuropeanCallOption
-from core.interest_rates.zero_coupon_bond import ZeroCouponBond
-from core.option_pricing.american_options import AmericanCallOption, AmericanPutOption
-from core.option_pricing.european_options import EuropeanCallOption, EuropeanPutOption
+from pricing_engine.core.implied_volatility.heston_model import HestonEuropeanCallOption
+from pricing_engine.core.interest_rates.zero_coupon_bond import ZeroCouponBond
+from pricing_engine.core.option_pricing.american_options import AmericanCallOption, AmericanPutOption
+from pricing_engine.core.option_pricing.european_options import EuropeanCallOption, EuropeanPutOption
 
 app = FastAPI()
 
