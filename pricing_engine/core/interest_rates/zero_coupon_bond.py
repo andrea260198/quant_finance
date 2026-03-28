@@ -4,8 +4,8 @@ from typing import Literal, Union, Annotated
 from pydantic import Field
 from pydantic_extra_types.currency_code import ISO4217
 
-from core.contract import Contract, PricingMethod
-from core.interest_rates.short_rate_models import VasicekModel, CoxIngersolRossModel
+from pricing_engine.core.contract import Contract, PricingMethod
+from pricing_engine.core.interest_rates.short_rate_models import VasicekModel, CoxIngersolRossModel
 import numpy as np
 
 

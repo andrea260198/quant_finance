@@ -2,9 +2,9 @@ from typing import Literal
 
 import numpy as np
 
-from core.contract import PricingMethod
-from core.option_pricing.abstract_option import AbstractOption, ApproxTrait
-from core.option_pricing.european_options import EuropeanPutOption
+from pricing_engine.core.contract import PricingMethod
+from pricing_engine.core.option_pricing.abstract_option import AbstractOption, ApproxTrait
+from pricing_engine.core.option_pricing.european_options import EuropeanPutOption
 
 
 class EuropeanPutOptionBarrierIn(AbstractOption, ApproxTrait):

@@ -8,7 +8,7 @@ from pricing_engine.core.interest_rates.short_rate_models import VasicekModel
 from pricing_engine.core.interest_rates.zero_coupon_bond import ZeroCouponBond
 from pricing_engine.core.option_pricing.american_options import AmericanCallOption
 from pricing_engine.core.option_pricing.european_options import EuropeanCallOption
-from api.main import app
+from pricing_engine.api.main import app
 
 client = TestClient(app)
 

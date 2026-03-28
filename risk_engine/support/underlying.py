@@ -1,6 +1,6 @@
 from functools import cached_property
 
-from support.quant_dataclass import ImmutableDataclass
+from pricing_engine.support.quant_dataclass import ImmutableDataclass
 
 
 class Underlying(ImmutableDataclass):

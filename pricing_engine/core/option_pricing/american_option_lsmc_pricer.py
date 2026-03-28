@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
-from support.quant_dataclass import ImmutableDataclass
+from pricing_engine.support.quant_dataclass import ImmutableDataclass
 from tqdm import tqdm
 
 

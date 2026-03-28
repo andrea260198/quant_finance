@@ -1,13 +1,13 @@
 import psutil
 import numpy.typing as npt
 
-from core.implied_volatility.heston_model import HestonEuropeanCallOption
+from pricing_engine.core.implied_volatility.heston_model import HestonEuropeanCallOption
 import matplotlib.pyplot as plt
 from scipy.optimize import root
-from core.option_pricing.european_options import EuropeanCallOption
+from pricing_engine.core.option_pricing.european_options import EuropeanCallOption
 import numpy as np
 from multiprocessing import Pool
-from support.quant_dataclass import ImmutableDataclass
+from pricing_engine.support.quant_dataclass import ImmutableDataclass
 
 
 def plot_heston_price_surface() -> None:

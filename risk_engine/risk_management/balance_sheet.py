@@ -1,4 +1,4 @@
-from support.quant_dataclass import ImmutableDataclass
+from pricing_engine.support.quant_dataclass import ImmutableDataclass
 import polars as pl
 
 

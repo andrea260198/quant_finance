@@ -5,20 +5,14 @@ import numpy.typing as npt
 from statistics import NormalDist
 from tqdm import tqdm
 from abc import abstractmethod
-from overrides import override
 
-from core.contract import PricingMethod
-from core.option_pricing.abstract_option import AbstractOption, ExactTrait, ApproxTrait, MonteCarloTrait
+from pricing_engine.core.contract import PricingMethod
+from pricing_engine.core.option_pricing.abstract_option import AbstractOption, ExactTrait, ApproxTrait, MonteCarloTrait
 
 
 class AbstractEuropeanVanillaOption(AbstractOption, ApproxTrait, MonteCarloTrait):
-    T: float
-    r: float
-    S_0: float
-    sigma: float
     pricing_method: PricingMethod = PricingMethod.BINOMIAL_TREE
 
-    @override
     def price_approx(self, N: int) -> float:
         """
         Approximate option price with a binomial tree.
@@ -96,7 +90,6 @@ class EuropeanCallOption(AbstractEuropeanVanillaOption, ExactTrait):
         V_exact: float = S_0 * Phi(d1) - K * np.exp(-r * T) * Phi(d2)
         return V_exact
 
-    @override
     def _calc_payoff(self, S_T: npt.NDArray[np.float64]) -> npt.NDArray[np.float64]:
         K = self.strike
         return np.maximum(S_T - K, 0)  # Get element-wise max value
@@ -106,7 +99,6 @@ class EuropeanPutOption(AbstractEuropeanVanillaOption):
     strike: float
     type: Literal["EuropeanPutOption"] = "EuropeanPutOption"
 
-    @override
     def _calc_payoff(self, S_T: npt.NDArray[np.float64]) -> npt.NDArray[np.float64]:
         K = self.strike
         return np.maximum(K - S_T, 0)  # Get element-wise max value
@@ -118,7 +110,6 @@ class EuropeanDigitalCallOption(AbstractEuropeanVanillaOption):
     def price_exact(self) -> float:
         raise NotImplementedError
 
-    @override
     def _calc_payoff(self, S_T: npt.NDArray[np.float64]) -> npt.NDArray[np.float64]:
         K = self.strike
         mask = S_T - K > 0

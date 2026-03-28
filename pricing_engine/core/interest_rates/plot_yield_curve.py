@@ -20,9 +20,9 @@
 
 import time
 
-from core.contract import PricingMethod
-from core.interest_rates.short_rate_models import VasicekModel, ShortRateModel
-from core.interest_rates.zero_coupon_bond import ZeroCouponBond
+from pricing_engine.core.contract import PricingMethod
+from pricing_engine.core.interest_rates.short_rate_models import VasicekModel, ShortRateModel
+from pricing_engine.core.interest_rates.zero_coupon_bond import ZeroCouponBond
 from multiprocessing import Pool
 import numpy as np
 import matplotlib.pyplot as plt

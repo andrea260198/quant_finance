@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from functools import cached_property
-from core.contract import Contract, PricingMethod
+from pricing_engine.core.contract import Contract, PricingMethod
 from pydantic_extra_types.currency_code import ISO4217
 
 
@@ -10,9 +10,9 @@ class AbstractOption(Contract, ABC):
     S_0: float
     sigma: float
     pricing_method: PricingMethod
-    underlying_name: str = "GenericUnderlying"
+    underlying_name: str
+    currency: ISO4217
     underlying_quantity: float = 1
-    currency: ISO4217 = "USD"
 
     @cached_property
     def price(self) -> float:

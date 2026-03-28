@@ -3,7 +3,7 @@ from enum import StrEnum
 from functools import cached_property
 from typing import Literal
 
-from support.quant_dataclass import ImmutableDataclass
+from pricing_engine.support.quant_dataclass import ImmutableDataclass
 
 
 class PricingMethod(StrEnum):

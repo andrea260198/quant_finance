@@ -6,7 +6,7 @@ from overrides import override
 import numpy.typing as npt
 from scipy.stats import qmc
 
-from support.quant_dataclass import ImmutableDataclass
+from pricing_engine.support.quant_dataclass import ImmutableDataclass
 
 
 class ShortRateModel(ImmutableDataclass, ABC):
