@@ -2,12 +2,12 @@ import unittest
 
 from fastapi.testclient import TestClient
 
-from core.contract import PricingMethod
-from core.implied_volatility.heston_model import HestonEuropeanCallOption
-from core.interest_rates.short_rate_models import VasicekModel
-from core.interest_rates.zero_coupon_bond import ZeroCouponBond
-from core.option_pricing.american_options import AmericanCallOption
-from core.option_pricing.european_options import EuropeanCallOption
+from pricing_engine.core.contract import PricingMethod
+from pricing_engine.core.implied_volatility.heston_model import HestonEuropeanCallOption
+from pricing_engine.core.interest_rates.short_rate_models import VasicekModel
+from pricing_engine.core.interest_rates.zero_coupon_bond import ZeroCouponBond
+from pricing_engine.core.option_pricing.american_options import AmericanCallOption
+from pricing_engine.core.option_pricing.european_options import EuropeanCallOption
 from api.main import app
 
 client = TestClient(app)

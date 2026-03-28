@@ -1,6 +1,6 @@
-from core.contract import PricingMethod
-from core.interest_rates.plot_yield_curve import get_approx_and_exact_yield_curves, get_yield_curve
-from core.interest_rates.short_rate_models import VasicekModel
+from pricing_engine.core.contract import PricingMethod
+from pricing_engine.core.interest_rates.plot_yield_curve import get_approx_and_exact_yield_curves, get_yield_curve
+from pricing_engine.core.interest_rates.short_rate_models import VasicekModel
 
 
 def test_get_yield_curve() -> None:
