@@ -1,4 +1,4 @@
-from core.implied_volatility.heston_model import HestonEuropeanCallOption
+from pricing_engine.core.implied_volatility.heston_model import HestonEuropeanCallOption
 
 
 def test_heston_european_call_option() -> None:
