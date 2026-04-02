@@ -87,8 +87,8 @@ class EuropeanCallOption(AbstractEuropeanVanillaOption, ExactTrait):
         def Phi(x: float) -> float:
             return NormalDist(0, 1).cdf(x)
 
-        V_exact: float = S_0 * Phi(d1) - K * np.exp(-r * T) * Phi(d2)
-        return V_exact
+        V_exact = S_0 * Phi(d1) - K * np.exp(-r * T) * Phi(d2)
+        return float(V_exact)
 
     def _calc_payoff(self, S_T: npt.NDArray[np.float64]) -> npt.NDArray[np.float64]:
         K = self.strike

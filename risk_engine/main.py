@@ -1,8 +1,10 @@
 import polars as pl
 
+from pricing_engine.core.interest_rates.short_rate_models import CoxIngersolRossModel
+from pricing_engine.core.interest_rates.zero_coupon_bond import ZeroCouponBond
 from pricing_engine.core.option_pricing.european_options import EuropeanCallOption, EuropeanPutOption
 from pricing_engine.support.quant_dataclass import ImmutableDataclass
-from pricing_engine.core.contract import Contract
+from pricing_engine.core.contract import Contract, PricingMethod
 import numpy as np
 
 
@@ -59,54 +61,72 @@ class BalanceSheetInitalizer(ImmutableDataclass):
     scenary_cube: ScenaryCube
 
     def run(self) -> list[Contract]:
-        initialized_contracts = []
-        for contract in self.contracts:
-            match contract:
-                case EuropeanCallOption() as european_call_option:
-                    r = self.scenary_cube.get_interest_rate(
-                        currency=european_call_option.currency,
-                        maturity=european_call_option.T - self.scenary_cube.time,
-                    )
-                    S_0 = self.scenary_cube.get_underlying_price(
-                        underlying_name=european_call_option.underlying_name
-                    )
-                    sigma = self.scenary_cube.get_underlying_volatility(
-                        underlying=european_call_option.underlying_name
-                    )
-
-                    initialized_contracts += [EuropeanCallOption(
-                        T=european_call_option.T - self.scenary_cube.time,
-                        r=r,
-                        S_0=S_0,
-                        sigma=sigma,
-                        strike=european_call_option.strike,
-                        underlying_name=european_call_option.underlying_name,
-                        currency=european_call_option.currency
-                    )]
-                case EuropeanPutOption() as european_put_option:
-                    r = self.scenary_cube.get_interest_rate(
-                        currency=european_put_option.currency,
-                        maturity=european_put_option.T - self.scenary_cube.time,
-                    )
-                    S_0 = self.scenary_cube.get_underlying_price(
-                        underlying_name=european_put_option.underlying_name
-                    )
-                    sigma = self.scenary_cube.get_underlying_volatility(
-                        underlying=european_put_option.underlying_name
-                    )
-
-                    initialized_contracts += [EuropeanPutOption(
-                        T=european_put_option.T - self.scenary_cube.time,
-                        r=r,
-                        S_0=S_0,
-                        sigma=sigma,
-                        strike=european_put_option.strike,
-                        underlying_name=european_put_option.underlying_name,
-                        currency=european_put_option.currency
-                    )]
-                case _:
-                    raise ValueError(f"Contract type {contract.type} not supported")
+        initialized_contracts = [self.initialize_contract(contract) for contract in self.contracts]
         return initialized_contracts
+
+    def initialize_contract(self, contract: Contract) -> Contract:
+        match contract:
+            case EuropeanCallOption() as european_call_option:
+                r = self.scenary_cube.get_interest_rate(
+                    currency=european_call_option.currency,
+                    maturity=european_call_option.T - self.scenary_cube.time,
+                )
+                S_0 = self.scenary_cube.get_underlying_price(
+                    underlying_name=european_call_option.underlying_name
+                )
+                sigma = self.scenary_cube.get_underlying_volatility(
+                    underlying=european_call_option.underlying_name
+                )
+
+                return EuropeanCallOption(
+                    T=european_call_option.T - self.scenary_cube.time,
+                    r=r,
+                    S_0=S_0,
+                    sigma=sigma,
+                    strike=european_call_option.strike,
+                    underlying_name=european_call_option.underlying_name,
+                    currency=european_call_option.currency
+                )
+            case EuropeanPutOption() as european_put_option:
+                r = self.scenary_cube.get_interest_rate(
+                    currency=european_put_option.currency,
+                    maturity=european_put_option.T - self.scenary_cube.time,
+                )
+                S_0 = self.scenary_cube.get_underlying_price(
+                    underlying_name=european_put_option.underlying_name
+                )
+                sigma = self.scenary_cube.get_underlying_volatility(
+                    underlying=european_put_option.underlying_name
+                )
+
+                return EuropeanPutOption(
+                    T=european_put_option.T - self.scenary_cube.time,
+                    r=r,
+                    S_0=S_0,
+                    sigma=sigma,
+                    strike=european_put_option.strike,
+                    underlying_name=european_put_option.underlying_name,
+                    currency=european_put_option.currency
+                )
+            case ZeroCouponBond() as zero_coupon_bond:
+                return ZeroCouponBond(
+                    T=zero_coupon_bond.T - self.scenary_cube.time,
+                    short_rate_model=CoxIngersolRossModel(
+                        dt=0.01,
+                        a=0.1,
+                        b=0.05,
+                        r0=self.scenary_cube.get_interest_rate(
+                            currency=zero_coupon_bond.currency,
+                            maturity=0,
+                        ),
+                        sigma=0.01
+                    ),
+                    M=100_000,
+                    face_value=zero_coupon_bond.face_value,
+                    currency=zero_coupon_bond.currency,
+                )
+            case _:
+                raise ValueError(f"Contract type {contract.type} not supported")
 
 
 class BalanceSheet(ImmutableDataclass):

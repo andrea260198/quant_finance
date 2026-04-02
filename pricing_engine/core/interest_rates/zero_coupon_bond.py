@@ -1,5 +1,5 @@
 from functools import cached_property
-from typing import Literal, Union, Annotated
+from typing import Literal, Union, Annotated, Optional
 
 from pydantic import Field
 from pydantic_extra_types.currency_code import ISO4217
@@ -11,8 +11,8 @@ import numpy as np
 
 class ZeroCouponBond(Contract):
     T: float  # Maturity
-    short_rate_model: Annotated[Union[VasicekModel, CoxIngersolRossModel], Field(discriminator="type")]
-    pricing_method: PricingMethod
+    short_rate_model: Optional[Annotated[Union[VasicekModel, CoxIngersolRossModel], Field(discriminator="type")]]
+    pricing_method: PricingMethod = PricingMethod.MONTE_CARLO
     M: int = -1 # Monte Carlo simulation sample size
     face_value: float = 1.0
     currency: ISO4217 = "USD"
@@ -46,7 +46,7 @@ class ZeroCouponBond(Contract):
         """
         # Calculate mean as approx of zero-coupon bond price
         Z = np.mean([np.exp(-self.short_rate_model.integrate_r_dt(self.T)) for k in range(self.M)])
-        return Z.item()
+        return float(Z.item())
 
     def price_qmc_approx(self) -> float:
         """
@@ -55,7 +55,7 @@ class ZeroCouponBond(Contract):
         """
         # Calculate mean as approx of zero-coupon bond price
         Z = np.mean(np.exp(-self.short_rate_model.approximate_integral_with_qmc(self.T, self.M)))
-        return Z.item()
+        return float(Z.item())
 
     def price_exact(self) -> float:
         return np.exp(- self.short_rate_model.calc_exact_yield(self.T) * self.T) * self.face_value
