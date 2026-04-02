@@ -10,8 +10,8 @@ class AbstractOption(Contract, ABC):
     S_0: float
     sigma: float
     pricing_method: PricingMethod
-    underlying_name: str
-    currency: ISO4217
+    underlying_name: str = "GenericUnderlying"  # TODO: think whether to keep the default value or fix the tests
+    currency: ISO4217 = "USD"  # TODO: think whether to keep the default value or fix the tests
     underlying_quantity: float = 1
 
     @cached_property
