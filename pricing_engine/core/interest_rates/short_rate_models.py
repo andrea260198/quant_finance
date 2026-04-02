@@ -127,6 +127,12 @@ class CoxIngersolRossModel(ShortRateModel):
         dr: float = a * (b - r) * dt + sigma * np.sqrt(r) * dX()
         return dr
 
+    def approximate_integral_with_qmc(self, T: float, M: int) -> npt.NDArray[np.float64]:
+        raise NotImplementedError()  # TODO: Implement
+
+    def calc_exact_yield(self, T: float) -> float:
+        raise NotImplementedError()  # TODO: Implement
+
 
 def get_low_discr_sample(N: int, M: int) -> npt.NDArray[np.float64]:
     sampler = qmc.Sobol(d=N, scramble=True)

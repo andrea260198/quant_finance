@@ -4,6 +4,7 @@ import numpy as np
 import polars as pl
 from pydantic_extra_types.currency_code import ISO4217
 
+from pricing_engine.core.interest_rates.zero_coupon_bond import ZeroCouponBond
 from pricing_engine.core.option_pricing.european_options import (
     EuropeanCallOption,
     EuropeanPutOption,
@@ -13,6 +14,8 @@ from risk_engine.main import ScenaryCube, BalanceSheetInitalizer
 
 class TestBalanceSheetInitalizer(unittest.TestCase):
     def test_simple_example(self):
+        np.random.seed(0)
+
         scenary_cube = ScenaryCube(
             time=0,
             interest_rates=pl.DataFrame(
@@ -54,6 +57,13 @@ class TestBalanceSheetInitalizer(unittest.TestCase):
                 underlying_quantity=1,
                 underlying_name="GOOG",
             ),
+            ZeroCouponBond(
+                T=5,
+                short_rate_model=None,
+                M=-1,  # Monte Carlo simulation sample size
+                face_value=1000,
+                currency=ISO4217("USD"),
+            )
         ]
         initialized_contracts = BalanceSheetInitalizer(
             contracts=contracts, scenary_cube=scenary_cube
@@ -61,4 +71,4 @@ class TestBalanceSheetInitalizer(unittest.TestCase):
 
         portfolio_value = sum([contract.price for contract in initialized_contracts])
 
-        assert portfolio_value == 73.62390982152526
+        assert portfolio_value == 852.4720681965857
