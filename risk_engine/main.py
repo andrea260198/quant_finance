@@ -56,7 +56,7 @@ class ScenarioGenerator(ImmutableDataclass):
 
 
 
-class BalanceSheetInitalizer(ImmutableDataclass):
+class ContractInitalizer(ImmutableDataclass):
     contracts: list[Contract]
     scenary_cube: ScenaryCube
 
@@ -153,15 +153,31 @@ class BalanceSheet(ImmutableDataclass):
         return portfolio_value
 
 
-        assets_total = sum([asset.price for asset in BalanceSheetInitalizer(self.assets, self.scenario).run()])
-        liabilites_total = sum([liability.price for liability in BalanceSheetInitalizer(self.liabilities, self.scenario).run()])
+        assets_total = sum([asset.price for asset in ContractInitalizer(self.assets, self.scenario).run()])
+        liabilites_total = sum([liability.price for liability in ContractInitalizer(self.liabilities, self.scenario).run()])
         equity = assets_total - liabilites_total
         return equity
 
 
+class RiskEngine(ImmutableDataclass):
+    def run(self):
+        contracts = ContractReader().run()
+        # Initial state
+        scenario_cube = ScenarioGenerator().run()
+        initialized_contracts = ContractInitalizer(contracts=contracts, scenario_cube=scenario_cube).run()
+        price = PortfolioPricer(initialized_contracts).run()
+        # Final states
+        for k in 100_000:
+            scenario_cube = ScenarioGenerator().run()
+            initialized_contracts = ContractInitalizer(contracts=contracts, scenario_cube=scenario_cube).run()
+            price = PortfolioPricer(initialized_contracts).run()
+        # Difference between initial price and final price is the PnL of the portfolio
+
+        # VaR
+
+
 def main():
-    #world = pl.DataFrame({"scenario_id": [0], ""})
-    assets = pl.DataFrame(data={"contract_type": ["EuropeanCallOption", "EuropeanPutOption"], "params_json": ["", ""]})
+    results = RiskEngine().run()
 
 
 if __name__ == "__main__":

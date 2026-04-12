@@ -9,7 +9,7 @@ from pricing_engine.core.option_pricing.european_options import (
     EuropeanCallOption,
     EuropeanPutOption,
 )
-from risk_engine.main import ScenaryCube, BalanceSheetInitalizer
+from risk_engine.main import ScenaryCube, ContractInitalizer
 
 
 class TestBalanceSheetInitalizer(unittest.TestCase):
@@ -65,7 +65,7 @@ class TestBalanceSheetInitalizer(unittest.TestCase):
                 currency=ISO4217("USD"),
             )
         ]
-        initialized_contracts = BalanceSheetInitalizer(
+        initialized_contracts = ContractInitalizer(
             contracts=contracts, scenary_cube=scenary_cube
         ).run()
 
