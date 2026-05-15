@@ -103,7 +103,7 @@ class ImplVolCalculator(ImmutableDataclass):
             V = HestonEuropeanCallOption(T=T, r=r, S_0=S_0, sigma=sigma_0, strike=K).price_mc_approx(M, dt)
 
             def fun(sigma: float) -> float:
-                return EuropeanCallOption(T=T, r=r, S_0=S_0, sigma=sigma, strike=K).price_exact() - V
+                return EuropeanCallOption(T=T, r=r, S_0=S_0, sigma=sigma.item(), strike=K).price_exact() - V
 
             sol = root(fun, sigma_0)
             # Negative volatility results are not accepted
